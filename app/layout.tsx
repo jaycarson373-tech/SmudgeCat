@@ -12,26 +12,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "https://dinocat-nine.vercel.app";
+
 export const metadata: Metadata = {
-  title: "2-2 — The Dino Cat",
+  metadataBase: new URL(productionUrl),
+  title: "Tutu — The Dino Cat",
   description:
-    "Meet Tutu, the two-legged Dino Cat beloved by millions. 100% of fees go toward giving him a better life.",
+    "The internet’s most famous pawless cat. All trading fees are donated to help Tutu live a better life.",
   icons: {
     icon: "/favicon.png",
     shortcut: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "2-2 — The Dino Cat",
+    title: "Tutu — The Dino Cat",
     description:
-      "Two back legs. One giant heart. Zero quit. Meet the internet’s Dino Cat.",
+      "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
     type: "website",
+    images: [
+      {
+        url: "/tutu-banner.jpg",
+        width: 1600,
+        height: 532,
+        alt: "Tutu the Dino Cat",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
-    title: "2-2 — The Dino Cat",
+    card: "summary_large_image",
+    title: "Tutu — The Dino Cat",
     description:
-      "Two back legs. One giant heart. Zero quit. Meet the internet’s Dino Cat.",
+      "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
+    images: ["/tutu-banner.jpg"],
   },
 };
 

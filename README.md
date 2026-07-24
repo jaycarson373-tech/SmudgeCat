@@ -1,8 +1,8 @@
-# DinoCat
+# Tutu the Dino Cat
 
-Landing page for **2-2 the Dino Cat**, the viral two-legged cat known as Tutu.
-The site features Tutu’s story, public TikTok milestones, and the project’s
-100% fee pledge.
+Charity-mission landing page for **Tutu the Dino Cat**, the viral two-legged
+cat. The site features Tutu’s story, public TikTok milestones, a $10,000
+donation thermometer, and the project’s 100% trading-fee pledge.
 
 ## Prerequisites
 
@@ -21,6 +21,11 @@ npm run build
 - `npm run dev`: start local development
 - `npm run build`: create the production build
 - `npm test`: build and verify the rendered landing page
+
+## Campaign settings
+
+Copy `.env.example` to `.env.local` and fill in the public campaign values.
+`NEXT_PUBLIC_RAISED_USD` moves the donation thermometer after a redeploy.
 
 ## Built With
 
