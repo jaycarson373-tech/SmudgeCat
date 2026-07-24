@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CampaignProgress } from "@/components/CampaignProgress";
 import { CopyButton } from "@/components/CopyButton";
+import { MotionController } from "@/components/MotionController";
 import { CAMPAIGN, type CampaignStatus } from "@/lib/campaign";
 
 const usd = new Intl.NumberFormat("en-US", {
@@ -78,6 +79,7 @@ export default function Home() {
 
   return (
     <main>
+      <MotionController />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Tutu home">
           <span className="brand-avatar">
@@ -198,9 +200,9 @@ export default function Home() {
               sizes="(max-width: 820px) 92vw, 46vw"
             />
           </div>
-          <div className="sticker sticker-views">
-            <strong>27M+</strong>
-            <span>VIRAL VIEWS</span>
+          <div className="sticker sticker-fees">
+            <strong>100%</strong>
+            <span>FEES TO TUTU</span>
           </div>
           <div className="sticker sticker-energy">
             <span>SMALL CAT.</span>
@@ -217,10 +219,6 @@ export default function Home() {
         <div className="stat">
           <strong>17.9M</strong>
           <span>TikTok likes</span>
-        </div>
-        <div className="stat">
-          <strong>27M+</strong>
-          <span>Breakout video views</span>
         </div>
         <div className="stat">
           <strong>532</strong>
@@ -264,7 +262,7 @@ export default function Home() {
         />
       </div>
 
-      <section className="story section-shell" id="story">
+      <section className="story section-shell" id="story" data-reveal>
         <div className="section-label">
           <span>01</span>
           <p>THE STORY</p>
@@ -296,7 +294,11 @@ export default function Home() {
         </aside>
       </section>
 
-      <section className="goal-section campaign-section" id="goal">
+      <section
+        className="goal-section campaign-section"
+        id="goal"
+        data-reveal
+      >
         <div className="section-shell campaign-grid">
           <div className="section-label">
             <span>02</span>
@@ -334,7 +336,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mission-section campaign-section" id="mission">
+      <section
+        className="mission-section campaign-section"
+        id="mission"
+        data-reveal
+      >
         <div className="section-shell campaign-grid">
           <div className="section-label">
             <span>03</span>
@@ -386,7 +392,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="promise" id="promise">
+      <section className="promise" id="promise" data-reveal>
         <div className="promise-inner">
           <div className="promise-number">
             <span>04</span>
@@ -417,6 +423,7 @@ export default function Home() {
       <section
         className="how-to-buy campaign-section section-shell"
         id="how-to-buy"
+        data-reveal
       >
         <div className="section-label">
           <span>05</span>
@@ -462,7 +469,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="socials-section campaign-section" id="socials">
+      <section
+        className="socials-section campaign-section"
+        id="socials"
+        data-reveal
+      >
         <div className="section-shell campaign-grid">
           <div className="section-label">
             <span>06</span>
@@ -545,7 +556,7 @@ export default function Home() {
       </section>
 
       {CAMPAIGN.ca && (
-        <section className="chart-section campaign-section">
+        <section className="chart-section campaign-section" data-reveal>
           <div className="section-shell campaign-grid">
             <div className="section-label">
               <span>07</span>
@@ -575,7 +586,7 @@ export default function Home() {
         </section>
       )}
 
-      <section className="final-cta section-shell">
+      <section className="final-cta section-shell" data-reveal>
         <div>
           <p className="eyebrow">
             <span aria-hidden="true">●</span> CHARITY COIN. MEME COIN ENERGY.

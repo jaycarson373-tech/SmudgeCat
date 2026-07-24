@@ -308,7 +308,7 @@ h1 span {
   z-index: 2;
 }
 
-.sticker-views {
+.sticker-fees {
   background: var(--violet);
   border-radius: 50%;
   color: white;
@@ -319,13 +319,13 @@ h1 span {
   width: 128px;
 }
 
-.sticker-views strong {
+.sticker-fees strong {
   font-size: 2.25rem;
   letter-spacing: -0.07em;
   line-height: 0.95;
 }
 
-.sticker-views span {
+.sticker-fees span {
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.59rem;
   font-weight: 800;
@@ -358,7 +358,7 @@ h1 span {
   border-bottom: 2px solid var(--line);
   border-top: 2px solid var(--line);
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 0 auto;
   max-width: 1440px;
   position: relative;
@@ -739,16 +739,7 @@ footer a {
   }
 
   .stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .stat:nth-child(3) {
-    border-left: 0;
-    border-top: 2px solid var(--line);
-  }
-
-  .stat:nth-child(4) {
-    border-top: 2px solid var(--line);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .promise-grid {
@@ -819,18 +810,18 @@ footer a {
     width: 89vw;
   }
 
-  .sticker-views {
+  .sticker-fees {
     height: 98px;
     right: -16px;
     top: -26px;
     width: 98px;
   }
 
-  .sticker-views strong {
+  .sticker-fees strong {
     font-size: 1.7rem;
   }
 
-  .sticker-views span {
+  .sticker-fees span {
     font-size: 0.48rem;
   }
 
@@ -841,7 +832,13 @@ footer a {
   }
 
   .stats {
+    grid-template-columns: 1fr;
     margin-top: 8px;
+  }
+
+  .stat + .stat {
+    border-left: 0;
+    border-top: 2px solid var(--line);
   }
 
   .stat {
@@ -2112,6 +2109,114 @@ footer a {
   }
 
   .mission-step.active .mission-node i::after {
+    animation: none;
+  }
+}
+
+/* Gentle page motion */
+.motion-enabled [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.motion-enabled [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-art {
+  transform: translate3d(var(--motion-x, 0), var(--motion-y, 0), 0);
+  transition: transform 350ms ease-out;
+  will-change: transform;
+}
+
+.photo-frame img {
+  transform: scale(1.04)
+    translate3d(var(--image-x, 0), var(--image-y, 0), 0);
+  transition: transform 450ms ease-out;
+}
+
+.sunburst {
+  animation: sunburst-drift 7s ease-in-out infinite;
+}
+
+.sticker-fees {
+  animation: fees-float 5s ease-in-out infinite;
+}
+
+.sticker-energy {
+  animation: energy-float 6s ease-in-out infinite;
+}
+
+.stat,
+.brand-banner img {
+  transition:
+    background-color 200ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+}
+
+.stat:hover {
+  background: var(--lime);
+  transform: translateY(-4px);
+}
+
+.brand-banner:hover img {
+  box-shadow: 10px 12px 0 var(--black);
+  transform: rotate(0.4deg) scale(1.006);
+}
+
+@keyframes sunburst-drift {
+  0%,
+  100% {
+    transform: rotate(4deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(6deg) translateY(-8px);
+  }
+}
+
+@keyframes fees-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(9deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(6deg);
+  }
+}
+
+@keyframes energy-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+
+  50% {
+    transform: translateY(-6px) rotate(-2deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-enabled [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .hero-art,
+  .photo-frame img {
+    transition: none;
+  }
+
+  .sunburst,
+  .sticker-fees,
+  .sticker-energy {
     animation: none;
   }
 }

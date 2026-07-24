@@ -23,7 +23,7 @@ export const CAMPAIGN = {
   ca: process.env.NEXT_PUBLIC_CA ?? "",
   pumpUrl: process.env.NEXT_PUBLIC_PUMP_URL ?? "",
   dexscreenerUrl: process.env.NEXT_PUBLIC_DEXSCREENER_URL ?? "",
-  xUrl: process.env.NEXT_PUBLIC_X_URL ?? "",
+  xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/dinocat_pf",
   telegramUrl: process.env.NEXT_PUBLIC_TG_URL ?? "",
   tiktokUrl: "https://www.tiktok.com/@dinocattutu",
   instagramUrl: "https://www.instagram.com/dinocattutu/",

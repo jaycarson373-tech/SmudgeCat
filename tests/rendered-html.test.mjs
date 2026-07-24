@@ -39,12 +39,14 @@ test("server-renders the DinoCat landing page", async () => {
   assert.match(html, /CA DROPS SOON/);
   assert.match(html, /HOW TO BUY/);
   assert.match(html, /FOLLOW THE REAL TUTU/);
+  assert.match(html, /https:\/\/x\.com\/dinocat_pf/);
+  assert.match(html, /100%/);
   assert.match(html, /OF FEES GO TOWARD GIVING TUTU A BETTER LIFE/);
   assert.match(html, /tutu-hero\.jpg/);
   assert.match(html, /tutu-banner\.jpg/);
   assert.match(html, /favicon\.png/);
   assert.doesNotMatch(
     html,
-    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2/i,
+    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M/i,
   );
 });
