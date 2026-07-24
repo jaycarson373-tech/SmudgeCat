@@ -1,12 +1,85 @@
 import Image from "next/image";
+import { CampaignProgress } from "@/components/CampaignProgress";
+import { CopyButton } from "@/components/CopyButton";
+import { CAMPAIGN, type CampaignStatus } from "@/lib/campaign";
 
-const tiktokUrl = "https://www.tiktok.com/@dinocattutu";
+const usd = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
+
+const missionSteps: Array<{
+  status: CampaignStatus;
+  title: string;
+  copy: string;
+}> = [
+  {
+    status: "raising",
+    title: "Raise",
+    copy: "Trading fees accumulate in the public care wallet.",
+  },
+  {
+    status: "contacting",
+    title: "Contact",
+    copy: "We are reaching out to Tutu’s owner through TikTok and every channel we can find.",
+  },
+  {
+    status: "responded",
+    title: "Response",
+    copy: "Owner responds, we verify it’s really them, and coordinate the handoff.",
+  },
+  {
+    status: "donated",
+    title: "Donate",
+    copy: "100% delivered, receipts posted, video proof.",
+  },
+];
+
+function safeAmount(value: number) {
+  return Number.isFinite(value) ? Math.max(0, value) : 0;
+}
+
+function shortAddress(value: string) {
+  if (value.length <= 18) return value;
+  return `${value.slice(0, 8)}…${value.slice(-8)}`;
+}
+
+function SocialLink({
+  href,
+  label,
+  className = "",
+}: {
+  href: string;
+  label: string;
+  className?: string;
+}) {
+  return (
+    <a
+      className={className}
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {label} <span aria-hidden="true">↗</span>
+    </a>
+  );
+}
 
 export default function Home() {
+  const raised = safeAmount(CAMPAIGN.raisedUsd);
+  const statusIndex = missionSteps.findIndex(
+    (step) => step.status === CAMPAIGN.status,
+  );
+  const chartUrl = `https://dexscreener.com/solana/${encodeURIComponent(
+    CAMPAIGN.ca,
+  )}`;
+  const fullChartUrl = CAMPAIGN.dexscreenerUrl || chartUrl;
+
   return (
     <main>
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="2-2 home">
+        <a className="brand" href="#top" aria-label="Tutu home">
           <span className="brand-avatar">
             <Image
               src="/favicon.png"
@@ -16,22 +89,41 @@ export default function Home() {
               priority
             />
           </span>
-          <span className="brand-name">2-2</span>
+          <span className="brand-name">TUTU</span>
           <span className="brand-tag">DINO CAT</span>
         </a>
 
-        <nav aria-label="Main navigation">
-          <a href="#story">The story</a>
-          <a href="#promise">The promise</a>
-          <a
-            className="nav-cta"
-            href={tiktokUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            TikTok <span aria-hidden="true">↗</span>
-          </a>
+        <nav className="header-center" aria-label="Main navigation">
+          <a href="#mission">How it works</a>
+          <a href="#goal">Donations</a>
+          <a href="#socials">Socials</a>
+          <a href="#how-to-buy">How to buy</a>
         </nav>
+
+        <div className="header-actions">
+          {CAMPAIGN.xUrl && (
+            <SocialLink
+              className="header-social"
+              href={CAMPAIGN.xUrl}
+              label="X"
+            />
+          )}
+          <SocialLink
+            className="header-social tiktok-social"
+            href={CAMPAIGN.tiktokUrl}
+            label="TK"
+          />
+          <div className="header-ca" aria-label="Contract address">
+            {CAMPAIGN.ca ? (
+              <>
+                <code>{shortAddress(CAMPAIGN.ca)}</code>
+                <CopyButton value={CAMPAIGN.ca} compact />
+              </>
+            ) : (
+              <a href="#how-to-buy">CA DROPS SOON</a>
+            )}
+          </div>
+        </div>
       </header>
 
       <section className="hero" id="top">
@@ -40,7 +132,7 @@ export default function Home() {
             <span aria-hidden="true">●</span> THE INTERNET’S TWO-LEGGED HERO
           </p>
           <h1>
-            MEET <span>2-2.</span>
+            MEET <span>TUTU.</span>
             <br />
             THE DINO CAT.
           </h1>
@@ -48,17 +140,49 @@ export default function Home() {
             Two back legs. One giant heart. Zero quit. Tutu turned a difficult
             start into a story millions can’t stop cheering for.
           </p>
+          <p className="hero-mission">
+            The internet’s most famous pawless cat. All fees donated to help{" "}
+            <strong>$TUTU</strong> live a better life.
+          </p>
+          <p className="hero-goal-copy">
+            We’re raising {usd.format(CAMPAIGN.goalUsd)} for Tutu. 100% of
+            trading fees. Then we hand it to his owner—publicly.
+          </p>
+
+          <div className={`ca-bar${CAMPAIGN.ca ? "" : " ca-bar-soon"}`}>
+            <span>Contract</span>
+            {CAMPAIGN.ca ? (
+              <>
+                <code className="ca-full">{CAMPAIGN.ca}</code>
+                <code className="ca-short">
+                  {shortAddress(CAMPAIGN.ca)}
+                </code>
+                <CopyButton value={CAMPAIGN.ca} />
+              </>
+            ) : (
+              <strong>CA DROPS SOON</strong>
+            )}
+          </div>
+
           <div className="hero-actions">
-            <a
-              className="button button-primary"
-              href={tiktokUrl}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Follow Tutu <span aria-hidden="true">↗</span>
-            </a>
-            <a className="text-link" href="#promise">
-              See the fee promise <span aria-hidden="true">↓</span>
+            {CAMPAIGN.pumpUrl ? (
+              <a
+                className="button button-primary"
+                href={CAMPAIGN.pumpUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Buy $TUTU <span aria-hidden="true">↗</span>
+              </a>
+            ) : (
+              <span className="button button-primary button-disabled">
+                Buy $TUTU — soon
+              </span>
+            )}
+            <a className="progress-pill" href="#goal">
+              <strong>{usd.format(raised)}</strong> raised of{" "}
+              {usd.format(CAMPAIGN.goalUsd)}{" "}
+              <span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
@@ -107,18 +231,37 @@ export default function Home() {
 
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>2-2 THE DINO CAT</span>
+          <span>TUTU THE DINO CAT</span>
           <b>✦</b>
-          <span>BUILT DIFFERENT</span>
+          <span>100% OF FEES → TUTU</span>
+          <b>✦</b>
+          <span>GOAL: $10,000</span>
+          <b>✦</b>
+          <span>OPERATION: REACH THE OWNER</span>
+          <b>✦</b>
+          <span>BELOVED BY MILLIONS</span>
+          <b>✦</b>
+          <span>TUTU THE DINO CAT</span>
+          <b>✦</b>
+          <span>100% OF FEES → TUTU</span>
+          <b>✦</b>
+          <span>GOAL: $10,000</span>
+          <b>✦</b>
+          <span>OPERATION: REACH THE OWNER</span>
           <b>✦</b>
           <span>BELOVED BY MILLIONS</span>
           <b>✦</b>
-          <span>2-2 THE DINO CAT</span>
-          <b>✦</b>
-          <span>BUILT DIFFERENT</span>
-          <b>✦</b>
-          <span>BELOVED BY MILLIONS</span>
         </div>
+      </div>
+
+      <div className="brand-banner section-shell">
+        <Image
+          src="/tutu-banner.jpg"
+          alt="Tutu the Dino Cat"
+          width={1600}
+          height={532}
+          sizes="(max-width: 1440px) 94vw, 1312px"
+        />
       </div>
 
       <section className="story section-shell" id="story">
@@ -142,21 +285,115 @@ export default function Home() {
           </div>
         </div>
         <aside className="story-card">
-          <span className="tiny-pill">WHY 2-2?</span>
+          <span className="tiny-pill">WHY TUTU?</span>
           <p>
-            It sounds like <strong>Tutu</strong>—and celebrates the two legs
-            that made him an icon.
+            <strong>Tutu is his real name.</strong> He is the cat, the mission,
+            and the whole reason this community exists.
           </p>
           <span className="dino-mark" aria-hidden="true">
-            2
+            T
           </span>
         </aside>
       </section>
 
+      <section className="goal-section campaign-section" id="goal">
+        <div className="section-shell campaign-grid">
+          <div className="section-label">
+            <span>02</span>
+            <p>THE GOAL</p>
+          </div>
+          <div className="campaign-main">
+            <p className="eyebrow">
+              <span aria-hidden="true">●</span> THE THERMOMETER
+            </p>
+            <h2>{usd.format(CAMPAIGN.goalUsd)} FOR TUTU. EVERY TRADE COUNTS.</h2>
+            <CampaignProgress
+              raisedUsd={raised}
+              goalUsd={CAMPAIGN.goalUsd}
+            />
+            <div className="wallet-proof">
+              <p>
+                Every fee from every trade goes here. Verify it yourself:
+              </p>
+              {CAMPAIGN.careWallet ? (
+                <a
+                  href={`https://solscan.io/account/${encodeURIComponent(
+                    CAMPAIGN.careWallet,
+                  )}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Care wallet ↗
+                </a>
+              ) : (
+                <span>Care wallet publishes at launch</span>
+              )}
+              <strong>Total updated regularly. On-chain doesn’t lie.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mission-section campaign-section" id="mission">
+        <div className="section-shell campaign-grid">
+          <div className="section-label">
+            <span>03</span>
+            <p>THE MISSION</p>
+          </div>
+          <div className="campaign-main">
+            <p className="eyebrow">
+              <span aria-hidden="true">●</span> OPERATION: REACH THE OWNER
+            </p>
+            <h2>RAISE IT. VERIFY THEM. HAND IT TO TUTU.</h2>
+            <div className="mission-timeline">
+              {missionSteps.map((step, index) => {
+                const state =
+                  index < statusIndex
+                    ? "completed"
+                    : index === statusIndex
+                      ? "active"
+                      : "future";
+
+                return (
+                  <div className={`mission-step ${state}`} key={step.status}>
+                    <div className="mission-node" aria-hidden="true">
+                      {state === "completed" ? "✓" : <i />}
+                    </div>
+                    <div>
+                      <span>0{index + 1}</span>
+                      <h3>{step.title}</h3>
+                      <p>{step.copy}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            <div className="owner-contact">
+              <strong>Are you Tutu’s owner? DM us:</strong>
+              <div>
+                {CAMPAIGN.xUrl && (
+                  <SocialLink href={CAMPAIGN.xUrl} label="X" />
+                )}
+                {CAMPAIGN.telegramUrl && (
+                  <SocialLink href={CAMPAIGN.telegramUrl} label="Telegram" />
+                )}
+                {!CAMPAIGN.xUrl && !CAMPAIGN.telegramUrl && (
+                  <span>Contact channels dropping soon</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="promise" id="promise">
         <div className="promise-inner">
+          <div className="promise-number">
+            <span>04</span>
+            <p>THE TUTU PROMISE</p>
+          </div>
           <p className="eyebrow light">
-            <span aria-hidden="true">●</span> THE 2-2 PROMISE
+            <span aria-hidden="true">●</span> THE TUTU PROMISE
           </p>
           <div className="promise-grid">
             <div className="hundred">
@@ -169,48 +406,229 @@ export default function Home() {
                 Care, comfort, food, play, and all the little things that help
                 the internet’s favorite Dino Cat keep living big.
               </p>
-              <a
-                className="button button-light"
-                href={tiktokUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Meet the real Tutu <span aria-hidden="true">↗</span>
+              <a className="promise-goal-link" href="#goal">
+                First stop: {usd.format(CAMPAIGN.goalUsd)}. Track it live ↑
               </a>
             </div>
           </div>
         </div>
       </section>
 
+      <section
+        className="how-to-buy campaign-section section-shell"
+        id="how-to-buy"
+      >
+        <div className="section-label">
+          <span>05</span>
+          <p>HOW TO BUY</p>
+        </div>
+        <div className="campaign-main">
+          <p className="eyebrow">
+            <span aria-hidden="true">●</span> JOIN THE MISSION
+          </p>
+          <h2>THREE STEPS. ONE VERY GOOD CAT.</h2>
+          <div className="buy-steps">
+            <article>
+              <span>01</span>
+              <h3>Phantom + SOL</h3>
+              <p>Download Phantom, create a wallet, and add a little SOL.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Paste the CA</h3>
+              <p>Open Pump.fun and paste the official Tutu contract address.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Swap</h3>
+              <p>Choose your amount, confirm the swap, and join the mission.</p>
+            </article>
+          </div>
+          <div className={`ca-bar buy-ca${CAMPAIGN.ca ? "" : " ca-bar-soon"}`}>
+            <span>Official CA</span>
+            {CAMPAIGN.ca ? (
+              <>
+                <code className="ca-full">{CAMPAIGN.ca}</code>
+                <code className="ca-short">
+                  {shortAddress(CAMPAIGN.ca)}
+                </code>
+                <CopyButton value={CAMPAIGN.ca} />
+              </>
+            ) : (
+              <strong>CA DROPS SOON</strong>
+            )}
+          </div>
+          <p className="buy-close">Every buy moves the thermometer.</p>
+        </div>
+      </section>
+
+      <section className="socials-section campaign-section" id="socials">
+        <div className="section-shell campaign-grid">
+          <div className="section-label">
+            <span>06</span>
+            <p>SOCIALS</p>
+          </div>
+          <div className="campaign-main">
+            <p className="eyebrow">
+              <span aria-hidden="true">●</span> FOLLOW THE REAL TUTU
+            </p>
+            <h2>ONE DINO CAT. A VERY LARGE INTERNET.</h2>
+            <div className="social-grid">
+              <a
+                className="social-card social-card-featured"
+                href={CAMPAIGN.tiktokUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <span>TikTok</span>
+                  <strong>@dinocattutu ↗</strong>
+                </div>
+                <dl>
+                  <div>
+                    <dt>Followers</dt>
+                    <dd>464K+</dd>
+                  </div>
+                  <div>
+                    <dt>Likes</dt>
+                    <dd>17.9M</dd>
+                  </div>
+                  <div>
+                    <dt>Videos</dt>
+                    <dd>532</dd>
+                  </div>
+                </dl>
+              </a>
+              <a
+                className="social-card"
+                href={CAMPAIGN.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <span>Instagram</span>
+                  <strong>@dinocattutu ↗</strong>
+                </div>
+                <p>More daily Tutu, more tiny T-Rex energy.</p>
+              </a>
+              {CAMPAIGN.xUrl && (
+                <a
+                  className="social-card"
+                  href={CAMPAIGN.xUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div>
+                    <span>X</span>
+                    <strong>Campaign updates ↗</strong>
+                  </div>
+                  <p>Thermometer moves, owner outreach, and public receipts.</p>
+                </a>
+              )}
+              {CAMPAIGN.telegramUrl && (
+                <a
+                  className="social-card"
+                  href={CAMPAIGN.telegramUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <div>
+                    <span>Telegram</span>
+                    <strong>Join the community ↗</strong>
+                  </div>
+                  <p>The Tutu mission control room.</p>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {CAMPAIGN.ca && (
+        <section className="chart-section campaign-section">
+          <div className="section-shell campaign-grid">
+            <div className="section-label">
+              <span>07</span>
+              <p>THE CHART</p>
+            </div>
+            <div className="campaign-main">
+              <div className="chart-heading">
+                <div>
+                  <p className="eyebrow">
+                    <span aria-hidden="true">●</span> LIVE ON-CHAIN
+                  </p>
+                  <h2>THE TUTU CHART.</h2>
+                </div>
+                <a href={fullChartUrl} target="_blank" rel="noreferrer">
+                  Open full chart ↗
+                </a>
+              </div>
+              <div className="chart-frame">
+                <iframe
+                  title="Tutu DexScreener chart"
+                  src={`${chartUrl}?embed=1&theme=dark&trades=0&info=0`}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
       <section className="final-cta section-shell">
         <div>
           <p className="eyebrow">
-            <span aria-hidden="true">●</span> ONE CAT. MILLIONS OF FANS.
+            <span aria-hidden="true">●</span> CHARITY COIN. MEME COIN ENERGY.
           </p>
-          <h2>WELCOME TO THE DINO ERA.</h2>
+          <h2>MAKE THE INTERNET’S FAVORITE DINO CAT PROUD.</h2>
         </div>
         <a
           className="round-link"
-          href={tiktokUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Follow Tutu on TikTok"
+          href="#goal"
+          aria-label="View Tutu’s donation goal"
         >
-          <span>FOLLOW</span>
-          <strong aria-hidden="true">↗</strong>
+          <span>DONATE</span>
+          <strong aria-hidden="true">↓</strong>
         </a>
       </section>
 
-      <footer>
-        <div className="footer-brand">
-          <Image src="/favicon.png" alt="" width={34} height={34} />
-          <strong>2-2 THE DINO CAT</strong>
+      <footer className="site-footer">
+        <div className="footer-top">
+          <div className="footer-brand">
+            <Image src="/favicon.png" alt="" width={38} height={38} />
+            <strong>TUTU THE DINO CAT</strong>
+          </div>
+          <div className={`footer-ca${CAMPAIGN.ca ? "" : " footer-ca-soon"}`}>
+            <span>CA</span>
+            {CAMPAIGN.ca ? (
+              <>
+                <code>{shortAddress(CAMPAIGN.ca)}</code>
+                <CopyButton value={CAMPAIGN.ca} compact />
+              </>
+            ) : (
+              <strong>DROPS SOON</strong>
+            )}
+          </div>
+          <div className="footer-socials">
+            <SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" />
+            <SocialLink href={CAMPAIGN.instagramUrl} label="Instagram" />
+            {CAMPAIGN.xUrl && <SocialLink href={CAMPAIGN.xUrl} label="X" />}
+            {CAMPAIGN.telegramUrl && (
+              <SocialLink href={CAMPAIGN.telegramUrl} label="Telegram" />
+            )}
+          </div>
         </div>
-        <p>
-          2-2 is a community meme coin, not an investment product. Crypto is
-          volatile. Nothing here is financial advice.
-        </p>
-        <a href="#top">BACK TO TOP ↑</a>
+        <div className="footer-legal">
+          <p>
+            Tutu is a community meme coin, not an investment product. Crypto is
+            volatile. Nothing here is financial advice.
+          </p>
+          <p>
+            Tutu is a community-run fan project. Not affiliated with Tutu’s
+            owner yet—we’re working on it.
+          </p>
+          <a href="#top">BACK TO TOP ↑</a>
+        </div>
       </footer>
     </main>
   );
