@@ -167,10 +167,10 @@ export default function Home() {
           </div>
 
           <div className="hero-actions">
-            {CAMPAIGN.pumpUrl ? (
+            {CAMPAIGN.jupiterUrl ? (
               <a
                 className="button button-primary"
-                href={CAMPAIGN.pumpUrl}
+                href={CAMPAIGN.jupiterUrl}
                 target="_blank"
                 rel="noreferrer"
               >
@@ -626,6 +626,15 @@ export default function Home() {
           </p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>
+        <nav className="footer-market-links" aria-label="Buy and chart links">
+          <SocialLink
+            className="footer-buy-link"
+            href={CAMPAIGN.jupiterUrl}
+            label="BUY $TUTU ON JUPITER"
+          />
+          <SocialLink href={CAMPAIGN.pumpUrl} label="PUMP.FUN" />
+          <SocialLink href={CAMPAIGN.dexscreenerUrl} label="DEXSCREENER" />
+        </nav>
       </footer>
     </main>
   );

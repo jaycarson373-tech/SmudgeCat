@@ -36,7 +36,11 @@ test("server-renders the DinoCat landing page", async () => {
   assert.match(html, /17\.9M/);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: REACH THE OWNER/);
-  assert.match(html, /CA DROPS SOON/);
+  assert.match(html, /4aKxVRfAPREPBK3ziUgWUAX9kdPSkLv9PgyXGLXYpump/);
+  assert.match(html, /BUY \$TUTU ON JUPITER/);
+  assert.match(html, /https:\/\/jup\.ag\/swap\/SOL-4aKxVRf/);
+  assert.match(html, /https:\/\/pump\.fun\/coin\/4aKxVRf/);
+  assert.match(html, /https:\/\/dexscreener\.com\/solana\/4aKxVRf/);
   assert.match(html, /HOW TO BUY/);
   assert.match(html, /FOLLOW THE REAL TUTU/);
   assert.match(html, /https:\/\/x\.com\/dinocat_pf/);

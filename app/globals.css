@@ -1750,6 +1750,43 @@ footer a {
   white-space: nowrap;
 }
 
+.footer-market-links {
+  border-top: 1px solid #514467;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 25px;
+  padding-top: 25px;
+}
+
+.site-footer .footer-market-links a {
+  align-items: center;
+  border: 1px solid #695d84;
+  display: flex;
+  font-size: 0.7rem;
+  font-weight: 900;
+  justify-content: space-between;
+  letter-spacing: 0.04em;
+  min-height: 52px;
+  padding: 14px 16px;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.site-footer .footer-market-links .footer-buy-link {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+}
+
+.site-footer .footer-market-links a:hover {
+  background: white;
+  color: var(--ink);
+  transform: translateY(-3px);
+}
+
 @media (max-width: 1120px) {
   .site-header {
     grid-template-columns: 1fr auto;
@@ -2064,6 +2101,10 @@ footer a {
   .footer-socials,
   .footer-legal a {
     grid-column: 1;
+  }
+
+  .footer-market-links {
+    grid-template-columns: 1fr;
   }
 }
 
