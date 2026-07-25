@@ -28,7 +28,7 @@ test("server-renders the DinoCat landing page", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Tutu — The Dino Cat<\/title>/i);
+  assert.match(html, /<title>Tutu \| The Dino Cat<\/title>/i);
   assert.match(html, /MEET/);
   assert.match(html, /TUTU/);
   assert.match(html, /THE DINO CAT/);

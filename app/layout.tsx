@@ -18,7 +18,7 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
-  title: "Tutu — The Dino Cat",
+  title: "Tutu | The Dino Cat",
   description:
     "The internet’s most famous pawless cat. All trading fees are donated to help Tutu live a better life.",
   icons: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "Tutu — The Dino Cat",
+    title: "Tutu | The Dino Cat",
     description:
       "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
     type: "website",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tutu — The Dino Cat",
+    title: "Tutu | The Dino Cat",
     description:
       "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
     images: ["/tutu-banner.jpg"],

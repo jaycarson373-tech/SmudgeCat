@@ -148,7 +148,7 @@ export default function Home() {
           </p>
           <p className="hero-goal-copy">
             We’re raising {usd.format(CAMPAIGN.goalUsd)} for Tutu. 100% of
-            trading fees. Then we hand it to his owner—publicly.
+            trading fees. Then we hand it to his owner, publicly.
           </p>
 
           <div className={`ca-bar${CAMPAIGN.ca ? "" : " ca-bar-soon"}`}>
@@ -178,7 +178,7 @@ export default function Home() {
               </a>
             ) : (
               <span className="button button-primary button-disabled">
-                Buy $TUTU — soon
+                Buy $TUTU soon
               </span>
             )}
             <a className="progress-pill" href="#goal">
@@ -272,7 +272,7 @@ export default function Home() {
           <div className="story-columns">
             <p>
               After losing both front legs, Tutu learned to move through life
-              on his own terms—hopping, balancing, climbing, and charming
+              on his own terms, hopping, balancing, climbing, and charming
               absolutely everyone along the way.
             </p>
             <p>
@@ -373,20 +373,6 @@ export default function Home() {
                   </div>
                 );
               })}
-            </div>
-            <div className="owner-contact">
-              <strong>Are you Tutu’s owner? DM us:</strong>
-              <div>
-                {CAMPAIGN.xUrl && (
-                  <SocialLink href={CAMPAIGN.xUrl} label="X" />
-                )}
-                {CAMPAIGN.telegramUrl && (
-                  <SocialLink href={CAMPAIGN.telegramUrl} label="Telegram" />
-                )}
-                {!CAMPAIGN.xUrl && !CAMPAIGN.telegramUrl && (
-                  <span>Contact channels dropping soon</span>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -636,7 +622,7 @@ export default function Home() {
           </p>
           <p>
             Tutu is a community-run fan project. Not affiliated with Tutu’s
-            owner yet—we’re working on it.
+            owner yet. We’re working on it.
           </p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>
