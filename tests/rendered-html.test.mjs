@@ -51,6 +51,8 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /rigby-hero\.jpg/);
   assert.match(html, /rigby-og\.png/);
   assert.match(html, /rigby-avatar\.png/);
+  assert.match(html, /rigby-favicon\.png/);
+  assert.match(html, /rigby-apple-touch-icon\.png/);
   assert.doesNotMatch(
     html,
     /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|jup\.ag\/swap|pump\.fun\/coin|dexscreener\.com\/solana|—/i,

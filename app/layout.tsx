@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   description:
     "One of the world’s most viral cats is running on Solana. 100% of fees support Rigby through official Cameos and merch.",
   icons: {
-    icon: "/rigby-avatar.png",
-    shortcut: "/rigby-avatar.png",
-    apple: "/rigby-avatar.png",
+    icon: "/rigby-favicon.png",
+    shortcut: "/rigby-favicon.png",
+    apple: "/rigby-apple-touch-icon.png",
   },
   openGraph: {
     title: "Rigby | The Fainting Goat Cat",
