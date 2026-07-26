@@ -20,11 +20,13 @@ export function CampaignProgress({
   const rootRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const safeRaised = Number.isFinite(raisedUsd) ? Math.max(0, raisedUsd) : 0;
-  const safeGoal = Number.isFinite(goalUsd) && goalUsd > 0 ? goalUsd : 10000;
+  const safeGoal = Number.isFinite(goalUsd) && goalUsd > 0 ? goalUsd : 5000;
   const percentage = useMemo(
     () => Math.min(100, (safeRaised / safeGoal) * 100),
     [safeGoal, safeRaised],
   );
+  const firstMilestone = safeGoal * 0.25;
+  const halfwayMilestone = safeGoal * 0.5;
 
   useEffect(() => {
     const node = rootRef.current;
@@ -46,6 +48,13 @@ export function CampaignProgress({
 
   return (
     <div className="goal-meter" ref={rootRef}>
+      <div className="goal-live-line">
+        <span>
+          <i aria-hidden="true" />
+          Live Rigby support goal
+        </span>
+        <b>Verified contributions only</b>
+      </div>
       <div className="goal-figures">
         <div>
           <span>Raised</span>
@@ -75,18 +84,18 @@ export function CampaignProgress({
         />
         <div className="milestone milestone-quarter">
           <i />
-          <span>$2.5K</span>
-          <b>Cameo support</b>
+          <span>{usd.format(firstMilestone)}</span>
+          <b>First support drop</b>
         </div>
         <div className="milestone milestone-half">
           <i />
-          <span>$5K</span>
-          <b>Official merch</b>
+          <span>{usd.format(halfwayMilestone)}</span>
+          <b>Halfway for Rigby</b>
         </div>
         <div className="milestone milestone-full">
           <i />
-          <span>$10K</span>
-          <b>Direct Rigby fund</b>
+          <span>{usd.format(safeGoal)}</span>
+          <b>Full goal funded</b>
         </div>
       </div>
     </div>

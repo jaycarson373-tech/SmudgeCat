@@ -80,6 +80,8 @@ export default function Home() {
   return (
     <main>
       <MotionController />
+      <div className="scroll-progress" aria-hidden="true" />
+      <div className="cursor-glow" aria-hidden="true" />
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Rigby home">
           <span className="brand-avatar">
@@ -104,7 +106,7 @@ export default function Home() {
 
         <div className="header-actions">
           <SocialLink
-            className="header-social"
+            className="header-social instagram-social"
             href={CAMPAIGN.instagramUrl}
             label="IG"
           />
@@ -112,6 +114,11 @@ export default function Home() {
             className="header-social tiktok-social"
             href={CAMPAIGN.tiktokUrl}
             label="TK"
+          />
+          <SocialLink
+            className="header-social x-social"
+            href={CAMPAIGN.xUrl}
+            label="X"
           />
           <div className="header-ca" aria-label="Contract address">
             {CAMPAIGN.ca ? (
@@ -131,6 +138,15 @@ export default function Home() {
           <p className="eyebrow">
             <span aria-hidden="true">●</span> ONE OF THE WORLD’S MOST VIRAL CATS
           </p>
+          <div className="launch-signal">
+            <span>
+              <i aria-hidden="true" />
+              Launch ready
+            </span>
+            <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
+              Follow @rigbycat_solana ↗
+            </a>
+          </div>
           <h1>
             MEET <span>RIGBY.</span>
             <br />
@@ -179,6 +195,16 @@ export default function Home() {
               <span className="button button-primary button-disabled">
                 Buy $RIGBY soon
               </span>
+            )}
+            {CAMPAIGN.pumpUrl && (
+              <a
+                className="button button-pump"
+                href={CAMPAIGN.pumpUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Pump.fun <span aria-hidden="true">↗</span>
+              </a>
             )}
             <a className="progress-pill" href="#goal">
               <strong>{usd.format(raised)}</strong> raised of{" "}
@@ -232,7 +258,9 @@ export default function Home() {
           <b>✦</b>
           <span>100% OF FEES SUPPORT RIGBY</span>
           <b>✦</b>
-          <span>GOAL: $10,000</span>
+          <span>GOAL: $5,000</span>
+          <b>✦</b>
+          <span>OFFICIAL CA LOCKED</span>
           <b>✦</b>
           <span>CAMEOS + OFFICIAL MERCH</span>
           <b>✦</b>
@@ -242,7 +270,9 @@ export default function Home() {
           <b>✦</b>
           <span>100% OF FEES SUPPORT RIGBY</span>
           <b>✦</b>
-          <span>GOAL: $10,000</span>
+          <span>GOAL: $5,000</span>
+          <b>✦</b>
+          <span>OFFICIAL CA LOCKED</span>
           <b>✦</b>
           <span>CAMEOS + OFFICIAL MERCH</span>
           <b>✦</b>
@@ -282,9 +312,9 @@ export default function Home() {
             </p>
           </div>
         </div>
-          <aside className="story-card">
-            <span className="tiny-pill">WHY RIGBY?</span>
-            <p>
+        <aside className="story-card">
+          <span className="tiny-pill">WHY RIGBY?</span>
+          <p>
             <strong>She is already internet history.</strong> 3 million TikTok
             followers, more than 2.3 million on Instagram, and over 1 billion
             total TikTok views.
@@ -318,7 +348,7 @@ export default function Home() {
             />
             <div className="wallet-proof">
               <p>
-                Every fee from every trade supports the Rigby mission:
+                Every verified fee donation moves this meter.
               </p>
               {CAMPAIGN.careWallet ? (
                 <a
@@ -330,10 +360,28 @@ export default function Home() {
                 >
                   Support wallet ↗
                 </a>
-              ) : (
-                <span>Support wallet publishes at launch</span>
-              )}
-              <strong>Total updated regularly. On-chain doesn’t lie.</strong>
+              ) : null}
+              <strong>
+                Contributions are counted after verification and updated
+                publicly.
+              </strong>
+            </div>
+            <div className="goal-actions" aria-label="Support the Rigby goal">
+              <SocialLink
+                className="goal-action goal-action-primary"
+                href={CAMPAIGN.jupiterUrl}
+                label="BUY $RIGBY"
+              />
+              <SocialLink
+                className="goal-action"
+                href={CAMPAIGN.cameoUrl}
+                label="BOOK A CAMEO"
+              />
+              <SocialLink
+                className="goal-action"
+                href={CAMPAIGN.merchUrl}
+                label="SHOP OFFICIAL MERCH"
+              />
             </div>
           </div>
         </div>
@@ -505,6 +553,18 @@ export default function Home() {
               </a>
               <a
                 className="social-card"
+                href={CAMPAIGN.xUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <span>Community X</span>
+                  <strong>@rigbycat_solana ↗</strong>
+                </div>
+                <p>Launch updates, receipts, milestones, and Rigby memes.</p>
+              </a>
+              <a
+                className="social-card"
                 href={CAMPAIGN.instagramUrl}
                 target="_blank"
                 rel="noreferrer"
@@ -555,7 +615,7 @@ export default function Home() {
               <div className="chart-heading">
                 <div>
                   <p className="eyebrow">
-                    <span aria-hidden="true">●</span> LIVE ON-CHAIN
+                    <span aria-hidden="true">●</span> SOLANA MARKET
                   </p>
                   <h2>THE RIGBY CHART.</h2>
                 </div>
@@ -584,11 +644,30 @@ export default function Home() {
         </div>
         <a
           className="round-link"
-          href="#goal"
-          aria-label="View Rigby’s support goal"
+          href={CAMPAIGN.jupiterUrl}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Buy Rigby on Jupiter"
         >
-          <span>DONATE</span>
-          <strong aria-hidden="true">↓</strong>
+          <span>BUY</span>
+          <strong aria-hidden="true">↗</strong>
+        </a>
+      </section>
+
+      <section
+        className="launch-banner section-shell"
+        aria-label="Rigby launch banner"
+        data-reveal
+      >
+        <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
+          <Image
+            src="/rigby-launch-banner.jpg"
+            alt="$RIGBY, the internet’s favorite fainting goat cat. 100% of fees support Rigby through Cameos and merch."
+            width={1280}
+            height={426}
+            sizes="(max-width: 1440px) 94vw, 1312px"
+          />
+          <span>FOLLOW THE LAUNCH ON X ↗</span>
         </a>
       </section>
 
@@ -610,6 +689,7 @@ export default function Home() {
             )}
           </div>
           <div className="footer-socials">
+            <SocialLink href={CAMPAIGN.xUrl} label="X" />
             <SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" />
             <SocialLink href={CAMPAIGN.instagramUrl} label="Instagram" />
             <SocialLink href={CAMPAIGN.youtubeUrl} label="YouTube" />

@@ -12,10 +12,12 @@ const allowedStatuses: CampaignStatus[] = [
 ];
 
 const configuredStatus = process.env.NEXT_PUBLIC_CAMPAIGN_STATUS;
-const ca = process.env.NEXT_PUBLIC_CA || "";
+const ca =
+  process.env.NEXT_PUBLIC_CA ||
+  "AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump";
 
 export const CAMPAIGN = {
-  goalUsd: 10000,
+  goalUsd: 5000,
   raisedUsd: Number(process.env.NEXT_PUBLIC_RAISED_USD ?? 0),
   careWallet: process.env.NEXT_PUBLIC_CARE_WALLET ?? "",
   status: allowedStatuses.includes(configuredStatus as CampaignStatus)
@@ -31,7 +33,8 @@ export const CAMPAIGN = {
   dexscreenerUrl:
     process.env.NEXT_PUBLIC_DEXSCREENER_URL ||
     (ca ? `https://dexscreener.com/solana/${ca}` : ""),
-  xUrl: process.env.NEXT_PUBLIC_X_URL ?? "",
+  xUrl:
+    process.env.NEXT_PUBLIC_X_URL || "https://x.com/rigbycat_solana",
   telegramUrl: process.env.NEXT_PUBLIC_TG_URL ?? "",
   tiktokUrl: "https://www.tiktok.com/@iamrigbycat",
   instagramUrl: "https://www.instagram.com/iamrigbycat/",

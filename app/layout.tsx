@@ -14,23 +14,28 @@ const geistMono = Geist_Mono({
 
 const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "https://dinocat-nine.vercel.app";
+  : "https://www.rigbycatsolana.fun";
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
-  title: "Rigby | The Fainting Goat Cat",
+  title: "Rigby on Solana | $RIGBY",
   description:
-    "One of the world’s most viral cats is running on Solana. 100% of fees support Rigby through official Cameos and merch.",
+    "One of the world’s most viral cats is launching on Solana. 100% of fees support Rigby through official Cameos and merch.",
+  alternates: {
+    canonical: "https://www.rigbycatsolana.fun",
+  },
   icons: {
     icon: "/rigby-favicon.png",
     shortcut: "/rigby-favicon.png",
     apple: "/rigby-apple-touch-icon.png",
   },
   openGraph: {
-    title: "Rigby | The Fainting Goat Cat",
+    title: "Rigby on Solana | $RIGBY",
     description:
-      "3 million TikTok followers, over 1 billion total views, one legendary blep, and 100% of fees supporting Rigby.",
+      "3 million TikTok followers, over 1 billion total views, and 100% of fees supporting Rigby. The blep is launching on Solana.",
     type: "website",
+    url: "https://www.rigbycatsolana.fun",
+    siteName: "$RIGBY",
     images: [
       {
         url: "/rigby-og.png",
@@ -42,9 +47,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Rigby | The Fainting Goat Cat",
+    title: "Rigby on Solana | $RIGBY",
     description:
-      "3 million TikTok followers, over 1 billion total views, one legendary blep, and 100% of fees supporting Rigby.",
+      "3 million TikTok followers, over 1 billion total views, and 100% of fees supporting Rigby. The blep is launching on Solana.",
+    creator: "@rigbycat_solana",
     images: ["/rigby-og.png"],
   },
 };

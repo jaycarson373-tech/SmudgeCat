@@ -8,6 +8,7 @@ export function MotionController() {
 
     const root = document.documentElement;
     const hero = document.querySelector<HTMLElement>(".hero");
+    const glow = document.querySelector<HTMLElement>(".cursor-glow");
     const revealItems = document.querySelectorAll<HTMLElement>("[data-reveal]");
     root.classList.add("motion-enabled");
 
@@ -29,6 +30,20 @@ export function MotionController() {
       hero?.style.setProperty("--image-y", "0px");
     }
 
+    function moveGlow(event: PointerEvent) {
+      if (!glow || event.pointerType === "touch") return;
+      glow.style.setProperty("--glow-x", `${event.clientX}px`);
+      glow.style.setProperty("--glow-y", `${event.clientY}px`);
+    }
+
+    function updateScrollProgress() {
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress =
+        scrollable > 0 ? Math.min(1, window.scrollY / scrollable) : 0;
+      root.style.setProperty("--scroll-progress", `${progress}`);
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -44,12 +59,18 @@ export function MotionController() {
     revealItems.forEach((item) => observer.observe(item));
     hero?.addEventListener("pointermove", moveHero);
     hero?.addEventListener("pointerleave", resetHero);
+    window.addEventListener("pointermove", moveGlow, { passive: true });
+    window.addEventListener("scroll", updateScrollProgress, { passive: true });
+    updateScrollProgress();
 
     return () => {
       root.classList.remove("motion-enabled");
+      root.style.removeProperty("--scroll-progress");
       observer.disconnect();
       hero?.removeEventListener("pointermove", moveHero);
       hero?.removeEventListener("pointerleave", resetHero);
+      window.removeEventListener("pointermove", moveGlow);
+      window.removeEventListener("scroll", updateScrollProgress);
     };
   }, []);
 

@@ -28,7 +28,7 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Rigby \| The Fainting Goat Cat<\/title>/i);
+  assert.match(html, /<title>Rigby on Solana \| \$RIGBY<\/title>/i);
   assert.match(html, /MEET/);
   assert.match(html, /RIGBY/);
   assert.match(html, /THE FAINTING GOAT CAT/);
@@ -39,8 +39,13 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /myotonia congenita/i);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: SUPPORT RIGBY/);
-  assert.match(html, /CA DROPS SOON/);
-  assert.match(html, /Buy \$RIGBY soon/);
+  assert.match(html, /AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
+  assert.match(html, /\$5,000/);
+  assert.match(html, /Buy \$RIGBY/);
+  assert.match(html, /https:\/\/x\.com\/rigbycat_solana/);
+  assert.match(html, /https:\/\/jup\.ag\/swap\/SOL-AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
+  assert.match(html, /https:\/\/pump\.fun\/coin\/AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
+  assert.match(html, /https:\/\/dexscreener\.com\/solana\/AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
   assert.match(html, /HOW TO BUY/);
   assert.match(html, /FOLLOW THE REAL RIGBY/);
   assert.match(html, /https:\/\/www\.tiktok\.com\/@iamrigbycat/);
@@ -54,8 +59,9 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /rigby-avatar\.png/);
   assert.match(html, /rigby-favicon\.png/);
   assert.match(html, /rigby-apple-touch-icon\.png/);
+  assert.match(html, /rigby-launch-banner\.jpg/);
   assert.doesNotMatch(
     html,
-    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|jup\.ag\/swap|pump\.fun\/coin|dexscreener\.com\/solana|—/i,
+    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|—/i,
   );
 });
