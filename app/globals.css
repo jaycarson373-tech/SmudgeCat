@@ -1872,7 +1872,7 @@ footer a {
     gap: 6px;
   }
 
-  .tiktok-social {
+  .header-social:not(.tiktok-social) {
     display: none;
   }
 
