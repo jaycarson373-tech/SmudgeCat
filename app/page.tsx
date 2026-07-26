@@ -173,10 +173,6 @@ export default function Home() {
             <span aria-hidden="true">●</span> ONE OF THE WORLD’S MOST VIRAL CATS
           </p>
           <div className="launch-signal">
-            <span>
-              <i aria-hidden="true" />
-              Launch ready
-            </span>
             <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
               Follow @rigbycat_solana ↗
             </a>
