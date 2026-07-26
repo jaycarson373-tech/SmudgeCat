@@ -54,14 +54,10 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /7473553601965870382/);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: SUPPORT RIGBY/);
-  assert.match(html, /AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
   assert.match(html, /\$5,000/);
-  assert.match(html, /Buy \$RIGBY/);
   assert.match(html, /https:\/\/x\.com\/rigbycat_solana/);
-  assert.match(html, /https:\/\/jup\.ag\/swap\/SOL-AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
-  assert.match(html, /https:\/\/pump\.fun\/coin\/AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
-  assert.match(html, /https:\/\/dexscreener\.com\/solana\/AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
-  assert.match(html, /HOW TO BUY/);
+  assert.doesNotMatch(html, /AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
+  assert.doesNotMatch(html, /jup\.ag|pump\.fun|dexscreener|HOW TO BUY|CA DROPS SOON/i);
   assert.match(html, /FOLLOW THE REAL RIGBY/);
   assert.match(html, /https:\/\/www\.tiktok\.com\/@iamrigbycat/);
   assert.match(html, /https:\/\/www\.instagram\.com\/iamrigbycat/);

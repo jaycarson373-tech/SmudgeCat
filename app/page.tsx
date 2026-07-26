@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { CampaignProgress } from "@/components/CampaignProgress";
-import { CopyButton } from "@/components/CopyButton";
 import { MotionController } from "@/components/MotionController";
 import { CAMPAIGN, type CampaignStatus } from "@/lib/campaign";
 
@@ -18,7 +17,7 @@ const missionSteps: Array<{
   {
     status: "raising",
     title: "Raise",
-    copy: "Trading fees accumulate in the public support wallet.",
+    copy: "Community support is tracked toward the public Rigby goal.",
   },
   {
     status: "contacting",
@@ -74,11 +73,6 @@ function safeAmount(value: number) {
   return Number.isFinite(value) ? Math.max(0, value) : 0;
 }
 
-function shortAddress(value: string) {
-  if (value.length <= 18) return value;
-  return `${value.slice(0, 8)}…${value.slice(-8)}`;
-}
-
 function SocialLink({
   href,
   label,
@@ -105,10 +99,6 @@ export default function Home() {
   const statusIndex = missionSteps.findIndex(
     (step) => step.status === CAMPAIGN.status,
   );
-  const chartUrl = `https://dexscreener.com/solana/${encodeURIComponent(
-    CAMPAIGN.ca,
-  )}`;
-  const fullChartUrl = CAMPAIGN.dexscreenerUrl || chartUrl;
 
   return (
     <main>
@@ -135,7 +125,6 @@ export default function Home() {
           <a href="#mission">How it works</a>
           <a href="#goal">Donations</a>
           <a href="#socials">Socials</a>
-          <a href="#how-to-buy">How to buy</a>
         </nav>
 
         <div className="header-actions">
@@ -154,16 +143,6 @@ export default function Home() {
             href={CAMPAIGN.xUrl}
             label="X"
           />
-          <div className="header-ca" aria-label="Contract address">
-            {CAMPAIGN.ca ? (
-              <>
-                <code>{shortAddress(CAMPAIGN.ca)}</code>
-                <CopyButton value={CAMPAIGN.ca} compact />
-              </>
-            ) : (
-              <a href="#how-to-buy">CA DROPS SOON</a>
-            )}
-          </div>
         </div>
       </header>
 
@@ -196,46 +175,7 @@ export default function Home() {
             and official merch. Direct owner support comes next.
           </p>
 
-          <div className={`ca-bar${CAMPAIGN.ca ? "" : " ca-bar-soon"}`}>
-            <span>Contract</span>
-            {CAMPAIGN.ca ? (
-              <>
-                <code className="ca-full">{CAMPAIGN.ca}</code>
-                <code className="ca-short">
-                  {shortAddress(CAMPAIGN.ca)}
-                </code>
-                <CopyButton value={CAMPAIGN.ca} />
-              </>
-            ) : (
-              <strong>CA DROPS SOON</strong>
-            )}
-          </div>
-
           <div className="hero-actions">
-            {CAMPAIGN.jupiterUrl ? (
-              <a
-                className="button button-primary"
-                href={CAMPAIGN.jupiterUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Buy $RIGBY <span aria-hidden="true">↗</span>
-              </a>
-            ) : (
-              <span className="button button-primary button-disabled">
-                Buy $RIGBY soon
-              </span>
-            )}
-            {CAMPAIGN.pumpUrl && (
-              <a
-                className="button button-pump"
-                href={CAMPAIGN.pumpUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                Pump.fun <span aria-hidden="true">↗</span>
-              </a>
-            )}
             <a className="progress-pill" href="#goal">
               <strong>{usd.format(raised)}</strong> raised of{" "}
               {usd.format(CAMPAIGN.goalUsd)}{" "}
@@ -290,7 +230,7 @@ export default function Home() {
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
-          <span>OFFICIAL CA LOCKED</span>
+          <span>CHARITY COIN. MEME ENERGY.</span>
           <b>✦</b>
           <span>CAMEOS + OFFICIAL MERCH</span>
           <b>✦</b>
@@ -302,7 +242,7 @@ export default function Home() {
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
-          <span>OFFICIAL CA LOCKED</span>
+          <span>CHARITY COIN. MEME ENERGY.</span>
           <b>✦</b>
           <span>CAMEOS + OFFICIAL MERCH</span>
           <b>✦</b>
@@ -433,7 +373,7 @@ export default function Home() {
               <span aria-hidden="true">●</span> THE THERMOMETER
             </p>
             <h2>
-              {usd.format(CAMPAIGN.goalUsd)} FOR RIGBY. EVERY TRADE COUNTS.
+              {usd.format(CAMPAIGN.goalUsd)} FOR RIGBY. EVERY DONATION COUNTS.
             </h2>
             <CampaignProgress
               raisedUsd={raised}
@@ -462,11 +402,6 @@ export default function Home() {
             <div className="goal-actions" aria-label="Support the Rigby goal">
               <SocialLink
                 className="goal-action goal-action-primary"
-                href={CAMPAIGN.jupiterUrl}
-                label="BUY $RIGBY"
-              />
-              <SocialLink
-                className="goal-action"
                 href={CAMPAIGN.cameoUrl}
                 label="BOOK A CAMEO"
               />
@@ -552,65 +487,13 @@ export default function Home() {
       </section>
 
       <section
-        className="how-to-buy campaign-section section-shell"
-        id="how-to-buy"
-        data-reveal
-      >
-        <div className="section-label">
-          <span>06</span>
-          <p>HOW TO BUY</p>
-        </div>
-        <div className="campaign-main">
-          <p className="eyebrow">
-            <span aria-hidden="true">●</span> JOIN THE MISSION
-          </p>
-          <h2>THREE STEPS. ONE VERY GOOD CAT.</h2>
-          <div className="buy-steps">
-            <article>
-              <span>01</span>
-              <h3>Phantom + SOL</h3>
-              <p>Download Phantom, create a wallet, and add a little SOL.</p>
-            </article>
-            <article>
-              <span>02</span>
-              <h3>Paste the CA</h3>
-              <p>
-                Open Jupiter or Pump.fun and paste the official Rigby contract
-                address.
-              </p>
-            </article>
-            <article>
-              <span>03</span>
-              <h3>Swap</h3>
-              <p>Choose your amount, confirm the swap, and join the mission.</p>
-            </article>
-          </div>
-          <div className={`ca-bar buy-ca${CAMPAIGN.ca ? "" : " ca-bar-soon"}`}>
-            <span>Official CA</span>
-            {CAMPAIGN.ca ? (
-              <>
-                <code className="ca-full">{CAMPAIGN.ca}</code>
-                <code className="ca-short">
-                  {shortAddress(CAMPAIGN.ca)}
-                </code>
-                <CopyButton value={CAMPAIGN.ca} />
-              </>
-            ) : (
-              <strong>CA DROPS SOON</strong>
-            )}
-          </div>
-          <p className="buy-close">Every buy moves the thermometer.</p>
-        </div>
-      </section>
-
-      <section
         className="socials-section campaign-section"
         id="socials"
         data-reveal
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>07</span>
+            <span>06</span>
             <p>SOCIALS</p>
           </div>
           <div className="campaign-main">
@@ -697,37 +580,6 @@ export default function Home() {
         </div>
       </section>
 
-      {CAMPAIGN.ca && (
-        <section className="chart-section campaign-section" data-reveal>
-          <div className="section-shell campaign-grid">
-            <div className="section-label">
-              <span>08</span>
-              <p>THE CHART</p>
-            </div>
-            <div className="campaign-main">
-              <div className="chart-heading">
-                <div>
-                  <p className="eyebrow">
-                    <span aria-hidden="true">●</span> SOLANA MARKET
-                  </p>
-                  <h2>THE RIGBY CHART.</h2>
-                </div>
-                <a href={fullChartUrl} target="_blank" rel="noreferrer">
-                  Open full chart ↗
-                </a>
-              </div>
-              <div className="chart-frame">
-                <iframe
-                  title="Rigby DexScreener chart"
-                  src={`${chartUrl}?embed=1&theme=dark&trades=0&info=0`}
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
       <section className="final-cta section-shell" data-reveal>
         <div>
           <p className="eyebrow">
@@ -737,12 +589,12 @@ export default function Home() {
         </div>
         <a
           className="round-link"
-          href={CAMPAIGN.jupiterUrl}
+          href={CAMPAIGN.xUrl}
           target="_blank"
           rel="noreferrer"
-          aria-label="Buy Rigby on Jupiter"
+          aria-label="Follow Rigby on X"
         >
-          <span>BUY</span>
+          <span>FOLLOW</span>
           <strong aria-hidden="true">↗</strong>
         </a>
       </section>
@@ -770,17 +622,6 @@ export default function Home() {
             <Image src="/rigby-avatar.png" alt="" width={38} height={38} />
             <strong>RIGBY THE FAINTING GOAT CAT</strong>
           </div>
-          <div className={`footer-ca${CAMPAIGN.ca ? "" : " footer-ca-soon"}`}>
-            <span>CA</span>
-            {CAMPAIGN.ca ? (
-              <>
-                <code>{shortAddress(CAMPAIGN.ca)}</code>
-                <CopyButton value={CAMPAIGN.ca} compact />
-              </>
-            ) : (
-              <strong>DROPS SOON</strong>
-            )}
-          </div>
           <div className="footer-socials">
             <SocialLink href={CAMPAIGN.xUrl} label="X" />
             <SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" />
@@ -802,26 +643,6 @@ export default function Home() {
           </p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>
-        {CAMPAIGN.ca &&
-          CAMPAIGN.jupiterUrl &&
-          CAMPAIGN.pumpUrl &&
-          CAMPAIGN.dexscreenerUrl && (
-            <nav
-              className="footer-market-links"
-              aria-label="Buy and chart links"
-            >
-              <SocialLink
-                className="footer-buy-link"
-                href={CAMPAIGN.jupiterUrl}
-                label="BUY $RIGBY ON JUPITER"
-              />
-              <SocialLink href={CAMPAIGN.pumpUrl} label="PUMP.FUN" />
-              <SocialLink
-                href={CAMPAIGN.dexscreenerUrl}
-                label="DEXSCREENER"
-              />
-            </nav>
-          )}
       </footer>
     </main>
   );
