@@ -29,7 +29,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Rigby | The Fainting Goat Cat",
     description:
-      "Nearly 3 million TikTok followers, one legendary blep, and 100% of fees supporting Rigby.",
+      "3 million TikTok followers, over 1 billion total views, one legendary blep, and 100% of fees supporting Rigby.",
     type: "website",
     images: [
       {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rigby | The Fainting Goat Cat",
     description:
-      "Nearly 3 million TikTok followers, one legendary blep, and 100% of fees supporting Rigby.",
+      "3 million TikTok followers, over 1 billion total views, one legendary blep, and 100% of fees supporting Rigby.",
     images: ["/rigby-og.png"],
   },
 };

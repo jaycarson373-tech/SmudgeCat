@@ -6,7 +6,7 @@ $RIGBY celebrates Rigby, the viral fainting goat cat loved by millions. 100% of 
 
 ## Launch thesis tweet
 
-Rigby is already one of the internet’s most viral cats: 2.8M on TikTok, 2.35M+ on Instagram, and a 346M-view breakout video. $RIGBY brings that global meme to Solana. 100% of fees support Rigby through official Cameos and merch until we connect with her owner.
+Rigby is already one of the internet’s most viral cats: 3M on TikTok, 2.35M+ on Instagram, and over 1 billion total TikTok views. $RIGBY brings that global meme to Solana. 100% of fees support Rigby through official Cameos and merch until we connect with her owner.
 
 ## X bio
 

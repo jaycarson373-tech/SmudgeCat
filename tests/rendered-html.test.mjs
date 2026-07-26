@@ -32,9 +32,10 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /MEET/);
   assert.match(html, /RIGBY/);
   assert.match(html, /THE FAINTING GOAT CAT/);
-  assert.match(html, /2\.8M/);
+  assert.match(html, /3M/);
   assert.match(html, /2\.35M\+/);
-  assert.match(html, /346M\+/);
+  assert.match(html, /1B\+/);
+  assert.match(html, /over 1 billion total views/i);
   assert.match(html, /myotonia congenita/i);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: SUPPORT RIGBY/);

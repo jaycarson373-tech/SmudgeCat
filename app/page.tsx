@@ -137,8 +137,9 @@ export default function Home() {
             THE FAINTING GOAT CAT.
           </h1>
           <p className="hero-dek">
-            Big eyes. Tiny blep. Nearly 3 million TikTok followers. Rigby turned
-            one unforgettable face into a global internet obsession.
+            Big eyes. Tiny blep. 3 million TikTok followers and over 1 billion
+            total views. Rigby turned one unforgettable face into a global
+            internet obsession.
           </p>
           <p className="hero-mission">
             The internet’s favorite fainting goat cat deserves to run on Solana.{" "}
@@ -211,7 +212,7 @@ export default function Home() {
 
       <section className="stats" aria-label="Rigby’s social media stats">
         <div className="stat">
-          <strong>2.8M</strong>
+          <strong>3M</strong>
           <span>TikTok followers</span>
         </div>
         <div className="stat">
@@ -219,8 +220,8 @@ export default function Home() {
           <span>Instagram followers</span>
         </div>
         <div className="stat">
-          <strong>346M+</strong>
-          <span>Views on one TikTok</span>
+          <strong>1B+</strong>
+          <span>Total TikTok views</span>
         </div>
         <p className="stats-note">Public social stats · July 2026</p>
       </section>
@@ -281,12 +282,12 @@ export default function Home() {
             </p>
           </div>
         </div>
-        <aside className="story-card">
-          <span className="tiny-pill">WHY RIGBY?</span>
-          <p>
-            <strong>She is already internet history.</strong> Nearly 3 million
-            TikTok followers, more than 2.3 million on Instagram, and a
-            346-million-view breakout video.
+          <aside className="story-card">
+            <span className="tiny-pill">WHY RIGBY?</span>
+            <p>
+            <strong>She is already internet history.</strong> 3 million TikTok
+            followers, more than 2.3 million on Instagram, and over 1 billion
+            total TikTok views.
           </p>
           <span className="rigby-mark" aria-hidden="true">
             R
@@ -490,11 +491,11 @@ export default function Home() {
                 <dl>
                   <div>
                     <dt>Followers</dt>
-                    <dd>2.8M</dd>
+                    <dd>3M</dd>
                   </div>
                   <div>
-                    <dt>Top video</dt>
-                    <dd>346M+</dd>
+                    <dt>Total views</dt>
+                    <dd>1B+</dd>
                   </div>
                   <div>
                     <dt>Status</dt>
