@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #1d103f;
-  --cream: #fff8e7;
-  --lime: #dfff37;
-  --orange: #ff5c35;
-  --violet: #6f32f5;
-  --pink: #ffb6d2;
-  --line: #281b45;
+  --ink: #151826;
+  --cream: #fff7e7;
+  --lime: #75cdf5;
+  --orange: #f2529f;
+  --violet: #2869d8;
+  --pink: #ffd0e4;
+  --line: #151826;
 }
 
 @theme inline {
@@ -533,7 +533,7 @@ h1 span {
   z-index: 2;
 }
 
-.dino-mark {
+.rigby-mark {
   bottom: -85px;
   color: var(--violet);
   font-size: 12rem;
@@ -935,7 +935,7 @@ footer a {
   }
 }
 
-/* Tutu campaign */
+/* Rigby campaign */
 
 .site-header {
   background: color-mix(in srgb, var(--cream) 94%, transparent);
@@ -1225,7 +1225,7 @@ footer a {
 
 .thermometer::after {
   color: var(--ink);
-  content: "TUTU";
+  content: "RIGBY";
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.6rem;
   font-weight: 900;
@@ -1335,7 +1335,7 @@ footer a {
 }
 
 .mission-section {
-  background: #f1eaff;
+  background: #e6f5ff;
 }
 
 .mission-timeline {

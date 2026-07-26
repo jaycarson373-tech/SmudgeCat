@@ -18,34 +18,34 @@ const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
 
 export const metadata: Metadata = {
   metadataBase: new URL(productionUrl),
-  title: "Tutu | The Dino Cat",
+  title: "Rigby | The Fainting Goat Cat",
   description:
-    "The internet’s most famous pawless cat. All trading fees are donated to help Tutu live a better life.",
+    "One of the world’s most viral cats is running on Solana. 100% of fees support Rigby through official Cameos and merch.",
   icons: {
-    icon: "/favicon.png",
-    shortcut: "/favicon.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/rigby-avatar.png",
+    shortcut: "/rigby-avatar.png",
+    apple: "/rigby-avatar.png",
   },
   openGraph: {
-    title: "Tutu | The Dino Cat",
+    title: "Rigby | The Fainting Goat Cat",
     description:
-      "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
+      "Nearly 3 million TikTok followers, one legendary blep, and 100% of fees supporting Rigby.",
     type: "website",
     images: [
       {
-        url: "/tutu-banner.jpg",
-        width: 1600,
-        height: 532,
-        alt: "Tutu the Dino Cat",
+        url: "/rigby-og.png",
+        width: 1731,
+        height: 909,
+        alt: "Rigby, the fainting goat cat",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Tutu | The Dino Cat",
+    title: "Rigby | The Fainting Goat Cat",
     description:
-      "The internet’s most famous pawless cat. 100% of fees go toward a $10,000 goal for Tutu.",
-    images: ["/tutu-banner.jpg"],
+      "Nearly 3 million TikTok followers, one legendary blep, and 100% of fees supporting Rigby.",
+    images: ["/rigby-og.png"],
   },
 };
 

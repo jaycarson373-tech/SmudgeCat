@@ -22,35 +22,40 @@ async function render() {
   );
 }
 
-test("server-renders the DinoCat landing page", async () => {
+test("server-renders the Rigby landing page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Tutu \| The Dino Cat<\/title>/i);
+  assert.match(html, /<title>Rigby \| The Fainting Goat Cat<\/title>/i);
   assert.match(html, /MEET/);
-  assert.match(html, /TUTU/);
-  assert.match(html, /THE DINO CAT/);
-  assert.match(html, /464K\+/);
-  assert.match(html, /17\.9M/);
+  assert.match(html, /RIGBY/);
+  assert.match(html, /THE FAINTING GOAT CAT/);
+  assert.match(html, /2\.8M/);
+  assert.match(html, /2\.35M\+/);
+  assert.match(html, /346M\+/);
+  assert.match(html, /myotonia congenita/i);
   assert.match(html, /THE THERMOMETER/);
-  assert.match(html, /OPERATION: REACH THE OWNER/);
+  assert.match(html, /OPERATION: SUPPORT RIGBY/);
   assert.match(html, /4aKxVRfAPREPBK3ziUgWUAX9kdPSkLv9PgyXGLXYpump/);
-  assert.match(html, /BUY \$TUTU ON JUPITER/);
+  assert.match(html, /BUY \$RIGBY ON JUPITER/);
   assert.match(html, /https:\/\/jup\.ag\/swap\/SOL-4aKxVRf/);
   assert.match(html, /https:\/\/pump\.fun\/coin\/4aKxVRf/);
   assert.match(html, /https:\/\/dexscreener\.com\/solana\/4aKxVRf/);
   assert.match(html, /HOW TO BUY/);
-  assert.match(html, /FOLLOW THE REAL TUTU/);
-  assert.match(html, /https:\/\/x\.com\/dinocat_pf/);
+  assert.match(html, /FOLLOW THE REAL RIGBY/);
+  assert.match(html, /https:\/\/www\.tiktok\.com\/@iamrigbycat/);
+  assert.match(html, /https:\/\/www\.instagram\.com\/iamrigbycat/);
+  assert.match(html, /https:\/\/www\.cameo\.com\/iamrigbycat/);
+  assert.match(html, /https:\/\/rigbycat\.dashery\.com/);
   assert.match(html, /100%/);
-  assert.match(html, /OF FEES GO TOWARD GIVING TUTU A BETTER LIFE/);
-  assert.match(html, /tutu-hero\.jpg/);
-  assert.match(html, /tutu-banner\.jpg/);
-  assert.match(html, /favicon\.png/);
+  assert.match(html, /OF FEES GO BACK TOWARD SUPPORTING RIGBY/);
+  assert.match(html, /rigby-hero\.jpg/);
+  assert.match(html, /rigby-og\.png/);
+  assert.match(html, /rigby-avatar\.png/);
   assert.doesNotMatch(
     html,
-    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M/i,
+    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|—/i,
   );
 });

@@ -30,8 +30,12 @@ export const CAMPAIGN = {
   dexscreenerUrl:
     process.env.NEXT_PUBLIC_DEXSCREENER_URL ||
     `https://dexscreener.com/solana/${ca}`,
-  xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/dinocat_pf",
+  xUrl: process.env.NEXT_PUBLIC_X_URL ?? "",
   telegramUrl: process.env.NEXT_PUBLIC_TG_URL ?? "",
-  tiktokUrl: "https://www.tiktok.com/@dinocattutu",
-  instagramUrl: "https://www.instagram.com/dinocattutu/",
+  tiktokUrl: "https://www.tiktok.com/@iamrigbycat",
+  instagramUrl: "https://www.instagram.com/iamrigbycat/",
+  cameoUrl: "https://www.cameo.com/iamrigbycat",
+  merchUrl: "https://rigbycat.dashery.com/",
+  youtubeUrl: "https://www.youtube.com/@iamrigbycat",
+  linktreeUrl: "https://linktr.ee/iamrigbycat",
 };

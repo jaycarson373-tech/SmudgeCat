@@ -64,7 +64,7 @@ export function CampaignProgress({
       <div
         className="thermometer"
         role="progressbar"
-        aria-label="Tutu donation goal"
+        aria-label="Rigby support goal"
         aria-valuemin={0}
         aria-valuemax={safeGoal}
         aria-valuenow={safeRaised}
@@ -76,17 +76,17 @@ export function CampaignProgress({
         <div className="milestone milestone-quarter">
           <i />
           <span>$2.5K</span>
-          <b>Vet fund</b>
+          <b>Cameo support</b>
         </div>
         <div className="milestone milestone-half">
           <i />
           <span>$5K</span>
-          <b>Halfway for the Dino</b>
+          <b>Official merch</b>
         </div>
         <div className="milestone milestone-full">
           <i />
           <span>$10K</span>
-          <b>Full send to Tutu</b>
+          <b>Direct Rigby fund</b>
         </div>
       </div>
     </div>

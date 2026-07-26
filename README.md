@@ -1,8 +1,9 @@
-# Tutu the Dino Cat
+# Rigby the Cat
 
-Charity-mission landing page for **Tutu the Dino Cat**, the viral two-legged
-cat. The site features Tutu’s story, public TikTok milestones, a $10,000
-donation thermometer, and the project’s 100% trading-fee pledge.
+Community landing page for **Rigby**, the viral cat with myotonia congenita.
+The site features Rigby’s story, public social milestones, a $10,000 support
+thermometer, transparent fee mission, buying guide, live chart, and links to
+Rigby’s official Cameo, merch, and social accounts.
 
 ## Prerequisites
 
