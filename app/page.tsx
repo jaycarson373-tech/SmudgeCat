@@ -628,15 +628,26 @@ export default function Home() {
           </p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>
-        <nav className="footer-market-links" aria-label="Buy and chart links">
-          <SocialLink
-            className="footer-buy-link"
-            href={CAMPAIGN.jupiterUrl}
-            label="BUY $RIGBY ON JUPITER"
-          />
-          <SocialLink href={CAMPAIGN.pumpUrl} label="PUMP.FUN" />
-          <SocialLink href={CAMPAIGN.dexscreenerUrl} label="DEXSCREENER" />
-        </nav>
+        {CAMPAIGN.ca &&
+          CAMPAIGN.jupiterUrl &&
+          CAMPAIGN.pumpUrl &&
+          CAMPAIGN.dexscreenerUrl && (
+            <nav
+              className="footer-market-links"
+              aria-label="Buy and chart links"
+            >
+              <SocialLink
+                className="footer-buy-link"
+                href={CAMPAIGN.jupiterUrl}
+                label="BUY $RIGBY ON JUPITER"
+              />
+              <SocialLink href={CAMPAIGN.pumpUrl} label="PUMP.FUN" />
+              <SocialLink
+                href={CAMPAIGN.dexscreenerUrl}
+                label="DEXSCREENER"
+              />
+            </nav>
+          )}
       </footer>
     </main>
   );

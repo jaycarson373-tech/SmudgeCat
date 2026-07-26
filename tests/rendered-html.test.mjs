@@ -38,11 +38,8 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /myotonia congenita/i);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: SUPPORT RIGBY/);
-  assert.match(html, /4aKxVRfAPREPBK3ziUgWUAX9kdPSkLv9PgyXGLXYpump/);
-  assert.match(html, /BUY \$RIGBY ON JUPITER/);
-  assert.match(html, /https:\/\/jup\.ag\/swap\/SOL-4aKxVRf/);
-  assert.match(html, /https:\/\/pump\.fun\/coin\/4aKxVRf/);
-  assert.match(html, /https:\/\/dexscreener\.com\/solana\/4aKxVRf/);
+  assert.match(html, /CA DROPS SOON/);
+  assert.match(html, /Buy \$RIGBY soon/);
   assert.match(html, /HOW TO BUY/);
   assert.match(html, /FOLLOW THE REAL RIGBY/);
   assert.match(html, /https:\/\/www\.tiktok\.com\/@iamrigbycat/);
@@ -56,6 +53,6 @@ test("server-renders the Rigby landing page", async () => {
   assert.match(html, /rigby-avatar\.png/);
   assert.doesNotMatch(
     html,
-    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|—/i,
+    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|jup\.ag\/swap|pump\.fun\/coin|dexscreener\.com\/solana|—/i,
   );
 });

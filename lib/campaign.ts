@@ -12,8 +12,7 @@ const allowedStatuses: CampaignStatus[] = [
 ];
 
 const configuredStatus = process.env.NEXT_PUBLIC_CAMPAIGN_STATUS;
-const defaultCa = "4aKxVRfAPREPBK3ziUgWUAX9kdPSkLv9PgyXGLXYpump";
-const ca = process.env.NEXT_PUBLIC_CA || defaultCa;
+const ca = process.env.NEXT_PUBLIC_CA || "";
 
 export const CAMPAIGN = {
   goalUsd: 10000,
@@ -24,12 +23,14 @@ export const CAMPAIGN = {
     : ("raising" as CampaignStatus),
   ca,
   pumpUrl:
-    process.env.NEXT_PUBLIC_PUMP_URL || `https://pump.fun/coin/${ca}`,
+    process.env.NEXT_PUBLIC_PUMP_URL ||
+    (ca ? `https://pump.fun/coin/${ca}` : ""),
   jupiterUrl:
-    process.env.NEXT_PUBLIC_JUPITER_URL || `https://jup.ag/swap/SOL-${ca}`,
+    process.env.NEXT_PUBLIC_JUPITER_URL ||
+    (ca ? `https://jup.ag/swap/SOL-${ca}` : ""),
   dexscreenerUrl:
     process.env.NEXT_PUBLIC_DEXSCREENER_URL ||
-    `https://dexscreener.com/solana/${ca}`,
+    (ca ? `https://dexscreener.com/solana/${ca}` : ""),
   xUrl: process.env.NEXT_PUBLIC_X_URL ?? "",
   telegramUrl: process.env.NEXT_PUBLIC_TG_URL ?? "",
   tiktokUrl: "https://www.tiktok.com/@iamrigbycat",
