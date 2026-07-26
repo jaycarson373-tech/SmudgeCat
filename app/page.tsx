@@ -37,6 +37,39 @@ const missionSteps: Array<{
   },
 ];
 
+const greatestHits = [
+  {
+    rank: "01",
+    title: "Funk nonstop",
+    views: "142.1M",
+    likes: "21.5M",
+    video: "/rigby-greatest-hit-1.mp4",
+    poster: "/rigby-greatest-hit-1-poster.png",
+    tiktok:
+      "https://www.tiktok.com/@iamrigbycat/video/7606523760253947166",
+  },
+  {
+    rank: "02",
+    title: "Hello, Rigby",
+    views: "73.5M",
+    likes: "12.8M",
+    video: "/rigby-greatest-hit-2.mp4",
+    poster: "/rigby-greatest-hit-2-poster.png",
+    tiktok:
+      "https://www.tiktok.com/@iamrigbycat/video/7625807340045913374",
+  },
+  {
+    rank: "03",
+    title: "Vote for Rigby",
+    views: "56.2M",
+    likes: "9.6M",
+    video: "/rigby-greatest-hit-3.mp4",
+    poster: "/rigby-greatest-hit-3-poster.png",
+    tiktok:
+      "https://www.tiktok.com/@iamrigbycat/video/7473553601965870382",
+  },
+] as const;
+
 function safeAmount(value: number) {
   return Number.isFinite(value) ? Math.max(0, value) : 0;
 }
@@ -98,6 +131,7 @@ export default function Home() {
         </a>
 
         <nav className="header-center" aria-label="Main navigation">
+          <a href="#hits">Greatest hits</a>
           <a href="#mission">How it works</a>
           <a href="#goal">Donations</a>
           <a href="#socials">Socials</a>
@@ -325,6 +359,69 @@ export default function Home() {
         </aside>
       </section>
 
+      <section className="hits-section campaign-section" id="hits" data-reveal>
+        <div className="section-shell hits-shell">
+          <div className="section-label">
+            <span>02</span>
+            <p>GREATEST HITS</p>
+          </div>
+          <div className="hits-main">
+            <div className="hits-heading">
+              <div>
+                <p className="eyebrow light">
+                  <span aria-hidden="true">●</span> PRESS PLAY
+                </p>
+                <h2>RIGBY’S GREATEST HITS.</h2>
+              </div>
+              <div className="hits-total">
+                <strong>271.8M</strong>
+                <span>combined views</span>
+              </div>
+            </div>
+            <p className="hits-intro">
+              Three videos. More than 43.9 million likes. One unmistakable face.
+            </p>
+            <div className="hits-grid">
+              {greatestHits.map((hit) => (
+                <article className="hit-card" key={hit.rank}>
+                  <div className="hit-video">
+                    <video
+                      aria-label={`${hit.title}, ${hit.views} views on TikTok`}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      poster={hit.poster}
+                    >
+                      <source src={hit.video} type="video/mp4" />
+                    </video>
+                    <span>{hit.rank}</span>
+                  </div>
+                  <div className="hit-copy">
+                    <h3>{hit.title}</h3>
+                    <dl>
+                      <div>
+                        <dt>Views</dt>
+                        <dd>{hit.views}</dd>
+                      </div>
+                      <div>
+                        <dt>Likes</dt>
+                        <dd>{hit.likes}</dd>
+                      </div>
+                    </dl>
+                    <a href={hit.tiktok} target="_blank" rel="noreferrer">
+                      Watch on TikTok ↗
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <p className="hits-note">
+              Public TikTok totals checked July 2026.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section
         className="goal-section campaign-section"
         id="goal"
@@ -332,7 +429,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>02</span>
+            <span>03</span>
             <p>THE GOAL</p>
           </div>
           <div className="campaign-main">
@@ -394,7 +491,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>03</span>
+            <span>04</span>
             <p>THE MISSION</p>
           </div>
           <div className="campaign-main">
@@ -432,7 +529,7 @@ export default function Home() {
       <section className="promise" id="promise" data-reveal>
         <div className="promise-inner">
           <div className="promise-number">
-            <span>04</span>
+            <span>05</span>
             <p>THE RIGBY PROMISE</p>
           </div>
           <p className="eyebrow light">
@@ -464,7 +561,7 @@ export default function Home() {
         data-reveal
       >
         <div className="section-label">
-          <span>05</span>
+          <span>06</span>
           <p>HOW TO BUY</p>
         </div>
         <div className="campaign-main">
@@ -517,7 +614,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>06</span>
+            <span>07</span>
             <p>SOCIALS</p>
           </div>
           <div className="campaign-main">
@@ -608,7 +705,7 @@ export default function Home() {
         <section className="chart-section campaign-section" data-reveal>
           <div className="section-shell campaign-grid">
             <div className="section-label">
-              <span>07</span>
+              <span>08</span>
               <p>THE CHART</p>
             </div>
             <div className="campaign-main">

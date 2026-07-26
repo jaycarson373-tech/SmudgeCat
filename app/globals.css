@@ -1176,6 +1176,208 @@ footer a {
   max-width: 1050px;
 }
 
+.hits-section {
+  background: var(--ink);
+  color: white;
+}
+
+.hits-shell {
+  display: grid;
+  gap: 50px;
+  grid-template-columns: 110px minmax(0, 1fr);
+  padding-bottom: clamp(90px, 10vw, 145px);
+  padding-top: clamp(90px, 10vw, 145px);
+}
+
+.hits-section .section-label span {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.hits-main {
+  min-width: 0;
+}
+
+.hits-heading {
+  align-items: end;
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+}
+
+.hits-heading h2 {
+  font-size: clamp(3.4rem, 7vw, 7.5rem);
+  font-weight: 950;
+  letter-spacing: -0.085em;
+  line-height: 0.86;
+  margin: 0;
+  max-width: 920px;
+}
+
+.hits-total {
+  border-left: 2px solid var(--orange);
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  padding-left: 18px;
+}
+
+.hits-total strong {
+  color: var(--lime);
+  font-size: clamp(2.2rem, 4vw, 4.5rem);
+  letter-spacing: -0.07em;
+  line-height: 0.9;
+}
+
+.hits-total span,
+.hits-note {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.hits-intro {
+  color: #d7cee9;
+  font-size: clamp(1rem, 1.5vw, 1.24rem);
+  line-height: 1.55;
+  margin: 26px 0 45px;
+}
+
+.hits-grid {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.hit-card {
+  background: var(--cream);
+  border: 2px solid white;
+  box-shadow: 7px 7px 0 var(--orange);
+  color: var(--ink);
+  min-width: 0;
+  transition:
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.hit-card:nth-child(2) {
+  box-shadow: 7px 7px 0 var(--lime);
+}
+
+.hit-card:nth-child(3) {
+  box-shadow: 7px 7px 0 var(--violet);
+}
+
+.hit-card:hover {
+  box-shadow: 11px 11px 0 var(--orange);
+  transform: translate(-4px, -4px) rotate(-0.35deg);
+}
+
+.hit-card:nth-child(2):hover {
+  box-shadow: 11px 11px 0 var(--lime);
+}
+
+.hit-card:nth-child(3):hover {
+  box-shadow: 11px 11px 0 var(--violet);
+}
+
+.hit-video {
+  aspect-ratio: 9 / 16;
+  background: #050505;
+  border-bottom: 2px solid var(--ink);
+  overflow: hidden;
+  position: relative;
+}
+
+.hit-video video {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.hit-video > span {
+  align-items: center;
+  background: var(--lime);
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  display: flex;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.63rem;
+  font-weight: 950;
+  height: 38px;
+  justify-content: center;
+  left: 12px;
+  pointer-events: none;
+  position: absolute;
+  top: 12px;
+  width: 38px;
+}
+
+.hit-card:nth-child(2) .hit-video > span {
+  background: var(--pink);
+}
+
+.hit-card:nth-child(3) .hit-video > span {
+  background: var(--orange);
+}
+
+.hit-copy {
+  padding: 22px;
+}
+
+.hit-copy h3 {
+  font-size: clamp(1.65rem, 2.7vw, 2.8rem);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+  line-height: 0.95;
+  margin: 0 0 24px;
+  text-transform: uppercase;
+}
+
+.hit-copy dl {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 0 25px;
+}
+
+.hit-copy dl > div {
+  border-left: 2px solid var(--ink);
+  padding-left: 10px;
+}
+
+.hit-copy dt {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.54rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.hit-copy dd {
+  font-size: clamp(1.55rem, 2.5vw, 2.5rem);
+  font-weight: 950;
+  letter-spacing: -0.06em;
+  margin: 4px 0 0;
+}
+
+.hit-copy > a {
+  border-bottom: 2px solid var(--ink);
+  display: inline-block;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.hits-note {
+  color: #a99fbd;
+  margin: 28px 0 0;
+}
+
 .goal-section {
   background: var(--cream);
 }
@@ -1797,7 +1999,8 @@ footer a {
   }
 
   .campaign-grid,
-  .how-to-buy {
+  .how-to-buy,
+  .hits-shell {
     grid-template-columns: 70px minmax(0, 1fr);
   }
 }
@@ -1808,19 +2011,40 @@ footer a {
   }
 
   .campaign-grid,
-  .how-to-buy {
+  .how-to-buy,
+  .hits-shell {
     gap: 28px;
     grid-template-columns: 1fr;
   }
 
   .campaign-grid .section-label,
-  .how-to-buy .section-label {
+  .how-to-buy .section-label,
+  .hits-shell .section-label {
     grid-column: 1;
   }
 
   .campaign-grid .section-label p,
-  .how-to-buy .section-label p {
+  .how-to-buy .section-label p,
+  .hits-shell .section-label p {
     writing-mode: initial;
+  }
+
+  .hits-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hits-grid {
+    grid-auto-columns: minmax(280px, 82vw);
+    grid-auto-flow: column;
+    grid-template-columns: none;
+    overflow-x: auto;
+    padding: 5px 11px 18px 3px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .hit-card {
+    scroll-snap-align: start;
   }
 
   .buy-steps {
@@ -1943,9 +2167,18 @@ footer a {
   }
 
   .campaign-grid,
-  .how-to-buy {
+  .how-to-buy,
+  .hits-shell {
     padding-bottom: 90px;
     padding-top: 90px;
+  }
+
+  .hits-heading h2 {
+    font-size: clamp(3.4rem, 17vw, 5rem);
+  }
+
+  .hits-total strong {
+    font-size: 2.8rem;
   }
 
   .campaign-main > h2 {
