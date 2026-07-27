@@ -12,18 +12,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL
-  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-  : "https://dinocat-jaycarson373-7760s-projects.vercel.app";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(productionUrl),
   title: "Smudge on Solana | $SMUDGE",
   description:
     "The cat behind one of the internet’s most famous memes. Future creator fees support Smudge and rescue cats through verified official channels.",
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: "/smudge-favicon.png",
     shortcut: "/smudge-favicon.png",
@@ -34,7 +26,6 @@ export const metadata: Metadata = {
     description:
       "He no like vegetals. He does like memes. Meet Smudge, the table cat who became internet history.",
     type: "website",
-    url: "/",
     siteName: "$SMUDGE",
   },
   twitter: {
