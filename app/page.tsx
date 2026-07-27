@@ -17,55 +17,61 @@ const missionSteps: Array<{
   {
     status: "raising",
     title: "Raise",
-    copy: "Community support is tracked toward the public Rigby goal.",
+    copy: "Community contributions are tracked toward the public Smudge goal.",
   },
   {
     status: "contacting",
     title: "Support",
-    copy: "Fees fund verified Rigby Cameos and official merch purchases.",
+    copy: "Support moves through Smudge’s official merch, direct support link, and featured rescue charity.",
   },
   {
     status: "responded",
-    title: "Connect",
-    copy: "We keep reaching out through Rigby’s verified channels until we connect with her owner.",
+    title: "Document",
+    copy: "Every completed contribution is recorded with a public receipt.",
   },
   {
     status: "donated",
     title: "Direct",
-    copy: "Once connected, support moves directly to Rigby with public receipts.",
+    copy: "Once connected with Smudge’s owner, future support can be coordinated directly.",
   },
 ];
 
 const greatestHits = [
   {
     rank: "01",
-    title: "Funk nonstop",
-    views: "142.1M",
-    likes: "21.5M",
-    video: "/rigby-greatest-hit-1.mp4",
-    poster: "/rigby-greatest-hit-1-poster.png",
-    tiktok:
-      "https://www.tiktok.com/@iamrigbycat/video/7606523760253947166",
+    title: "He no like vegetals",
+    metricOneLabel: "Original post",
+    metricOne: "2018",
+    metricTwoLabel: "Tumblr notes",
+    metricTwo: "50K+",
+    image: "/smudge-original.jpg",
+    alt: "Smudge sitting at the dinner table behind a plate of salad",
+    href: "https://www.tumblr.com/deadbeforedeath/175034192749/he-no-like-vegetals",
+    linkLabel: "See the original",
   },
   {
     rank: "02",
-    title: "Hello, Rigby",
-    views: "73.5M",
-    likes: "12.8M",
-    video: "/rigby-greatest-hit-2.mp4",
-    poster: "/rigby-greatest-hit-2-poster.png",
-    tiktok:
-      "https://www.tiktok.com/@iamrigbycat/video/7625807340045913374",
+    title: "Meme of the Year",
+    metricOneLabel: "Shorty Award",
+    metricOne: "Winner",
+    metricTwoLabel: "Year",
+    metricTwo: "2020",
+    image: "/smudge-kitten.jpg",
+    alt: "Smudge investigating a kitchen faucet",
+    href: "https://shortyawards.com/12th/woman-yells-at-cat",
+    linkLabel: "See the award",
   },
   {
     rank: "03",
-    title: "Vote for Rigby",
-    views: "56.2M",
-    likes: "9.6M",
-    video: "/rigby-greatest-hit-3.mp4",
-    poster: "/rigby-greatest-hit-3-poster.png",
-    tiktok:
-      "https://www.tiktok.com/@iamrigbycat/video/7473553601965870382",
+    title: "Still judging",
+    metricOneLabel: "Instagram",
+    metricOne: "1.5M",
+    metricTwoLabel: "Posts",
+    metricTwo: "685",
+    image: "/smudge-collectible.jpg",
+    alt: "Smudge, the white table cat, looking into the camera",
+    href: "https://www.instagram.com/smudge_lord/",
+    linkLabel: "Follow Smudge",
   },
 ] as const;
 
@@ -106,18 +112,18 @@ export default function Home() {
       <div className="scroll-progress" aria-hidden="true" />
       <div className="cursor-glow" aria-hidden="true" />
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Rigby home">
+        <a className="brand" href="#top" aria-label="Smudge home">
           <span className="brand-avatar">
             <Image
-              src="/rigby-avatar.png"
+              src="/smudge-avatar.png"
               alt=""
               width={42}
               height={42}
               priority
             />
           </span>
-          <span className="brand-name">RIGBY</span>
-          <span className="brand-tag">BLEP CAT</span>
+          <span className="brand-name">SMUDGE</span>
+          <span className="brand-tag">TABLE CAT</span>
         </a>
 
         <nav className="header-center" aria-label="Main navigation">
@@ -153,26 +159,25 @@ export default function Home() {
           </p>
           <div className="launch-signal">
             <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
-              Follow @rigbycat_solana ↗
+              Follow @SmudgeLord ↗
             </a>
           </div>
           <h1>
-            MEET <span>RIGBY.</span>
+            MEET <span>SMUDGE.</span>
             <br />
-            THE FAINTING GOAT CAT.
+            THE SALAD-HATING LEGEND.
           </h1>
           <p className="hero-dek">
-            Big eyes. Tiny blep. 3 million TikTok followers and over 1 billion
-            total views. Rigby turned one unforgettable face into a global
-            internet obsession.
+            One table. One plate of vegetables. One deeply unimpressed face
+            that became one of the defining memes of the internet.
           </p>
           <p className="hero-mission">
-            The internet’s favorite fainting goat cat deserves to run on Solana.{" "}
-            <strong>$RIGBY</strong> sends every fee back toward supporting her.
+            The internet’s most famous salad hater deserves to run on Solana.{" "}
+            <strong>$SMUDGE</strong> is meme history with nine lives.
           </p>
           <p className="hero-goal-copy">
-            For now, 100% of trading fees support Rigby through verified Cameos
-            and official merch. Direct owner support comes next.
+            100% of future creator fees will support Smudge and rescue cats
+            through verified official channels, with public receipts.
           </p>
 
           <div className="hero-actions">
@@ -184,12 +189,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-art" aria-label="Rigby the viral cat">
+        <div className="hero-art" aria-label="Smudge the famous table cat">
           <div className="sunburst" aria-hidden="true" />
           <div className="photo-frame">
             <Image
-              src="/rigby-hero.jpg"
-              alt="Rigby, the gray and white viral cat, making her signature tongue-out face"
+              src="/smudge-original.jpg"
+              alt="Smudge, the white viral cat, sitting behind a plate of salad"
               fill
               priority
               sizes="(max-width: 820px) 92vw, 46vw"
@@ -197,54 +202,54 @@ export default function Home() {
           </div>
           <div className="sticker sticker-fees">
             <strong>100%</strong>
-            <span>FEES SUPPORT RIGBY</span>
+            <span>FUTURE FEES SUPPORT SMUDGE</span>
           </div>
           <div className="sticker sticker-energy">
-            <span>TINY BLEP.</span>
-            <strong>GLOBAL MEME.</strong>
+            <span>NO VEGETALS.</span>
+            <strong>ONLY MEMES.</strong>
           </div>
         </div>
       </section>
 
-      <section className="stats" aria-label="Rigby’s social media stats">
+      <section className="stats" aria-label="Smudge’s internet legacy">
         <div className="stat">
-          <strong>3M</strong>
-          <span>TikTok followers</span>
-        </div>
-        <div className="stat">
-          <strong>2.35M+</strong>
+          <strong>1.5M</strong>
           <span>Instagram followers</span>
         </div>
         <div className="stat">
-          <strong>1B+</strong>
-          <span>Total TikTok views</span>
+          <strong>50K+</strong>
+          <span>Original Tumblr notes</span>
         </div>
-        <p className="stats-note">Public social stats · July 2026</p>
+        <div className="stat">
+          <strong>#1</strong>
+          <span>TIME’s 2020 cat ranking</span>
+        </div>
+        <p className="stats-note">Public sources · July 2026</p>
       </section>
 
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>RIGBY THE BLEP CAT</span>
+          <span>SMUDGE THE TABLE CAT</span>
           <b>✦</b>
-          <span>100% OF FEES SUPPORT RIGBY</span>
+          <span>100% OF FUTURE FEES SUPPORT SMUDGE</span>
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
           <span>CHARITY COIN. MEME ENERGY.</span>
           <b>✦</b>
-          <span>CAMEOS + OFFICIAL MERCH</span>
+          <span>HE NO LIKE VEGETALS</span>
           <b>✦</b>
           <span>BELOVED BY MILLIONS</span>
           <b>✦</b>
-          <span>RIGBY THE BLEP CAT</span>
+          <span>SMUDGE THE TABLE CAT</span>
           <b>✦</b>
-          <span>100% OF FEES SUPPORT RIGBY</span>
+          <span>100% OF FUTURE FEES SUPPORT SMUDGE</span>
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
           <span>CHARITY COIN. MEME ENERGY.</span>
           <b>✦</b>
-          <span>CAMEOS + OFFICIAL MERCH</span>
+          <span>HE NO LIKE VEGETALS</span>
           <b>✦</b>
           <span>BELOVED BY MILLIONS</span>
           <b>✦</b>
@@ -253,10 +258,10 @@ export default function Home() {
 
       <div className="brand-banner section-shell">
         <Image
-          src="/rigby-og.png"
-          alt="Rigby, the fainting goat cat"
-          width={1731}
-          height={909}
+          src="/smudge-collectible.jpg"
+          alt="Smudge, the famous white table cat"
+          width={640}
+          height={640}
           sizes="(max-width: 1440px) 94vw, 1312px"
         />
       </div>
@@ -267,30 +272,28 @@ export default function Home() {
           <p>THE STORY</p>
         </div>
         <div className="story-copy">
-          <h2>SHE MADE ONE SILLY FACE. THE INTERNET NEVER RECOVERED.</h2>
+          <h2>HE TOOK ONE SEAT AT THE TABLE. THE INTERNET NEVER RECOVERED.</h2>
           <div className="story-columns">
             <p>
-              Rigby has myotonia congenita, a rare muscle condition sometimes
-              nicknamed “fainting goat syndrome.” Her muscles can stay
-              contracted after movement, creating stiffness and her famously
-              expressive tongue-out look.
+              Smudge is a white rescue cat from Ottawa who insists on having a
+              chair at dinner. In June 2018, he claimed an empty seat behind a
+              plate of salad and made internet history.
             </p>
             <p>
-              She is not actually fainting. She remains conscious, keeps being
-              completely herself, and has become a confirmed reaction-meme icon
-              loved across TikTok, Instagram, and the wider internet.
+              The original Tumblr post, “he no like vegetals,” became the cat
+              half of “Woman Yelling at a Cat.” The pairing turned Smudge into
+              one of the most recognizable reaction images ever made.
             </p>
           </div>
         </div>
         <aside className="story-card">
-          <span className="tiny-pill">WHY RIGBY?</span>
+          <span className="tiny-pill">WHY SMUDGE?</span>
           <p>
-            <strong>She is already internet history.</strong> 3 million TikTok
-            followers, more than 2.3 million on Instagram, and over 1 billion
-            total TikTok views.
+            <strong>He is certified internet royalty.</strong> Meme of the Year,
+            TIME’s top internet cat of 2020, and 1.5 million Instagram followers.
           </p>
-          <span className="rigby-mark" aria-hidden="true">
-            R
+          <span className="smudge-mark" aria-hidden="true">
+            S
           </span>
         </aside>
       </section>
@@ -305,54 +308,52 @@ export default function Home() {
             <div className="hits-heading">
               <div>
                 <p className="eyebrow light">
-                  <span aria-hidden="true">●</span> PRESS PLAY
+                  <span aria-hidden="true">●</span> INTERNET HISTORY
                 </p>
-                <h2>RIGBY’S GREATEST HITS.</h2>
+                <h2>SMUDGE’S GREATEST HITS.</h2>
               </div>
               <div className="hits-total">
-                <strong>271.8M</strong>
-                <span>combined views</span>
+                <strong>2018</strong>
+                <span>the table was claimed</span>
               </div>
             </div>
             <p className="hits-intro">
-              Three videos. More than 43.9 million likes. One unmistakable face.
+              One face. Infinite remixes. A permanent seat at the table of
+              internet culture.
             </p>
             <div className="hits-grid">
               {greatestHits.map((hit) => (
                 <article className="hit-card" key={hit.rank}>
                   <div className="hit-video">
-                    <video
-                      aria-label={`${hit.title}, ${hit.views} views on TikTok`}
-                      controls
-                      playsInline
-                      preload="metadata"
-                      poster={hit.poster}
-                    >
-                      <source src={hit.video} type="video/mp4" />
-                    </video>
+                    <Image
+                      src={hit.image}
+                      alt={hit.alt}
+                      fill
+                      sizes="(max-width: 820px) 82vw, 29vw"
+                    />
                     <span>{hit.rank}</span>
                   </div>
                   <div className="hit-copy">
                     <h3>{hit.title}</h3>
                     <dl>
                       <div>
-                        <dt>Views</dt>
-                        <dd>{hit.views}</dd>
+                        <dt>{hit.metricOneLabel}</dt>
+                        <dd>{hit.metricOne}</dd>
                       </div>
                       <div>
-                        <dt>Likes</dt>
-                        <dd>{hit.likes}</dd>
+                        <dt>{hit.metricTwoLabel}</dt>
+                        <dd>{hit.metricTwo}</dd>
                       </div>
                     </dl>
-                    <a href={hit.tiktok} target="_blank" rel="noreferrer">
-                      Watch on TikTok ↗
+                    <a href={hit.href} target="_blank" rel="noreferrer">
+                      {hit.linkLabel} ↗
                     </a>
                   </div>
                 </article>
               ))}
             </div>
             <p className="hits-note">
-              Public TikTok totals checked July 2026.
+              Public source totals checked July 2026.
             </p>
           </div>
         </div>
@@ -373,7 +374,8 @@ export default function Home() {
               <span aria-hidden="true">●</span> THE THERMOMETER
             </p>
             <h2>
-              {usd.format(CAMPAIGN.goalUsd)} FOR RIGBY. EVERY DONATION COUNTS.
+              {usd.format(CAMPAIGN.goalUsd)} FOR SMUDGE AND RESCUE CATS. EVERY
+              VERIFIED CONTRIBUTION COUNTS.
             </h2>
             <CampaignProgress
               raisedUsd={raised}
@@ -381,7 +383,7 @@ export default function Home() {
             />
             <div className="wallet-proof">
               <p>
-                Every verified fee donation moves this meter.
+                Every verified contribution moves this meter.
               </p>
               {CAMPAIGN.careWallet ? (
                 <a
@@ -399,16 +401,21 @@ export default function Home() {
                 publicly.
               </strong>
             </div>
-            <div className="goal-actions" aria-label="Support the Rigby goal">
+            <div className="goal-actions" aria-label="Support the Smudge goal">
               <SocialLink
                 className="goal-action goal-action-primary"
-                href={CAMPAIGN.cameoUrl}
-                label="BOOK A CAMEO"
+                href={CAMPAIGN.supportUrl}
+                label="DIRECT SMUDGE SUPPORT"
               />
               <SocialLink
                 className="goal-action"
                 href={CAMPAIGN.merchUrl}
                 label="SHOP OFFICIAL MERCH"
+              />
+              <SocialLink
+                className="goal-action"
+                href={CAMPAIGN.charityUrl}
+                label="FURRY TALES CHARITY"
               />
             </div>
           </div>
@@ -427,9 +434,9 @@ export default function Home() {
           </div>
           <div className="campaign-main">
             <p className="eyebrow">
-              <span aria-hidden="true">●</span> OPERATION: SUPPORT RIGBY
+              <span aria-hidden="true">●</span> OPERATION: SUPPORT SMUDGE
             </p>
-            <h2>RAISE IT. SUPPORT HER. SHOW THE RECEIPTS.</h2>
+            <h2>RAISE IT. SUPPORT HIM. SHOW THE RECEIPTS.</h2>
             <div className="mission-timeline">
               {missionSteps.map((step, index) => {
                 const state =
@@ -461,10 +468,10 @@ export default function Home() {
         <div className="promise-inner">
           <div className="promise-number">
             <span>05</span>
-            <p>THE RIGBY PROMISE</p>
+            <p>THE SMUDGE PROMISE</p>
           </div>
           <p className="eyebrow light">
-            <span aria-hidden="true">●</span> THE RIGBY PROMISE
+            <span aria-hidden="true">●</span> THE SMUDGE PROMISE
           </p>
           <div className="promise-grid">
             <div className="hundred">
@@ -472,11 +479,11 @@ export default function Home() {
               <b>%</b>
             </div>
             <div className="promise-copy">
-              <h2>OF FEES GO BACK TOWARD SUPPORTING RIGBY.</h2>
+              <h2>OF FUTURE CREATOR FEES SUPPORT SMUDGE AND RESCUE CATS.</h2>
               <p>
-                For now, that means official Cameo bookings and merch purchases
-                through Rigby’s verified channels. Once we connect with her
-                owner, the mission moves to direct, publicly documented support.
+                Support is routed through Smudge’s verified direct-support
+                link, official merch, and featured rescue charity. If we connect
+                with his owner, the mission moves to coordinated direct support.
               </p>
               <a className="promise-goal-link" href="#goal">
                 First stop: {usd.format(CAMPAIGN.goalUsd)}. Track it live ↑
@@ -498,34 +505,46 @@ export default function Home() {
           </div>
           <div className="campaign-main">
             <p className="eyebrow">
-              <span aria-hidden="true">●</span> FOLLOW THE REAL RIGBY
+              <span aria-hidden="true">●</span> FOLLOW THE REAL SMUDGE
             </p>
-            <h2>ONE SILLY CAT. A VERY LARGE INTERNET.</h2>
+            <h2>ONE UNBOTHERED CAT. A VERY LARGE INTERNET.</h2>
             <div className="social-grid">
               <a
                 className="social-card social-card-featured"
+                href={CAMPAIGN.instagramUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <span>Instagram</span>
+                  <strong>@smudge_lord ↗</strong>
+                </div>
+                <dl>
+                  <div>
+                    <dt>Followers</dt>
+                    <dd>1.5M</dd>
+                  </div>
+                  <div>
+                    <dt>Posts</dt>
+                    <dd>685</dd>
+                  </div>
+                  <div>
+                    <dt>Status</dt>
+                    <dd>Icon</dd>
+                  </div>
+                </dl>
+              </a>
+              <a
+                className="social-card"
                 href={CAMPAIGN.tiktokUrl}
                 target="_blank"
                 rel="noreferrer"
               >
                 <div>
                   <span>TikTok</span>
-                  <strong>@iamrigbycat ↗</strong>
+                  <strong>@smudge_lord ↗</strong>
                 </div>
-                <dl>
-                  <div>
-                    <dt>Followers</dt>
-                    <dd>3M</dd>
-                  </div>
-                  <div>
-                    <dt>Total views</dt>
-                    <dd>1B+</dd>
-                  </div>
-                  <div>
-                    <dt>Status</dt>
-                    <dd>Growing</dd>
-                  </div>
-                </dl>
+                <p>Official Smudge videos, table manners, and gremlin energy.</p>
               </a>
               <a
                 className="social-card"
@@ -534,34 +553,22 @@ export default function Home() {
                 rel="noreferrer"
               >
                 <div>
-                  <span>Community X</span>
-                  <strong>@rigbycat_solana ↗</strong>
+                  <span>X</span>
+                  <strong>@SmudgeLord ↗</strong>
                 </div>
-                <p>Launch updates, receipts, milestones, and Rigby memes.</p>
+                <p>The official account for the cat who hates vegetals.</p>
               </a>
               <a
                 className="social-card"
-                href={CAMPAIGN.instagramUrl}
+                href={CAMPAIGN.facebookUrl}
                 target="_blank"
                 rel="noreferrer"
               >
                 <div>
-                  <span>Instagram</span>
-                  <strong>@iamrigbycat ↗</strong>
+                  <span>Facebook</span>
+                  <strong>Smudge Lord Official ↗</strong>
                 </div>
-                <p>More than 2.3 million followers and growing.</p>
-              </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.cameoUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>Cameo</span>
-                  <strong>Book Rigby ↗</strong>
-                </div>
-                <p>One of the verified ways fees support Rigby right now.</p>
+                <p>Official posts and a whole table full of Smudge fans.</p>
               </a>
               <a
                 className="social-card"
@@ -571,9 +578,21 @@ export default function Home() {
               >
                 <div>
                   <span>Official merch</span>
-                  <strong>Shop Rigby + Simba ↗</strong>
+                  <strong>Shop Smudge Lord ↗</strong>
                 </div>
-                <p>Buy directly through Rigby’s official store.</p>
+                <p>Buy directly through Smudge’s official store.</p>
+              </a>
+              <a
+                className="social-card"
+                href={CAMPAIGN.charityUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div>
+                  <span>Rescue charity</span>
+                  <strong>Furry Tales ↗</strong>
+                </div>
+                <p>Support the rescue organization featured by Smudge’s official links.</p>
               </a>
             </div>
           </div>
@@ -585,14 +604,14 @@ export default function Home() {
           <p className="eyebrow">
             <span aria-hidden="true">●</span> CHARITY COIN. MEME COIN ENERGY.
           </p>
-          <h2>PUT THE INTERNET’S FAVORITE BLEP ON SOLANA.</h2>
+          <h2>PUT THE INTERNET’S MOST UNBOTHERED CAT ON SOLANA.</h2>
         </div>
         <a
           className="round-link"
           href={CAMPAIGN.xUrl}
           target="_blank"
           rel="noreferrer"
-          aria-label="Follow Rigby on X"
+          aria-label="Follow Smudge on X"
         >
           <span>FOLLOW</span>
           <strong aria-hidden="true">↗</strong>
@@ -601,45 +620,46 @@ export default function Home() {
 
       <section
         className="launch-banner section-shell"
-        aria-label="Rigby launch banner"
+        aria-label="Smudge banner"
         data-reveal
       >
-        <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
+        <a href={CAMPAIGN.instagramUrl} target="_blank" rel="noreferrer">
           <Image
-            src="/rigby-launch-banner.jpg"
-            alt="$RIGBY, the internet’s favorite fainting goat cat. 100% of fees support Rigby through Cameos and merch."
-            width={1280}
-            height={426}
+            src="/smudge-original.jpg"
+            alt="Smudge sitting at the dinner table behind a plate of salad"
+            width={746}
+            height={545}
             sizes="(max-width: 1440px) 94vw, 1312px"
           />
-          <span>FOLLOW THE LAUNCH ON X ↗</span>
+          <span>FOLLOW SMUDGE ON INSTAGRAM ↗</span>
         </a>
       </section>
 
       <footer className="site-footer">
         <div className="footer-top">
           <div className="footer-brand">
-            <Image src="/rigby-avatar.png" alt="" width={38} height={38} />
-            <strong>RIGBY THE FAINTING GOAT CAT</strong>
+            <Image src="/smudge-avatar.png" alt="" width={38} height={38} />
+            <strong>SMUDGE THE TABLE CAT</strong>
           </div>
           <div className="footer-socials">
             <SocialLink href={CAMPAIGN.xUrl} label="X" />
             <SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" />
             <SocialLink href={CAMPAIGN.instagramUrl} label="Instagram" />
-            <SocialLink href={CAMPAIGN.youtubeUrl} label="YouTube" />
-            <SocialLink href={CAMPAIGN.cameoUrl} label="Cameo" />
+            <SocialLink href={CAMPAIGN.facebookUrl} label="Facebook" />
             <SocialLink href={CAMPAIGN.merchUrl} label="Official merch" />
-            <SocialLink href={CAMPAIGN.linktreeUrl} label="All Rigby links" />
+            <SocialLink href={CAMPAIGN.supportUrl} label="Direct support" />
+            <SocialLink href={CAMPAIGN.charityUrl} label="Furry Tales" />
+            <SocialLink href={CAMPAIGN.linktreeUrl} label="All Smudge links" />
           </div>
         </div>
         <div className="footer-legal">
           <p>
-            Rigby is a community meme coin, not an investment product. Crypto
+            Smudge is a community meme coin, not an investment product. Crypto
             is volatile. Nothing here is financial advice.
           </p>
           <p>
-            Rigby is a community-run fan project. Not affiliated with Rigby’s
-            owner. Fees support her through official Cameos and merch for now.
+            Smudge is a community-run fan project. It is not affiliated with
+            Smudge’s owner. Support uses official public links for now.
           </p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>

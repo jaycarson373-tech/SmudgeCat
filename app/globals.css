@@ -2,11 +2,11 @@
 
 :root {
   --ink: #151826;
-  --cream: #fff7e7;
-  --lime: #75cdf5;
-  --orange: #f2529f;
-  --violet: #2869d8;
-  --pink: #ffd0e4;
+  --cream: #fff8ea;
+  --lime: #a8d66d;
+  --orange: #f15a4a;
+  --violet: #6f3aa8;
+  --pink: #ffd4bf;
   --line: #151826;
 }
 
@@ -293,7 +293,7 @@ h1 span {
 
 .photo-frame img {
   object-fit: cover;
-  object-position: 50% 50%;
+  object-position: 50% 48%;
   transform: scale(1.02);
 }
 
@@ -533,7 +533,7 @@ h1 span {
   z-index: 2;
 }
 
-.rigby-mark {
+.smudge-mark {
   bottom: -85px;
   color: var(--violet);
   font-size: 12rem;
@@ -935,7 +935,7 @@ footer a {
   }
 }
 
-/* Rigby campaign */
+/* Smudge campaign */
 
 .site-header {
   background: color-mix(in srgb, var(--cream) 94%, transparent);
@@ -1143,10 +1143,12 @@ footer a {
 }
 
 .brand-banner img {
+  aspect-ratio: 2.4 / 1;
   border: 2px solid var(--ink);
   box-shadow: 10px 10px 0 var(--ink);
   display: block;
-  height: auto;
+  object-fit: cover;
+  object-position: 50% 35%;
   width: 100%;
 }
 
@@ -1284,14 +1286,14 @@ footer a {
 }
 
 .hit-video {
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 1 / 1;
   background: #050505;
   border-bottom: 2px solid var(--ink);
   overflow: hidden;
   position: relative;
 }
 
-.hit-video video {
+.hit-video img {
   display: block;
   height: 100%;
   object-fit: cover;
@@ -1427,7 +1429,7 @@ footer a {
 
 .thermometer::after {
   color: var(--ink);
-  content: "RIGBY";
+  content: "SMUDGE";
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.6rem;
   font-weight: 900;
@@ -2646,10 +2648,12 @@ footer a {
 }
 
 .launch-banner img {
+  aspect-ratio: 3 / 1;
   border: 2px solid var(--ink);
   box-shadow: 10px 10px 0 var(--ink);
   display: block;
-  height: auto;
+  object-fit: cover;
+  object-position: 50% 48%;
   transition:
     box-shadow 240ms ease,
     transform 240ms ease;

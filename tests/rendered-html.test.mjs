@@ -22,57 +22,49 @@ async function render() {
   );
 }
 
-test("server-renders the Rigby landing page", async () => {
+test("server-renders the Smudge landing page", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Rigby on Solana \| \$RIGBY<\/title>/i);
+  assert.match(html, /<title>Smudge on Solana \| \$SMUDGE<\/title>/i);
   assert.match(html, /MEET/);
-  assert.match(html, /RIGBY/);
-  assert.match(html, /THE FAINTING GOAT CAT/);
-  assert.match(html, /3M/);
-  assert.match(html, /2\.35M\+/);
-  assert.match(html, /1B\+/);
-  assert.match(html, /over 1 billion total views/i);
-  assert.match(html, /myotonia congenita/i);
-  assert.match(html, /RIGBY’S GREATEST HITS/);
-  assert.match(html, /271\.8M/);
-  assert.match(html, /43\.9 million likes/i);
-  assert.match(html, /142\.1M/);
-  assert.match(html, /21\.5M/);
-  assert.match(html, /73\.5M/);
-  assert.match(html, /12\.8M/);
-  assert.match(html, /56\.2M/);
-  assert.match(html, /9\.6M/);
-  assert.match(html, /rigby-greatest-hit-1\.mp4/);
-  assert.match(html, /rigby-greatest-hit-2\.mp4/);
-  assert.match(html, /rigby-greatest-hit-3\.mp4/);
-  assert.match(html, /7606523760253947166/);
-  assert.match(html, /7625807340045913374/);
-  assert.match(html, /7473553601965870382/);
+  assert.match(html, /SMUDGE/);
+  assert.match(html, /THE SALAD-HATING LEGEND/);
+  assert.match(html, /1\.5M/);
+  assert.match(html, /50K\+/);
+  assert.match(html, /TIME’s 2020 cat ranking/i);
+  assert.match(html, /he no like vegetals/i);
+  assert.match(html, /Ottawa/i);
+  assert.match(html, /SMUDGE’S GREATEST HITS/);
+  assert.match(html, /Meme of the Year/i);
+  assert.match(html, /Shorty Award/i);
+  assert.match(html, /smudge-original\.jpg/);
+  assert.match(html, /smudge-kitten\.jpg/);
+  assert.match(html, /smudge-collectible\.jpg/);
+  assert.match(html, /175034192749/);
+  assert.match(html, /shortyawards\.com\/12th\/woman-yells-at-cat/);
   assert.match(html, /THE THERMOMETER/);
-  assert.match(html, /OPERATION: SUPPORT RIGBY/);
+  assert.match(html, /OPERATION: SUPPORT SMUDGE/);
   assert.match(html, /\$5,000/);
-  assert.match(html, /https:\/\/x\.com\/rigbycat_solana/);
+  assert.match(html, /https:\/\/x\.com\/SmudgeLord/);
   assert.doesNotMatch(html, /AmxxQwEZzB2rzP2LpkYBogJRqdfg3msxqazTTqZGpump/);
   assert.doesNotMatch(html, /jup\.ag|pump\.fun|dexscreener|HOW TO BUY|CA DROPS SOON/i);
-  assert.match(html, /FOLLOW THE REAL RIGBY/);
-  assert.match(html, /https:\/\/www\.tiktok\.com\/@iamrigbycat/);
-  assert.match(html, /https:\/\/www\.instagram\.com\/iamrigbycat/);
-  assert.match(html, /https:\/\/www\.cameo\.com\/iamrigbycat/);
-  assert.match(html, /https:\/\/rigbycat\.dashery\.com/);
+  assert.match(html, /FOLLOW THE REAL SMUDGE/);
+  assert.match(html, /https:\/\/www\.tiktok\.com\/@smudge_lord/);
+  assert.match(html, /https:\/\/www\.instagram\.com\/smudge_lord/);
+  assert.match(html, /https:\/\/www\.facebook\.com\/smudgelordofficial/);
+  assert.match(html, /https:\/\/www\.paypal\.me\/smudgelord/);
+  assert.match(html, /https:\/\/smudge-lord\.com/);
+  assert.match(html, /https:\/\/www\.furry-tales\.ca/);
   assert.match(html, /100%/);
-  assert.match(html, /OF FEES GO BACK TOWARD SUPPORTING RIGBY/);
-  assert.match(html, /rigby-hero\.jpg/);
-  assert.match(html, /rigby-og\.png/);
-  assert.match(html, /rigby-avatar\.png/);
-  assert.match(html, /rigby-favicon\.png/);
-  assert.match(html, /rigby-apple-touch-icon\.png/);
-  assert.match(html, /rigby-launch-banner\.jpg/);
+  assert.match(html, /OF FUTURE CREATOR FEES SUPPORT SMUDGE AND RESCUE CATS/);
+  assert.match(html, /smudge-avatar\.png/);
+  assert.match(html, /smudge-favicon\.png/);
+  assert.match(html, /smudge-apple-touch-icon\.png/);
   assert.doesNotMatch(
     html,
-    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|—/i,
+    /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|Rigby|iamrigbycat|fainting goat|myotonia|blep|—/i,
   );
 });

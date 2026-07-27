@@ -1,9 +1,9 @@
-# Rigby the Cat
+# Smudge the Cat
 
-Community landing page for **Rigby**, the viral cat with myotonia congenita.
-The site features Rigby’s story, public social milestones, a $10,000 support
-thermometer, transparent fee mission, buying guide, live chart, and links to
-Rigby’s official Cameo, merch, and social accounts.
+Community landing page for **Smudge**, the famous white table cat behind the
+“Woman Yelling at a Cat” meme. The site features Smudge’s story, meme history,
+a $5,000 support thermometer, a transparent future-fee mission, and links to
+Smudge’s official accounts, merch, direct support, and featured rescue charity.
 
 ## Prerequisites
 

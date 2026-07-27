@@ -51,7 +51,7 @@ export function CampaignProgress({
       <div className="goal-live-line">
         <span>
           <i aria-hidden="true" />
-          Live Rigby support goal
+          Live Smudge support goal
         </span>
         <b>Verified contributions only</b>
       </div>
@@ -73,7 +73,7 @@ export function CampaignProgress({
       <div
         className="thermometer"
         role="progressbar"
-        aria-label="Rigby support goal"
+        aria-label="Smudge support goal"
         aria-valuemin={0}
         aria-valuemax={safeGoal}
         aria-valuenow={safeRaised}
@@ -90,7 +90,7 @@ export function CampaignProgress({
         <div className="milestone milestone-half">
           <i />
           <span>{usd.format(halfwayMilestone)}</span>
-          <b>Halfway for Rigby</b>
+          <b>Halfway for Smudge</b>
         </div>
         <div className="milestone milestone-full">
           <i />
