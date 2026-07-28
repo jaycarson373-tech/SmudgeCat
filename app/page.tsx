@@ -165,11 +165,11 @@ export default function Home() {
           <h1>
             MEET <span>SMUDGE.</span>
             <br />
-            THE SALAD-HATING LEGEND.
+            THE TABLE CAT.
           </h1>
           <p className="hero-dek">
-            One table. One plate of vegetables. One deeply unimpressed face
-            that became one of the defining memes of the internet.
+            Smudge the Table Cat claimed one seat, faced one plate of
+            vegetables, and became one of the defining memes of the internet.
           </p>
           <p className="hero-mission">
             The internet’s most famous salad hater deserves to run on Solana.{" "}
@@ -275,9 +275,9 @@ export default function Home() {
           <h2>HE TOOK ONE SEAT AT THE TABLE. THE INTERNET NEVER RECOVERED.</h2>
           <div className="story-columns">
             <p>
-              Smudge is a white rescue cat from Ottawa who insists on having a
-              chair at dinner. In June 2018, he claimed an empty seat behind a
-              plate of salad and made internet history.
+              Smudge the Table Cat is a white rescue cat from Ottawa who
+              insists on having a chair at dinner. In June 2018, he claimed an
+              empty seat behind a plate of salad and made internet history.
             </p>
             <p>
               The original Tumblr post, “he no like vegetals,” became the cat

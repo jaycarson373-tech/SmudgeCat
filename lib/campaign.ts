@@ -19,12 +19,7 @@ export const CAMPAIGN = {
   status: allowedStatuses.includes(configuredStatus as CampaignStatus)
     ? (configuredStatus as CampaignStatus)
     : ("raising" as CampaignStatus),
-  ca: "",
-  pumpUrl: "",
-  jupiterUrl: "",
-  dexscreenerUrl: "",
   xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/SmudgeLord",
-  telegramUrl: process.env.NEXT_PUBLIC_TG_URL ?? "",
   tiktokUrl: "https://www.tiktok.com/@smudge_lord",
   instagramUrl: "https://www.instagram.com/smudge_lord/",
   facebookUrl: "https://www.facebook.com/smudgelordofficial",

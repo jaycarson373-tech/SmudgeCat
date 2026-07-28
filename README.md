@@ -1,9 +1,10 @@
-# Smudge the Cat
+# Smudge the Table Cat
 
-Community landing page for **Smudge**, the famous white table cat behind the
-“Woman Yelling at a Cat” meme. The site features Smudge’s story, meme history,
-a $5,000 support thermometer, a transparent future-fee mission, and links to
-Smudge’s official accounts, merch, direct support, and featured rescue charity.
+Community landing page for **Smudge the Table Cat**, the famous white cat
+behind the “Woman Yelling at a Cat” meme. The site features Smudge’s story,
+meme history, a $5,000 support thermometer, a transparent future-fee mission,
+and links to Smudge’s official accounts, merch, direct support, and featured
+rescue charity.
 
 ## Prerequisites
 

@@ -28,10 +28,11 @@ test("server-renders the Smudge landing page", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<title>Smudge on Solana \| \$SMUDGE<\/title>/i);
+  assert.match(html, /<title>Smudge the Table Cat \| \$SMUDGE<\/title>/i);
   assert.match(html, /MEET/);
   assert.match(html, /SMUDGE/);
-  assert.match(html, /THE SALAD-HATING LEGEND/);
+  assert.match(html, /THE TABLE CAT/);
+  assert.match(html, /Smudge the Table Cat claimed one seat/i);
   assert.match(html, /1\.5M/);
   assert.match(html, /50K\+/);
   assert.match(html, /TIME’s 2020 cat ranking/i);
@@ -63,6 +64,7 @@ test("server-renders the Smudge landing page", async () => {
   assert.match(html, /smudge-avatar\.png/);
   assert.match(html, /smudge-favicon\.png/);
   assert.match(html, /smudge-apple-touch-icon\.png/);
+  assert.match(html, /https:\/\/dinocat-nine\.vercel\.app\/og\.png/);
   assert.doesNotMatch(
     html,
     /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|Rigby|iamrigbycat|fainting goat|myotonia|blep|—/i,
