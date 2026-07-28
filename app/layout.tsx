@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Smudge the Table Cat",
     images: [
       {
-        url: "https://dinocat-nine.vercel.app/og.png",
+        url: "https://smudge-table-cat.vercel.app/og.png",
         width: 1200,
         height: 630,
         alt: "Smudge the Table Cat sitting behind a plate of salad",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     title: "Smudge the Table Cat | $SMUDGE",
     description:
       "Make a custom Smudge PFP. Add hats, ties, backgrounds, and download it free. 100% of creator fees are reserved for Smudge and his owner.",
-    images: ["https://dinocat-nine.vercel.app/og.png"],
+    images: ["https://smudge-table-cat.vercel.app/og.png"],
   },
 };
 

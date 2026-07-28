@@ -76,7 +76,7 @@ test("server-renders the Smudge landing page", async () => {
   assert.match(html, /smudge-avatar\.png/);
   assert.match(html, /smudge-favicon\.png/);
   assert.match(html, /smudge-apple-touch-icon\.png/);
-  assert.match(html, /https:\/\/dinocat-nine\.vercel\.app\/og\.png/);
+  assert.match(html, /https:\/\/smudge-table-cat\.vercel\.app\/og\.png/);
   assert.doesNotMatch(
     html,
     /codex-preview|Your site is taking shape|\b2-2\b|\$2-2|27M|Tutu|Dino Cat|dinocattutu|tutu-hero|tutu-banner|4aKxVRf|dinocat_pf|Rigby|iamrigbycat|fainting goat|myotonia|blep|—/i,
