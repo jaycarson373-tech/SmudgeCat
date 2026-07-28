@@ -46,6 +46,15 @@ test("server-renders the Smudge landing page", async () => {
   assert.match(html, /smudge-collectible\.jpg/);
   assert.match(html, /175034192749/);
   assert.match(html, /shortyawards\.com\/12th\/woman-yells-at-cat/);
+  assert.match(html, /THE SMUDGE MACHINE/);
+  assert.match(html, /ONE CAT\. INFINITE INTERNET\./);
+  assert.match(html, /MAKE A SMUDGE PFP/);
+  assert.match(html, /TAG THE BOT\. GET YOUR PFP SMUDGED\./);
+  assert.match(html, /smudge-pfp-studio\.png/);
+  assert.match(html, /smudge-pfp-comic\.png/);
+  assert.match(html, /smudge-pfp-pixel\.png/);
+  assert.match(html, /smudge-pfp-clay\.png/);
+  assert.match(html, /DOWNLOAD PNG/);
   assert.match(html, /THE THERMOMETER/);
   assert.match(html, /OPERATION: SUPPORT SMUDGE/);
   assert.match(html, /\$5,000/);
@@ -60,7 +69,10 @@ test("server-renders the Smudge landing page", async () => {
   assert.match(html, /https:\/\/smudge-lord\.com/);
   assert.match(html, /https:\/\/www\.furry-tales\.ca/);
   assert.match(html, /100%/);
-  assert.match(html, /OF FUTURE CREATOR FEES SUPPORT SMUDGE AND RESCUE CATS/);
+  assert.match(
+    html,
+    /OF CREATOR FEES ARE RESERVED FOR SMUDGE AND HIS OWNER/,
+  );
   assert.match(html, /smudge-avatar\.png/);
   assert.match(html, /smudge-favicon\.png/);
   assert.match(html, /smudge-apple-touch-icon\.png/);

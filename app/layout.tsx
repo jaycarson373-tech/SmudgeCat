@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Smudge the Table Cat | $SMUDGE",
   description:
-    "Smudge the Table Cat is the white cat behind one of the internet’s most famous memes. Future creator fees support Smudge and rescue cats through verified official channels.",
+    "Build and download a custom Smudge PFP. 100% of creator fees are reserved for Smudge the Table Cat and his owner.",
   icons: {
     icon: "/smudge-favicon.png",
     shortcut: "/smudge-favicon.png",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Smudge the Table Cat | $SMUDGE",
     description:
-      "He no like vegetals. He does like memes. Meet Smudge the Table Cat, an internet icon on Solana.",
+      "Make a custom Smudge PFP. Add hats, ties, backgrounds, and download it free. 100% of creator fees are reserved for Smudge and his owner.",
     type: "website",
     siteName: "Smudge the Table Cat",
     images: [
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Smudge the Table Cat | $SMUDGE",
     description:
-      "He no like vegetals. He does like memes. Meet Smudge the Table Cat, an internet icon on Solana.",
+      "Make a custom Smudge PFP. Add hats, ties, backgrounds, and download it free. 100% of creator fees are reserved for Smudge and his owner.",
     images: ["https://dinocat-nine.vercel.app/og.png"],
   },
 };

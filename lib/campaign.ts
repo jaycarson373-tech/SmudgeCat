@@ -19,6 +19,7 @@ export const CAMPAIGN = {
   status: allowedStatuses.includes(configuredStatus as CampaignStatus)
     ? (configuredStatus as CampaignStatus)
     : ("raising" as CampaignStatus),
+  botHandle: process.env.NEXT_PUBLIC_BOT_HANDLE ?? "",
   xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/SmudgeLord",
   tiktokUrl: "https://www.tiktok.com/@smudge_lord",
   instagramUrl: "https://www.instagram.com/smudge_lord/",

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { CampaignProgress } from "@/components/CampaignProgress";
 import { MotionController } from "@/components/MotionController";
+import { PfpStudio } from "@/components/PfpStudio";
 import { CAMPAIGN, type CampaignStatus } from "@/lib/campaign";
 
 const usd = new Intl.NumberFormat("en-US", {
@@ -17,22 +18,22 @@ const missionSteps: Array<{
   {
     status: "raising",
     title: "Raise",
-    copy: "Community contributions are tracked toward the public Smudge goal.",
+    copy: "100% of creator fees are reserved for Smudge and his owner.",
   },
   {
     status: "contacting",
-    title: "Support",
-    copy: "Support moves through Smudge’s official merch, direct support link, and featured rescue charity.",
+    title: "Connect",
+    copy: "The community keeps reaching out through Smudge’s verified official channels.",
   },
   {
     status: "responded",
     title: "Document",
-    copy: "Every completed contribution is recorded with a public receipt.",
+    copy: "Once contact is verified, the handoff plan and every completed contribution are documented.",
   },
   {
     status: "donated",
     title: "Direct",
-    copy: "Once connected with Smudge’s owner, future support can be coordinated directly.",
+    copy: "Creator fees are delivered to Smudge’s owner with public receipts.",
   },
 ];
 
@@ -72,6 +73,29 @@ const greatestHits = [
     alt: "Smudge, the white table cat, looking into the camera",
     href: "https://www.instagram.com/smudge_lord/",
     linkLabel: "Follow Smudge",
+  },
+] as const;
+
+const pfpDownloads = [
+  {
+    title: "Studio Smudge",
+    detail: "Clean white",
+    image: "/smudge-pfp-studio.png",
+  },
+  {
+    title: "Comic Smudge",
+    detail: "Halftone legend",
+    image: "/smudge-pfp-comic.png",
+  },
+  {
+    title: "Pixel Smudge",
+    detail: "16-bit judgment",
+    image: "/smudge-pfp-pixel.png",
+  },
+  {
+    title: "Clay Smudge",
+    detail: "Handmade hater",
+    image: "/smudge-pfp-clay.png",
   },
 ] as const;
 
@@ -127,6 +151,7 @@ export default function Home() {
         </a>
 
         <nav className="header-center" aria-label="Main navigation">
+          <a href="#pfp">PFP studio</a>
           <a href="#hits">Greatest hits</a>
           <a href="#mission">How it works</a>
           <a href="#goal">Donations</a>
@@ -176,11 +201,14 @@ export default function Home() {
             <strong>$SMUDGE</strong> is meme history with nine lives.
           </p>
           <p className="hero-goal-copy">
-            100% of future creator fees will support Smudge and rescue cats
-            through verified official channels, with public receipts.
+            100% of creator fees are reserved for Smudge and his owner, with
+            public receipts when funds are delivered.
           </p>
 
           <div className="hero-actions">
+            <a className="button button-primary" href="#pfp">
+              MAKE A SMUDGE PFP ↓
+            </a>
             <a className="progress-pill" href="#goal">
               <strong>{usd.format(raised)}</strong> raised of{" "}
               {usd.format(CAMPAIGN.goalUsd)}{" "}
@@ -202,7 +230,7 @@ export default function Home() {
           </div>
           <div className="sticker sticker-fees">
             <strong>100%</strong>
-            <span>FUTURE FEES SUPPORT SMUDGE</span>
+            <span>CREATOR FEES FOR SMUDGE</span>
           </div>
           <div className="sticker sticker-energy">
             <span>NO VEGETALS.</span>
@@ -231,7 +259,9 @@ export default function Home() {
         <div>
           <span>SMUDGE THE TABLE CAT</span>
           <b>✦</b>
-          <span>100% OF FUTURE FEES SUPPORT SMUDGE</span>
+          <span>100% OF CREATOR FEES FOR SMUDGE + HIS OWNER</span>
+          <b>✦</b>
+          <span>BUILD YOUR SMUDGE PFP</span>
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
@@ -243,7 +273,9 @@ export default function Home() {
           <b>✦</b>
           <span>SMUDGE THE TABLE CAT</span>
           <b>✦</b>
-          <span>100% OF FUTURE FEES SUPPORT SMUDGE</span>
+          <span>100% OF CREATOR FEES FOR SMUDGE + HIS OWNER</span>
+          <b>✦</b>
+          <span>BUILD YOUR SMUDGE PFP</span>
           <b>✦</b>
           <span>GOAL: $5,000</span>
           <b>✦</b>
@@ -359,6 +391,88 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="pfp-section campaign-section" id="pfp" data-reveal>
+        <div className="section-shell pfp-shell">
+          <div className="section-label">
+            <span>03</span>
+            <p>PFP STUDIO</p>
+          </div>
+          <div className="pfp-main">
+            <div className="pfp-heading">
+              <div>
+                <p className="eyebrow">
+                  <span aria-hidden="true">●</span> THE SMUDGE MACHINE
+                </p>
+                <h2>ONE CAT. INFINITE INTERNET.</h2>
+              </div>
+              <p>
+                Pick a Smudge, choose a background, add a hat and dress him for
+                dinner. Every PFP downloads as a crisp, circle-safe PNG.
+              </p>
+            </div>
+
+            <PfpStudio />
+
+            <div className="pfp-download-heading">
+              <div>
+                <span>READY-MADE PFP PACK</span>
+                <h3>DON’T WANT TO BUILD? TAKE ONE.</h3>
+              </div>
+              <p>Free to download. Built for the timeline.</p>
+            </div>
+            <div className="pfp-download-grid">
+              {pfpDownloads.map((pfp) => (
+                <article className="pfp-download-card" key={pfp.title}>
+                  <Image
+                    src={pfp.image}
+                    alt={`${pfp.title} profile picture`}
+                    width={1024}
+                    height={1024}
+                    sizes="(max-width: 580px) 82vw, (max-width: 1000px) 42vw, 21vw"
+                  />
+                  <div>
+                    <span>{pfp.detail}</span>
+                    <strong>{pfp.title}</strong>
+                    <a href={pfp.image} download>
+                      DOWNLOAD PNG ↓
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+            <div className="bot-card" id="bot">
+              <div className="bot-pulse" aria-hidden="true">
+                <i />
+                BOT
+              </div>
+              <div>
+                <p className="eyebrow">
+                  <span aria-hidden="true">●</span> AUTOMATED SMUDGE REPLIES
+                </p>
+                <h3>TAG THE BOT. GET YOUR PFP SMUDGED.</h3>
+                <p>
+                  Mention or reply to the Smudge bot on X. It reads the look of
+                  your current profile picture, creates a one-of-one Smudge
+                  version, and replies with the finished image.
+                </p>
+              </div>
+              {CAMPAIGN.botHandle ? (
+                <a
+                  href={`https://x.com/${CAMPAIGN.botHandle.replace(/^@/, "")}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  TAG @{CAMPAIGN.botHandle.replace(/^@/, "")} ↗
+                </a>
+              ) : (
+                <span>BOT HANDLE DROPS AT ACTIVATION</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section
         className="goal-section campaign-section"
         id="goal"
@@ -366,7 +480,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>03</span>
+            <span>04</span>
             <p>THE GOAL</p>
           </div>
           <div className="campaign-main">
@@ -374,7 +488,7 @@ export default function Home() {
               <span aria-hidden="true">●</span> THE THERMOMETER
             </p>
             <h2>
-              {usd.format(CAMPAIGN.goalUsd)} FOR SMUDGE AND RESCUE CATS. EVERY
+              {usd.format(CAMPAIGN.goalUsd)} FOR SMUDGE AND HIS OWNER. EVERY
               VERIFIED CONTRIBUTION COUNTS.
             </h2>
             <CampaignProgress
@@ -429,7 +543,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>04</span>
+            <span>05</span>
             <p>THE MISSION</p>
           </div>
           <div className="campaign-main">
@@ -467,7 +581,7 @@ export default function Home() {
       <section className="promise" id="promise" data-reveal>
         <div className="promise-inner">
           <div className="promise-number">
-            <span>05</span>
+            <span>06</span>
             <p>THE SMUDGE PROMISE</p>
           </div>
           <p className="eyebrow light">
@@ -479,11 +593,11 @@ export default function Home() {
               <b>%</b>
             </div>
             <div className="promise-copy">
-              <h2>OF FUTURE CREATOR FEES SUPPORT SMUDGE AND RESCUE CATS.</h2>
+              <h2>OF CREATOR FEES ARE RESERVED FOR SMUDGE AND HIS OWNER.</h2>
               <p>
-                Support is routed through Smudge’s verified direct-support
-                link, official merch, and featured rescue charity. If we connect
-                with his owner, the mission moves to coordinated direct support.
+                Until direct contact is verified, support uses Smudge’s official
+                merch and direct-support links. The fee reserve is held for a
+                documented owner handoff with public receipts.
               </p>
               <a className="promise-goal-link" href="#goal">
                 First stop: {usd.format(CAMPAIGN.goalUsd)}. Track it live ↑
@@ -500,7 +614,7 @@ export default function Home() {
       >
         <div className="section-shell campaign-grid">
           <div className="section-label">
-            <span>06</span>
+            <span>07</span>
             <p>SOCIALS</p>
           </div>
           <div className="campaign-main">
