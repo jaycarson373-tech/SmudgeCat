@@ -8,29 +8,37 @@ type Option = {
 };
 
 const BASES: Option[] = [
-  { id: "studio", label: "Studio Smudge" },
-  { id: "comic", label: "Comic Smudge" },
-  { id: "pixel", label: "Pixel Smudge" },
-  { id: "clay", label: "Clay Smudge" },
+  { id: "studio", label: "Studio Timon" },
+  { id: "comic", label: "Comic Timon" },
+  { id: "pixel", label: "Pixel Timon" },
+  { id: "clay", label: "Clay Timon" },
 ];
 
 const BACKDROPS: Option[] = [
   { id: "white", label: "Clean white" },
-  { id: "cream", label: "Dinner cream" },
-  { id: "lime", label: "No vegetals" },
-  { id: "purple", label: "Meme purple" },
-  { id: "coral", label: "Hot plate" },
+  { id: "cream", label: "Warm sand" },
+  { id: "lime", label: "Timon yellow" },
+  { id: "purple", label: "Sunset orange" },
+  { id: "coral", label: "Savanna rust" },
   { id: "checker", label: "Checkerboard" },
-  { id: "gradient", label: "Solana sunset" },
+  { id: "gradient", label: "Golden hour" },
 ];
 
 const HATS: Option[] = [
   { id: "none", label: "No hat" },
-  { id: "crown", label: "Meme king" },
+  { id: "yellow", label: "Timon's yellow hat" },
+  { id: "crown", label: "Lookout king" },
   { id: "party", label: "Party hat" },
   { id: "cowboy", label: "Cowboy" },
   { id: "halo", label: "Angel halo" },
-  { id: "cap", label: "Meme cap" },
+  { id: "cap", label: "Timeline cap" },
+];
+
+const EYEWEAR: Option[] = [
+  { id: "none", label: "No eyewear" },
+  { id: "sunnies", label: "Iconic black shades" },
+  { id: "hearts", label: "Heart eyes" },
+  { id: "sport", label: "Speed shades" },
 ];
 
 const NECKWEAR: Option[] = [
@@ -43,17 +51,17 @@ const NECKWEAR: Option[] = [
 
 const FRAMES: Option[] = [
   { id: "clean", label: "Clean" },
-  { id: "ring", label: "Smudge ring" },
-  { id: "stamp", label: "Meme stamp" },
+  { id: "ring", label: "Timon ring" },
+  { id: "stamp", label: "Lookout stamp" },
 ];
 
 const palette = {
-  ink: "#151826",
-  cream: "#fff8ea",
-  lime: "#a8d66d",
-  orange: "#f15a4a",
-  violet: "#6f3aa8",
-  pink: "#ffd4bf",
+  ink: "#17130c",
+  cream: "#fff6dc",
+  lime: "#ffd323",
+  orange: "#f38b12",
+  violet: "#c86413",
+  pink: "#f7ddb0",
 };
 
 function drawBackdrop(
@@ -101,6 +109,28 @@ function strokeShape(context: CanvasRenderingContext2D) {
 }
 
 function drawHat(context: CanvasRenderingContext2D, hat: string) {
+  if (hat === "yellow") {
+    context.fillStyle = palette.lime;
+    context.beginPath();
+    context.ellipse(512, 242, 290, 70, -0.02, 0, Math.PI * 2);
+    context.fill();
+    strokeShape(context);
+    context.beginPath();
+    context.moveTo(350, 218);
+    context.quadraticCurveTo(368, 60, 512, 58);
+    context.quadraticCurveTo(662, 63, 677, 219);
+    context.quadraticCurveTo(512, 260, 350, 218);
+    context.closePath();
+    context.fill();
+    strokeShape(context);
+    context.strokeStyle = palette.orange;
+    context.lineWidth = 20;
+    context.beginPath();
+    context.moveTo(365, 202);
+    context.quadraticCurveTo(512, 237, 665, 202);
+    context.stroke();
+  }
+
   if (hat === "crown") {
     context.beginPath();
     context.moveTo(306, 276);
@@ -197,6 +227,67 @@ function drawHat(context: CanvasRenderingContext2D, hat: string) {
     context.closePath();
     context.fill();
     strokeShape(context);
+  }
+}
+
+function drawEyewear(context: CanvasRenderingContext2D, eyewear: string) {
+  if (eyewear === "sunnies") {
+    context.fillStyle = "#111111";
+    context.strokeStyle = palette.ink;
+    context.lineWidth = 18;
+    context.beginPath();
+    context.roundRect(250, 378, 226, 150, 68);
+    context.roundRect(548, 378, 226, 150, 68);
+    context.fill();
+    context.stroke();
+    context.beginPath();
+    context.moveTo(468, 423);
+    context.quadraticCurveTo(512, 395, 556, 423);
+    context.stroke();
+    context.strokeStyle = "rgba(255,255,255,0.7)";
+    context.lineWidth = 10;
+    context.beginPath();
+    context.moveTo(295, 412);
+    context.lineTo(345, 395);
+    context.moveTo(592, 412);
+    context.lineTo(642, 395);
+    context.stroke();
+  }
+
+  if (eyewear === "hearts") {
+    context.fillStyle = "#ff5b87";
+    context.strokeStyle = palette.ink;
+    context.lineWidth = 14;
+    [366, 658].forEach((x) => {
+      context.beginPath();
+      context.moveTo(x, 520);
+      context.bezierCurveTo(x - 115, 445, x - 95, 350, x, 403);
+      context.bezierCurveTo(x + 95, 350, x + 115, 445, x, 520);
+      context.fill();
+      context.stroke();
+    });
+    context.beginPath();
+    context.moveTo(456, 421);
+    context.quadraticCurveTo(512, 395, 568, 421);
+    context.stroke();
+  }
+
+  if (eyewear === "sport") {
+    const lens = context.createLinearGradient(270, 380, 750, 520);
+    lens.addColorStop(0, palette.lime);
+    lens.addColorStop(0.5, palette.orange);
+    lens.addColorStop(1, "#ea3c1b");
+    context.fillStyle = lens;
+    context.strokeStyle = palette.ink;
+    context.lineWidth = 18;
+    context.beginPath();
+    context.moveTo(230, 390);
+    context.quadraticCurveTo(512, 335, 794, 390);
+    context.lineTo(745, 514);
+    context.quadraticCurveTo(512, 555, 279, 514);
+    context.closePath();
+    context.fill();
+    context.stroke();
   }
 }
 
@@ -298,7 +389,7 @@ function drawFrame(context: CanvasRenderingContext2D, frame: string) {
     context.textBaseline = "middle";
     context.fillRect(-318, 376, 636, 90);
     context.fillStyle = palette.cream;
-    context.fillText("SMUDGE THE TABLE CAT", 0, 423);
+    context.fillText("TIMON THE MEERKAT", 0, 423);
     context.restore();
   }
 }
@@ -307,7 +398,8 @@ export function PfpStudio() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [base, setBase] = useState("studio");
   const [backdrop, setBackdrop] = useState("white");
-  const [hat, setHat] = useState("none");
+  const [hat, setHat] = useState("yellow");
+  const [eyewear, setEyewear] = useState("sunnies");
   const [neckwear, setNeckwear] = useState("none");
   const [frame, setFrame] = useState("ring");
   const [ready, setReady] = useState(false);
@@ -321,14 +413,14 @@ export function PfpStudio() {
 
     const image = new window.Image();
     image.decoding = "async";
-    image.src = `/smudge-pfp-${base}.png`;
+    image.src = `/timon-pfp-${base}.png`;
 
     try {
       await image.decode();
     } catch {
       await new Promise<void>((resolve, reject) => {
         image.onload = () => resolve();
-        image.onerror = () => reject(new Error("Could not load Smudge"));
+        image.onerror = () => reject(new Error("Could not load Timon"));
       });
     }
 
@@ -352,10 +444,11 @@ export function PfpStudio() {
     context.stroke();
 
     drawHat(context, hat);
+    drawEyewear(context, eyewear);
     drawNeckwear(context, neckwear);
     drawFrame(context, frame);
     setReady(true);
-  }, [backdrop, base, frame, hat, neckwear]);
+  }, [backdrop, base, eyewear, frame, hat, neckwear]);
 
   useEffect(() => {
     void renderPfp();
@@ -367,6 +460,7 @@ export function PfpStudio() {
     setBase(pick(BASES));
     setBackdrop(pick(BACKDROPS));
     setHat(pick(HATS));
+    setEyewear(pick(EYEWEAR));
     setNeckwear(pick(NECKWEAR));
     setFrame(pick(FRAMES));
   }
@@ -375,7 +469,7 @@ export function PfpStudio() {
     const canvas = canvasRef.current;
     if (!canvas || !ready) return;
     const anchor = document.createElement("a");
-    anchor.download = `smudge-pfp-${Date.now()}.png`;
+    anchor.download = `timon-pfp-${Date.now()}.png`;
     anchor.href = canvas.toDataURL("image/png");
     anchor.click();
   }
@@ -392,7 +486,7 @@ export function PfpStudio() {
             ref={canvasRef}
             width={1024}
             height={1024}
-            aria-label="Your customized Smudge profile picture preview"
+            aria-label="Your customized Timon profile picture preview"
           />
           <span className="circle-safe-label">X CIRCLE SAFE</span>
         </div>
@@ -414,7 +508,7 @@ export function PfpStudio() {
       <div className="pfp-controls">
         <div className="pfp-control-group">
           <span>01</span>
-          <label htmlFor="pfp-base">Choose your Smudge</label>
+          <label htmlFor="pfp-base">Choose your Timon</label>
           <select
             id="pfp-base"
             value={base}
@@ -459,7 +553,22 @@ export function PfpStudio() {
         </div>
         <div className="pfp-control-group">
           <span>04</span>
-          <label htmlFor="pfp-neckwear">Dress for dinner</label>
+          <label htmlFor="pfp-eyewear">Add the shades</label>
+          <select
+            id="pfp-eyewear"
+            value={eyewear}
+            onChange={(event) => setEyewear(event.target.value)}
+          >
+            {EYEWEAR.map((option) => (
+              <option key={option.id} value={option.id}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="pfp-control-group">
+          <span>05</span>
+          <label htmlFor="pfp-neckwear">Dress the lookout</label>
           <select
             id="pfp-neckwear"
             value={neckwear}
@@ -473,7 +582,7 @@ export function PfpStudio() {
           </select>
         </div>
         <div className="pfp-control-group">
-          <span>05</span>
+          <span>06</span>
           <label htmlFor="pfp-frame">Finish the frame</label>
           <select
             id="pfp-frame"

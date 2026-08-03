@@ -134,7 +134,7 @@ async function claimMention(id: string) {
       },
       body: JSON.stringify([
         "SET",
-        `smudge-bot:${id}`,
+        `timon-bot:${id}`,
         "processing",
         "NX",
         "EX",
@@ -149,15 +149,15 @@ async function claimMention(id: string) {
   }
 
   const runtime = globalThis as typeof globalThis & {
-    __smudgeMentions?: Set<string>;
+    __timonMentions?: Set<string>;
   };
-  runtime.__smudgeMentions ??= new Set<string>();
-  if (runtime.__smudgeMentions.has(id)) return false;
-  runtime.__smudgeMentions.add(id);
+  runtime.__timonMentions ??= new Set<string>();
+  if (runtime.__timonMentions.has(id)) return false;
+  runtime.__timonMentions.add(id);
   return true;
 }
 
-async function generateSmudgedPfp(mention: Mention, smudgeImageUrl: string) {
+async function generateTimonPfp(mention: Mention, timonImageUrl: string) {
   const openAiKey = process.env.OPENAI_API_KEY;
   if (!openAiKey) throw new Error("OPENAI_API_KEY is not configured");
 
@@ -170,16 +170,16 @@ async function generateSmudgedPfp(mention: Mention, smudgeImageUrl: string) {
     body: JSON.stringify({
       model: process.env.OPENAI_IMAGE_MODEL ?? "gpt-image-1.5",
       prompt: [
-        "Create a square, circle-safe Smudge the Table Cat profile picture.",
-        "The second reference image is the identity reference for Smudge: preserve his white fur, skeptical squint, pink nose, pointed ears, and iconic unbothered expression.",
+        "Create a square, circle-safe Timon the Meerkat profile picture.",
+        "The second reference image is the identity reference for Timon: preserve his gray-tan fur, dark eye markings, round eyes, compact snout, rounded ears, and sweet curious expression.",
         "Use the first reference image only as creative inspiration for the new PFP's outfit, colors, props, mood, and background.",
-        "Do not reproduce or retain a human face. The final subject must be Smudge the white cat.",
-        "Center Smudge's face, keep both ears inside the crop, use a bold clean background, and make the image readable as a tiny X avatar.",
-        "No words, letters, logos, watermarks, salad, or extra animals.",
+        "Do not reproduce or retain a human face. The final subject must be Timon the meerkat.",
+        "Center Timon's face, keep both ears inside the crop, use a bold yellow, cream, or desert background, and make the image readable as a tiny X avatar.",
+        "No words, letters, logos, watermarks, or extra animals.",
       ].join(" "),
       images: [
         { image_url: mention.profileImageUrl },
-        { image_url: smudgeImageUrl },
+        { image_url: timonImageUrl },
       ],
       size: "1024x1024",
       quality: "medium",
@@ -238,9 +238,9 @@ async function replyWithPfp(mention: Mention, mediaId: string) {
 
   const siteUrl = process.env.PUBLIC_SITE_URL?.replace(/\/$/, "");
   const text = [
-    `@${mention.username} you have been Smudged.`,
-    "He no like vegetals.",
-    "100% of creator fees are reserved for Smudge and his owner.",
+    `@${mention.username} you have been Timonized.`,
+    "Tiny meerkat. Huge timeline energy.",
+    "100% of creator fees are reserved for Timon and his owner.",
     siteUrl ? `Make yours: ${siteUrl}/#pfp` : "",
   ]
     .filter(Boolean)
@@ -274,9 +274,9 @@ async function replyWithPfp(mention: Mention, mediaId: string) {
 
 async function processMention(mention: Mention, origin: string) {
   if (!(await claimMention(mention.id))) return;
-  const imageBase64 = await generateSmudgedPfp(
+  const imageBase64 = await generateTimonPfp(
     mention,
-    new URL("/smudge-pfp-studio.png", origin).href,
+    new URL("/timon-pfp-studio.png", origin).href,
   );
   const mediaId = await uploadImageToX(imageBase64);
   await replyWithPfp(mention, mediaId);
@@ -289,7 +289,7 @@ export async function GET(request: Request) {
 
   if (!crcToken) {
     return Response.json({
-      service: "Smudge PFP bot",
+      service: "Timon PFP bot",
       configured: Boolean(
         consumerSecret &&
           process.env.X_USER_ACCESS_TOKEN &&
@@ -339,7 +339,7 @@ export async function POST(request: Request) {
     );
     for (const result of results) {
       if (result.status === "rejected") {
-        console.error("Smudge bot failed to process a mention", result.reason);
+        console.error("Timon bot failed to process a mention", result.reason);
       }
     }
   });

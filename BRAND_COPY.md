@@ -1,21 +1,21 @@
-# Smudge Launch Copy
+# Timon Launch Copy
 
 ## Pump.fun description
 
-$SMUDGE celebrates Smudge the Table Cat, the white cat behind one of the most recognizable memes in internet history. He no like vegetals. He does like memes. 100% of creator fees are reserved for Smudge and his owner, with public receipts when funds are delivered. Community-run fan project.
+$TIMON celebrates Timon the Meerkat, the tiny viral animal creator with giant timeline energy. 258.8K TikTok followers, 22.4M likes, iconic costumes, and a face built for infinite remixes. Build your Timon PFP and join the lookout. 100% of creator fees are reserved for Timon and his owner, with completed support documented publicly. Community-run fan project.
 
 ## Launch thesis tweet
 
-Smudge the Table Cat claimed one seat at the dinner table and became internet history. The “he no like vegetals” cat has 1.5M Instagram followers, won Meme of the Year, and still owns the reaction-image throne. $SMUDGE brings that global meme to Solana. 100% of creator fees are reserved for Smudge and his owner.
+Timon is 12 inches of pure internet main character. The yellow hat. The black shades. 258.8K followers. 22.4M likes. More than 50M views across his three pinned TikToks. Now the lookout is coming to Solana. Build your Timon PFP. Join the timeline. 100% of creator fees are reserved for Timon and his owner. $TIMON
 
 ## X bio
 
-Smudge the Table Cat, the internet’s most famous salad hater, now on Solana. Make your Smudge PFP. 100% of creator fees are reserved for Smudge and his owner. Fan project.
+Timon the Meerkat on Solana. Tiny lookout, huge timeline. Build your custom PFP. 100% of creator fees reserved for Timon and his owner. Fan project.
 
-## X Community bio
+## X community bio
 
-The $SMUDGE community on Solana. Celebrating the table cat who became internet royalty while reserving 100% of creator fees for Smudge and his owner. Memes, custom PFPs, milestones, and transparent receipts.
+The $TIMON community on Solana. Viral meerkat energy, custom PFPs, community milestones, and public support receipts. 100% of creator fees reserved for Timon and his owner.
 
 ## Logo
 
-Use `public/smudge-avatar.png`.
+Use `public/timon-avatar.png`.

@@ -1,8 +1,4 @@
-export type CampaignStatus =
-  | "raising"
-  | "contacting"
-  | "responded"
-  | "donated";
+export type CampaignStatus = "raising" | "contacting" | "responded" | "donated";
 
 const allowedStatuses: CampaignStatus[] = [
   "raising",
@@ -12,6 +8,7 @@ const allowedStatuses: CampaignStatus[] = [
 ];
 
 const configuredStatus = process.env.NEXT_PUBLIC_CAMPAIGN_STATUS;
+
 export const CAMPAIGN = {
   goalUsd: 5000,
   raisedUsd: Number(process.env.NEXT_PUBLIC_RAISED_USD ?? 0),
@@ -20,12 +17,8 @@ export const CAMPAIGN = {
     ? (configuredStatus as CampaignStatus)
     : ("raising" as CampaignStatus),
   botHandle: process.env.NEXT_PUBLIC_BOT_HANDLE ?? "",
-  xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/SmudgeLord",
-  tiktokUrl: "https://www.tiktok.com/@smudge_lord",
-  instagramUrl: "https://www.instagram.com/smudge_lord/",
-  facebookUrl: "https://www.facebook.com/smudgelordofficial",
-  supportUrl: "https://www.paypal.me/smudgelord",
-  merchUrl: "https://smudge-lord.com/",
-  charityUrl: "https://www.furry-tales.ca/",
-  linktreeUrl: "https://linktr.ee/Smudge_Lord",
+  xUrl: process.env.NEXT_PUBLIC_X_URL || "https://x.com/timonsurik",
+  tiktokUrl: "https://www.tiktok.com/@timon.surik",
+  instagramUrl: "https://www.instagram.com/timon.surik/",
+  taplinkUrl: "https://taplink.cc/timonsurik",
 };

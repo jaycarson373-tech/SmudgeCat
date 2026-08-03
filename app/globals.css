@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --ink: #151826;
-  --cream: #fff8ea;
-  --lime: #a8d66d;
-  --orange: #f15a4a;
-  --violet: #6f3aa8;
-  --pink: #ffd4bf;
-  --line: #151826;
+  --ink: #17130c;
+  --cream: #fff7df;
+  --lime: #ffd323;
+  --orange: #f39a15;
+  --violet: #c65d13;
+  --pink: #f4ddb0;
+  --line: #17130c;
 }
 
 @theme inline {
@@ -41,8 +41,8 @@ a {
 }
 
 ::selection {
-  background: var(--violet);
-  color: white;
+  background: var(--lime);
+  color: var(--ink);
 }
 
 main {
@@ -533,7 +533,7 @@ h1 span {
   z-index: 2;
 }
 
-.smudge-mark {
+.timon-mark {
   bottom: -85px;
   color: var(--violet);
   font-size: 12rem;
@@ -935,7 +935,7 @@ footer a {
   }
 }
 
-/* Smudge campaign */
+/* Timon campaign */
 
 .site-header {
   background: color-mix(in srgb, var(--cream) 94%, transparent);
@@ -1429,7 +1429,7 @@ footer a {
 
 .thermometer::after {
   color: var(--ink);
-  content: "SMUDGE";
+  content: "TIMON";
   font-family: var(--font-geist-mono), monospace;
   font-size: 0.6rem;
   font-weight: 900;
@@ -1539,7 +1539,7 @@ footer a {
 }
 
 .mission-section {
-  background: #e6f5ff;
+  background: #fff0c5;
 }
 
 .mission-timeline {
@@ -1761,7 +1761,7 @@ footer a {
 }
 
 .socials-section {
-  background: #ffe1ec;
+  background: #ffe8a0;
 }
 
 .social-grid {
@@ -1787,7 +1787,7 @@ footer a {
 }
 
 .social-card-featured {
-  background: var(--violet);
+  background: var(--ink);
   color: white;
   grid-column: 1 / -1;
 }
@@ -2765,7 +2765,7 @@ footer a {
   }
 }
 
-/* Smudge PFP studio */
+/* Timon PFP studio */
 
 .pfp-section {
   background:

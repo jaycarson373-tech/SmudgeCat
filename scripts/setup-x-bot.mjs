@@ -46,7 +46,7 @@ await xRequest("/2/tweets/search/stream/rules", {
     add: [
       {
         value: `@${handle} -is:retweet -from:${handle}`,
-        tag: "smudge-pfp-request",
+        tag: "timon-pfp-request",
       },
     ],
   }),
@@ -59,4 +59,4 @@ await xRequest(
   { method: "POST" },
 );
 
-console.log("Smudge bot webhook and mention rule are active.");
+console.log("Timon bot webhook and mention rule are active.");

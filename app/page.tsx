@@ -18,84 +18,78 @@ const missionSteps: Array<{
   {
     status: "raising",
     title: "Raise",
-    copy: "100% of creator fees are reserved for Smudge and his owner.",
+    copy: "100% of creator fees are reserved for Timon and his owner.",
   },
   {
     status: "contacting",
-    title: "Connect",
-    copy: "The community keeps reaching out through Smudge’s verified official channels.",
+    title: "Support",
+    copy: "The community supports Timon through his verified public channels while the reserve grows.",
   },
   {
     status: "responded",
-    title: "Document",
-    copy: "Once contact is verified, the handoff plan and every completed contribution are documented.",
+    title: "Verify",
+    copy: "Every direct handoff is coordinated with the real owner and documented before it is counted.",
   },
   {
     status: "donated",
-    title: "Direct",
-    copy: "Creator fees are delivered to Smudge’s owner with public receipts.",
+    title: "Share",
+    copy: "Completed support is published with receipts so the community can follow every contribution.",
   },
 ];
 
 const greatestHits = [
   {
     rank: "01",
-    title: "He no like vegetals",
-    metricOneLabel: "Original post",
-    metricOne: "2018",
-    metricTwoLabel: "Tumblr notes",
-    metricTwo: "50K+",
-    image: "/smudge-original.jpg",
-    alt: "Smudge sitting at the dinner table behind a plate of salad",
-    href: "https://www.tumblr.com/deadbeforedeath/175034192749/he-no-like-vegetals",
-    linkLabel: "See the original",
+    title: "The yellow hat era",
+    metricOneLabel: "Pinned views",
+    metricOne: "19.5M",
+    metricTwoLabel: "Energy",
+    metricTwo: "Iconic",
+    image: "/timon-hero.png",
+    alt: "Timon the Meerkat wearing his yellow hat and sunglasses",
   },
   {
     rank: "02",
-    title: "Meme of the Year",
-    metricOneLabel: "Shorty Award",
-    metricOne: "Winner",
-    metricTwoLabel: "Year",
-    metricTwo: "2020",
-    image: "/smudge-kitten.jpg",
-    alt: "Smudge investigating a kitchen faucet",
-    href: "https://shortyawards.com/12th/woman-yells-at-cat",
-    linkLabel: "See the award",
+    title: "Peak bath-time chaos",
+    metricOneLabel: "Pinned views",
+    metricOne: "16.9M",
+    metricTwoLabel: "Mood",
+    metricTwo: "Unreal",
+    image: "/timon-pfp-comic.png",
+    alt: "A comic portrait of Timon the Meerkat",
   },
   {
     rank: "03",
-    title: "Still judging",
-    metricOneLabel: "Instagram",
-    metricOne: "1.5M",
-    metricTwoLabel: "Posts",
-    metricTwo: "685",
-    image: "/smudge-collectible.jpg",
-    alt: "Smudge, the white table cat, looking into the camera",
-    href: "https://www.instagram.com/smudge_lord/",
-    linkLabel: "Follow Smudge",
+    title: "Tiny animal, huge timeline",
+    metricOneLabel: "Pinned views",
+    metricOne: "15.3M",
+    metricTwoLabel: "Status",
+    metricTwo: "Viral",
+    image: "/timon-pfp-clay.png",
+    alt: "A clay portrait of Timon the Meerkat",
   },
 ] as const;
 
 const pfpDownloads = [
   {
-    title: "Studio Smudge",
-    detail: "Clean white",
-    image: "/smudge-pfp-studio.png",
+    title: "Studio Timon",
+    detail: "Clean classic",
+    image: "/timon-pfp-studio.png",
   },
   {
-    title: "Comic Smudge",
-    detail: "Halftone legend",
-    image: "/smudge-pfp-comic.png",
+    title: "Comic Timon",
+    detail: "Halftone hero",
+    image: "/timon-pfp-comic.png",
   },
   {
-    title: "Pixel Smudge",
-    detail: "16-bit judgment",
-    image: "/smudge-pfp-pixel.png",
+    title: "Pixel Timon",
+    detail: "16-bit lookout",
+    image: "/timon-pfp-pixel.png",
   },
   {
-    title: "Clay Smudge",
-    detail: "Handmade hater",
-    image: "/smudge-pfp-clay.png",
+    title: "Clay Timon",
+    detail: "Handmade legend",
+    image: "/timon-pfp-clay.png",
   },
 ] as const;
 
@@ -113,12 +107,7 @@ function SocialLink({
   className?: string;
 }) {
   return (
-    <a
-      className={className}
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-    >
+    <a className={className} href={href} target="_blank" rel="noreferrer">
       {label} <span aria-hidden="true">↗</span>
     </a>
   );
@@ -135,443 +124,193 @@ export default function Home() {
       <MotionController />
       <div className="scroll-progress" aria-hidden="true" />
       <div className="cursor-glow" aria-hidden="true" />
+
       <header className="site-header">
-        <a className="brand" href="#top" aria-label="Smudge home">
+        <a className="brand" href="#top" aria-label="Timon home">
           <span className="brand-avatar">
-            <Image
-              src="/smudge-avatar.png"
-              alt=""
-              width={42}
-              height={42}
-              priority
-            />
+            <Image src="/timon-avatar.png" alt="" width={42} height={42} priority />
           </span>
-          <span className="brand-name">SMUDGE</span>
-          <span className="brand-tag">TABLE CAT</span>
+          <span className="brand-name">TIMON</span>
+          <span className="brand-tag">THE MEERKAT</span>
         </a>
 
         <nav className="header-center" aria-label="Main navigation">
-          <a href="#pfp">PFP studio</a>
+          <a href="#story">Story</a>
           <a href="#hits">Greatest hits</a>
-          <a href="#mission">How it works</a>
-          <a href="#goal">Donations</a>
+          <a href="#pfp">PFP studio</a>
+          <a href="#goal">Support</a>
           <a href="#socials">Socials</a>
         </nav>
 
         <div className="header-actions">
-          <SocialLink
-            className="header-social instagram-social"
-            href={CAMPAIGN.instagramUrl}
-            label="IG"
-          />
-          <SocialLink
-            className="header-social tiktok-social"
-            href={CAMPAIGN.tiktokUrl}
-            label="TK"
-          />
-          <SocialLink
-            className="header-social x-social"
-            href={CAMPAIGN.xUrl}
-            label="X"
-          />
+          <SocialLink className="header-social instagram-social" href={CAMPAIGN.instagramUrl} label="IG" />
+          <SocialLink className="header-social tiktok-social" href={CAMPAIGN.tiktokUrl} label="TK" />
+          <SocialLink className="header-social x-social" href={CAMPAIGN.xUrl} label="X" />
         </div>
       </header>
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow">
-            <span aria-hidden="true">●</span> ONE OF THE WORLD’S MOST VIRAL CATS
-          </p>
+          <p className="eyebrow"><span aria-hidden="true">●</span> THE INTERNET&apos;S FAVORITE MEERKAT</p>
           <div className="launch-signal">
-            <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">
-              Follow @SmudgeLord ↗
-            </a>
+            <a href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer">Follow @timonsurik ↗</a>
           </div>
-          <h1>
-            MEET <span>SMUDGE.</span>
-            <br />
-            THE TABLE CAT.
-          </h1>
+          <h1>MEET <span>TIMON.</span><br />THE MEERKAT.</h1>
           <p className="hero-dek">
-            Smudge the Table Cat claimed one seat, faced one plate of
-            vegetables, and became one of the defining memes of the internet.
+            A tiny viral animal creator with giant main-character energy, legendary costumes, and a community that cannot stop watching.
           </p>
           <p className="hero-mission">
-            The internet’s most famous salad hater deserves to run on Solana.{" "}
-            <strong>$SMUDGE</strong> is meme history with nine lives.
+            <strong>$TIMON</strong> brings the yellow-hat icon to Solana with a playful PFP lab built for the timeline.
           </p>
           <p className="hero-goal-copy">
-            100% of creator fees are reserved for Smudge and his owner, with
-            public receipts when funds are delivered.
+            100% of creator fees are reserved for Timon and his owner, with public receipts for completed support.
           </p>
-
           <div className="hero-actions">
-            <a className="button button-primary" href="#pfp">
-              MAKE A SMUDGE PFP ↓
-            </a>
+            <a className="button button-primary" href="#pfp">BUILD YOUR TIMON PFP ↓</a>
             <a className="progress-pill" href="#goal">
-              <strong>{usd.format(raised)}</strong> raised of{" "}
-              {usd.format(CAMPAIGN.goalUsd)}{" "}
-              <span aria-hidden="true">↓</span>
+              <strong>{usd.format(raised)}</strong> raised of {usd.format(CAMPAIGN.goalUsd)} <span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
 
-        <div className="hero-art" aria-label="Smudge the famous table cat">
+        <div className="hero-art" aria-label="Timon the viral meerkat">
           <div className="sunburst" aria-hidden="true" />
           <div className="photo-frame">
             <Image
-              src="/smudge-original.jpg"
-              alt="Smudge, the white viral cat, sitting behind a plate of salad"
+              src="/timon-hero.png"
+              alt="Timon the Meerkat wearing a yellow hat and black sunglasses"
               fill
               priority
               sizes="(max-width: 820px) 92vw, 46vw"
             />
           </div>
-          <div className="sticker sticker-fees">
-            <strong>100%</strong>
-            <span>CREATOR FEES FOR SMUDGE</span>
-          </div>
-          <div className="sticker sticker-energy">
-            <span>NO VEGETALS.</span>
-            <strong>ONLY MEMES.</strong>
-          </div>
+          <div className="sticker sticker-fees"><strong>100%</strong><span>CREATOR FEES FOR TIMON</span></div>
+          <div className="sticker sticker-energy"><span>SMALL MEERKAT.</span><strong>HUGE ENERGY.</strong></div>
         </div>
       </section>
 
-      <section className="stats" aria-label="Smudge’s internet legacy">
-        <div className="stat">
-          <strong>1.5M</strong>
-          <span>Instagram followers</span>
-        </div>
-        <div className="stat">
-          <strong>50K+</strong>
-          <span>Original Tumblr notes</span>
-        </div>
-        <div className="stat">
-          <strong>#1</strong>
-          <span>TIME’s 2020 cat ranking</span>
-        </div>
-        <p className="stats-note">Public sources · July 2026</p>
+      <section className="stats" aria-label="Timon's TikTok stats">
+        <div className="stat"><strong>258.8K</strong><span>TikTok followers</span></div>
+        <div className="stat"><strong>22.4M</strong><span>TikTok likes</span></div>
+        <div className="stat"><strong>51.7M</strong><span>Views across three pinned hits</span></div>
+        <p className="stats-note">TikTok profile snapshot · August 2026</p>
       </section>
 
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>SMUDGE THE TABLE CAT</span>
-          <b>✦</b>
-          <span>100% OF CREATOR FEES FOR SMUDGE + HIS OWNER</span>
-          <b>✦</b>
-          <span>BUILD YOUR SMUDGE PFP</span>
-          <b>✦</b>
-          <span>GOAL: $5,000</span>
-          <b>✦</b>
-          <span>CHARITY COIN. MEME ENERGY.</span>
-          <b>✦</b>
-          <span>HE NO LIKE VEGETALS</span>
-          <b>✦</b>
-          <span>BELOVED BY MILLIONS</span>
-          <b>✦</b>
-          <span>SMUDGE THE TABLE CAT</span>
-          <b>✦</b>
-          <span>100% OF CREATOR FEES FOR SMUDGE + HIS OWNER</span>
-          <b>✦</b>
-          <span>BUILD YOUR SMUDGE PFP</span>
-          <b>✦</b>
-          <span>GOAL: $5,000</span>
-          <b>✦</b>
-          <span>CHARITY COIN. MEME ENERGY.</span>
-          <b>✦</b>
-          <span>HE NO LIKE VEGETALS</span>
-          <b>✦</b>
-          <span>BELOVED BY MILLIONS</span>
-          <b>✦</b>
+          <span>TIMON THE MEERKAT</span><b>✦</b><span>BUILD YOUR TIMON PFP</span><b>✦</b>
+          <span>100% OF CREATOR FEES FOR TIMON</span><b>✦</b><span>258.8K FOLLOWERS</span><b>✦</b>
+          <span>22.4M LIKES</span><b>✦</b><span>HAKUNA MATATA</span><b>✦</b>
+          <span>TIMON THE MEERKAT</span><b>✦</b><span>BUILD YOUR TIMON PFP</span><b>✦</b>
+          <span>100% OF CREATOR FEES FOR TIMON</span><b>✦</b><span>258.8K FOLLOWERS</span><b>✦</b>
+          <span>22.4M LIKES</span><b>✦</b><span>HAKUNA MATATA</span><b>✦</b>
         </div>
-      </div>
-
-      <div className="brand-banner section-shell">
-        <Image
-          src="/smudge-collectible.jpg"
-          alt="Smudge, the famous white table cat"
-          width={640}
-          height={640}
-          sizes="(max-width: 1440px) 94vw, 1312px"
-        />
       </div>
 
       <section className="story section-shell" id="story" data-reveal>
-        <div className="section-label">
-          <span>01</span>
-          <p>THE STORY</p>
-        </div>
+        <div className="section-label"><span>01</span><p>THE STORY</p></div>
         <div className="story-copy">
-          <h2>HE TOOK ONE SEAT AT THE TABLE. THE INTERNET NEVER RECOVERED.</h2>
+          <h2>ONE TINY LOOKOUT. MILLIONS STOPPED SCROLLING.</h2>
           <div className="story-columns">
             <p>
-              Smudge the Table Cat is a white rescue cat from Ottawa who
-              insists on having a chair at dinner. In June 2018, he claimed an
-              empty seat behind a plate of salad and made internet history.
+              Timon is a real pet meerkat whose curious stare, little paws, costumes, and perfectly timed reactions turned everyday clips into massive TikTok moments.
             </p>
             <p>
-              The original Tumblr post, “he no like vegetals,” became the cat
-              half of “Woman Yelling at a Cat.” The pairing turned Smudge into
-              one of the most recognizable reaction images ever made.
+              From pink hats to yellow shades, Timon brings a new look to every post. The formula is simple: tiny meerkat, huge personality, endless remix potential.
             </p>
           </div>
         </div>
         <aside className="story-card">
-          <span className="tiny-pill">WHY SMUDGE?</span>
-          <p>
-            <strong>He is certified internet royalty.</strong> Meme of the Year,
-            TIME’s top internet cat of 2020, and 1.5 million Instagram followers.
-          </p>
-          <span className="smudge-mark" aria-hidden="true">
-            S
-          </span>
+          <span className="tiny-pill">WHY TIMON?</span>
+          <p><strong>He is built for the timeline.</strong> 258.8K followers, 22.4M likes, and more than 50M views across the three pinned videos shown on his profile.</p>
+          <span className="timon-mark" aria-hidden="true">T</span>
         </aside>
       </section>
 
       <section className="hits-section campaign-section" id="hits" data-reveal>
         <div className="section-shell hits-shell">
-          <div className="section-label">
-            <span>02</span>
-            <p>GREATEST HITS</p>
-          </div>
+          <div className="section-label"><span>02</span><p>GREATEST HITS</p></div>
           <div className="hits-main">
             <div className="hits-heading">
-              <div>
-                <p className="eyebrow light">
-                  <span aria-hidden="true">●</span> INTERNET HISTORY
-                </p>
-                <h2>SMUDGE’S GREATEST HITS.</h2>
-              </div>
-              <div className="hits-total">
-                <strong>2018</strong>
-                <span>the table was claimed</span>
-              </div>
+              <div><p className="eyebrow light"><span aria-hidden="true">●</span> VIRAL BY NATURE</p><h2>TIMON&apos;S GREATEST HITS.</h2></div>
+              <div className="hits-total"><strong>50M+</strong><span>pinned views combined</span></div>
             </div>
-            <p className="hits-intro">
-              One face. Infinite remixes. A permanent seat at the table of
-              internet culture.
-            </p>
+            <p className="hits-intro">Three pinned clips. More than fifty million views. One unmistakable little face.</p>
             <div className="hits-grid">
               {greatestHits.map((hit) => (
                 <article className="hit-card" key={hit.rank}>
-                  <div className="hit-video">
-                    <Image
-                      src={hit.image}
-                      alt={hit.alt}
-                      fill
-                      sizes="(max-width: 820px) 82vw, 29vw"
-                    />
-                    <span>{hit.rank}</span>
-                  </div>
+                  <div className="hit-video"><Image src={hit.image} alt={hit.alt} fill sizes="(max-width: 820px) 82vw, 29vw" /><span>{hit.rank}</span></div>
                   <div className="hit-copy">
                     <h3>{hit.title}</h3>
-                    <dl>
-                      <div>
-                        <dt>{hit.metricOneLabel}</dt>
-                        <dd>{hit.metricOne}</dd>
-                      </div>
-                      <div>
-                        <dt>{hit.metricTwoLabel}</dt>
-                        <dd>{hit.metricTwo}</dd>
-                      </div>
-                    </dl>
-                    <a href={hit.href} target="_blank" rel="noreferrer">
-                      {hit.linkLabel} ↗
-                    </a>
+                    <dl><div><dt>{hit.metricOneLabel}</dt><dd>{hit.metricOne}</dd></div><div><dt>{hit.metricTwoLabel}</dt><dd>{hit.metricTwo}</dd></div></dl>
+                    <a href={CAMPAIGN.tiktokUrl} target="_blank" rel="noreferrer">WATCH ON TIKTOK ↗</a>
                   </div>
                 </article>
               ))}
             </div>
-            <p className="hits-note">
-              Public source totals checked July 2026.
-            </p>
+            <p className="hits-note">Public TikTok profile snapshot checked August 2026.</p>
           </div>
         </div>
       </section>
 
       <section className="pfp-section campaign-section" id="pfp" data-reveal>
         <div className="section-shell pfp-shell">
-          <div className="section-label">
-            <span>03</span>
-            <p>PFP STUDIO</p>
-          </div>
+          <div className="section-label"><span>03</span><p>PFP STUDIO</p></div>
           <div className="pfp-main">
             <div className="pfp-heading">
-              <div>
-                <p className="eyebrow">
-                  <span aria-hidden="true">●</span> THE SMUDGE MACHINE
-                </p>
-                <h2>ONE CAT. INFINITE INTERNET.</h2>
-              </div>
-              <p>
-                Pick a Smudge, choose a background, add a hat and dress him for
-                dinner. Every PFP downloads as a crisp, circle-safe PNG.
-              </p>
+              <div><p className="eyebrow"><span aria-hidden="true">●</span> THE TIMON MACHINE</p><h2>ONE MEERKAT. INFINITE LOOKS.</h2></div>
+              <p>Choose your Timon, switch the background, add a hat, shades, and neckwear, then download a crisp circle-safe PNG.</p>
             </div>
-
             <PfpStudio />
-
-            <div className="pfp-download-heading">
-              <div>
-                <span>READY-MADE PFP PACK</span>
-                <h3>DON’T WANT TO BUILD? TAKE ONE.</h3>
-              </div>
-              <p>Free to download. Built for the timeline.</p>
-            </div>
+            <div className="pfp-download-heading"><div><span>READY-MADE PFP PACK</span><h3>DON&apos;T WANT TO BUILD? TAKE ONE.</h3></div><p>Free to download. Built for the timeline.</p></div>
             <div className="pfp-download-grid">
               {pfpDownloads.map((pfp) => (
                 <article className="pfp-download-card" key={pfp.title}>
-                  <Image
-                    src={pfp.image}
-                    alt={`${pfp.title} profile picture`}
-                    width={1024}
-                    height={1024}
-                    sizes="(max-width: 580px) 82vw, (max-width: 1000px) 42vw, 21vw"
-                  />
-                  <div>
-                    <span>{pfp.detail}</span>
-                    <strong>{pfp.title}</strong>
-                    <a href={pfp.image} download>
-                      DOWNLOAD PNG ↓
-                    </a>
-                  </div>
+                  <Image src={pfp.image} alt={`${pfp.title} profile picture`} width={1024} height={1024} sizes="(max-width: 580px) 82vw, (max-width: 1000px) 42vw, 21vw" />
+                  <div><span>{pfp.detail}</span><strong>{pfp.title}</strong><a href={pfp.image} download>DOWNLOAD PNG ↓</a></div>
                 </article>
               ))}
             </div>
-
             <div className="bot-card" id="bot">
-              <div className="bot-pulse" aria-hidden="true">
-                <i />
-                BOT
-              </div>
-              <div>
-                <p className="eyebrow">
-                  <span aria-hidden="true">●</span> AUTOMATED SMUDGE REPLIES
-                </p>
-                <h3>TAG THE BOT. GET YOUR PFP SMUDGED.</h3>
-                <p>
-                  Mention or reply to the Smudge bot on X. It reads the look of
-                  your current profile picture, creates a one-of-one Smudge
-                  version, and replies with the finished image.
-                </p>
-              </div>
-              {CAMPAIGN.botHandle ? (
-                <a
-                  href={`https://x.com/${CAMPAIGN.botHandle.replace(/^@/, "")}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  TAG @{CAMPAIGN.botHandle.replace(/^@/, "")} ↗
-                </a>
-              ) : (
-                <span>BOT HANDLE DROPS AT ACTIVATION</span>
-              )}
+              <div className="bot-pulse" aria-hidden="true"><i />BOT</div>
+              <div><p className="eyebrow"><span aria-hidden="true">●</span> AUTOMATED TIMON REPLIES</p><h3>TAG THE BOT. GET TIMONIZED.</h3><p>Mention or reply to the Timon bot on X. It reads the style of your profile picture, creates a one-of-one Timon version, and replies with the finished image.</p></div>
+              {CAMPAIGN.botHandle ? <a href={`https://x.com/${CAMPAIGN.botHandle.replace(/^@/, "")}`} target="_blank" rel="noreferrer">TAG @{CAMPAIGN.botHandle.replace(/^@/, "")} ↗</a> : <span>BOT HANDLE DROPS AT ACTIVATION</span>}
             </div>
           </div>
         </div>
       </section>
 
-      <section
-        className="goal-section campaign-section"
-        id="goal"
-        data-reveal
-      >
+      <section className="goal-section campaign-section" id="goal" data-reveal>
         <div className="section-shell campaign-grid">
-          <div className="section-label">
-            <span>04</span>
-            <p>THE GOAL</p>
-          </div>
+          <div className="section-label"><span>04</span><p>THE GOAL</p></div>
           <div className="campaign-main">
-            <p className="eyebrow">
-              <span aria-hidden="true">●</span> THE THERMOMETER
-            </p>
-            <h2>
-              {usd.format(CAMPAIGN.goalUsd)} FOR SMUDGE AND HIS OWNER. EVERY
-              VERIFIED CONTRIBUTION COUNTS.
-            </h2>
-            <CampaignProgress
-              raisedUsd={raised}
-              goalUsd={CAMPAIGN.goalUsd}
-            />
+            <p className="eyebrow"><span aria-hidden="true">●</span> THE SUPPORT METER</p>
+            <h2>{usd.format(CAMPAIGN.goalUsd)} FOR TIMON AND HIS OWNER. EVERY VERIFIED CONTRIBUTION COUNTS.</h2>
+            <CampaignProgress raisedUsd={raised} goalUsd={CAMPAIGN.goalUsd} />
             <div className="wallet-proof">
-              <p>
-                Every verified contribution moves this meter.
-              </p>
-              {CAMPAIGN.careWallet ? (
-                <a
-                  href={`https://solscan.io/account/${encodeURIComponent(
-                    CAMPAIGN.careWallet,
-                  )}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Support wallet ↗
-                </a>
-              ) : null}
-              <strong>
-                Contributions are counted after verification and updated
-                publicly.
-              </strong>
+              <p>Every verified contribution moves this meter.</p>
+              {CAMPAIGN.careWallet ? <a href={`https://solscan.io/account/${encodeURIComponent(CAMPAIGN.careWallet)}`} target="_blank" rel="noreferrer">SUPPORT WALLET ↗</a> : null}
+              <strong>Contributions are counted after verification and updated publicly.</strong>
             </div>
-            <div className="goal-actions" aria-label="Support the Smudge goal">
-              <SocialLink
-                className="goal-action goal-action-primary"
-                href={CAMPAIGN.supportUrl}
-                label="DIRECT SMUDGE SUPPORT"
-              />
-              <SocialLink
-                className="goal-action"
-                href={CAMPAIGN.merchUrl}
-                label="SHOP OFFICIAL MERCH"
-              />
-              <SocialLink
-                className="goal-action"
-                href={CAMPAIGN.charityUrl}
-                label="FURRY TALES CHARITY"
-              />
+            <div className="goal-actions" aria-label="Support Timon">
+              <SocialLink className="goal-action goal-action-primary" href={CAMPAIGN.taplinkUrl} label="TIMON'S OFFICIAL LINKS" />
+              <SocialLink className="goal-action" href={CAMPAIGN.tiktokUrl} label="FOLLOW ON TIKTOK" />
+              <SocialLink className="goal-action" href={CAMPAIGN.instagramUrl} label="FOLLOW ON INSTAGRAM" />
             </div>
           </div>
         </div>
       </section>
 
-      <section
-        className="mission-section campaign-section"
-        id="mission"
-        data-reveal
-      >
+      <section className="mission-section campaign-section" id="mission" data-reveal>
         <div className="section-shell campaign-grid">
-          <div className="section-label">
-            <span>05</span>
-            <p>THE MISSION</p>
-          </div>
+          <div className="section-label"><span>05</span><p>THE MISSION</p></div>
           <div className="campaign-main">
-            <p className="eyebrow">
-              <span aria-hidden="true">●</span> OPERATION: SUPPORT SMUDGE
-            </p>
+            <p className="eyebrow"><span aria-hidden="true">●</span> OPERATION: SUPPORT TIMON</p>
             <h2>RAISE IT. SUPPORT HIM. SHOW THE RECEIPTS.</h2>
             <div className="mission-timeline">
               {missionSteps.map((step, index) => {
-                const state =
-                  index < statusIndex
-                    ? "completed"
-                    : index === statusIndex
-                      ? "active"
-                      : "future";
-
-                return (
-                  <div className={`mission-step ${state}`} key={step.status}>
-                    <div className="mission-node" aria-hidden="true">
-                      {state === "completed" ? "✓" : <i />}
-                    </div>
-                    <div>
-                      <span>0{index + 1}</span>
-                      <h3>{step.title}</h3>
-                      <p>{step.copy}</p>
-                    </div>
-                  </div>
-                );
+                const state = index < statusIndex ? "completed" : index === statusIndex ? "active" : "future";
+                return <div className={`mission-step ${state}`} key={step.status}><div className="mission-node" aria-hidden="true">{state === "completed" ? "✓" : <i />}</div><div><span>0{index + 1}</span><h3>{step.title}</h3><p>{step.copy}</p></div></div>;
               })}
             </div>
           </div>
@@ -580,201 +319,53 @@ export default function Home() {
 
       <section className="promise" id="promise" data-reveal>
         <div className="promise-inner">
-          <div className="promise-number">
-            <span>06</span>
-            <p>THE SMUDGE PROMISE</p>
-          </div>
-          <p className="eyebrow light">
-            <span aria-hidden="true">●</span> THE SMUDGE PROMISE
-          </p>
+          <div className="promise-number"><span>06</span><p>THE TIMON PROMISE</p></div>
+          <p className="eyebrow light"><span aria-hidden="true">●</span> THE TIMON PROMISE</p>
           <div className="promise-grid">
-            <div className="hundred">
-              <span>100</span>
-              <b>%</b>
-            </div>
-            <div className="promise-copy">
-              <h2>OF CREATOR FEES ARE RESERVED FOR SMUDGE AND HIS OWNER.</h2>
-              <p>
-                Until direct contact is verified, support uses Smudge’s official
-                merch and direct-support links. The fee reserve is held for a
-                documented owner handoff with public receipts.
-              </p>
-              <a className="promise-goal-link" href="#goal">
-                First stop: {usd.format(CAMPAIGN.goalUsd)}. Track it live ↑
-              </a>
-            </div>
+            <div className="hundred"><span>100</span><b>%</b></div>
+            <div className="promise-copy"><h2>OF CREATOR FEES ARE RESERVED FOR TIMON AND HIS OWNER.</h2><p>The goal is direct, documented support for Timon. Until each handoff is verified, the reserve stays reserved. Completed support is shared publicly.</p><a className="promise-goal-link" href="#goal">First stop: {usd.format(CAMPAIGN.goalUsd)}. Track it live ↑</a></div>
           </div>
         </div>
       </section>
 
-      <section
-        className="socials-section campaign-section"
-        id="socials"
-        data-reveal
-      >
+      <section className="socials-section campaign-section" id="socials" data-reveal>
         <div className="section-shell campaign-grid">
-          <div className="section-label">
-            <span>07</span>
-            <p>SOCIALS</p>
-          </div>
+          <div className="section-label"><span>07</span><p>SOCIALS</p></div>
           <div className="campaign-main">
-            <p className="eyebrow">
-              <span aria-hidden="true">●</span> FOLLOW THE REAL SMUDGE
-            </p>
-            <h2>ONE UNBOTHERED CAT. A VERY LARGE INTERNET.</h2>
+            <p className="eyebrow"><span aria-hidden="true">●</span> FOLLOW TIMON</p>
+            <h2>THE LOOKOUT POST IS OPEN.</h2>
             <div className="social-grid">
-              <a
-                className="social-card social-card-featured"
-                href={CAMPAIGN.instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>Instagram</span>
-                  <strong>@smudge_lord ↗</strong>
-                </div>
-                <dl>
-                  <div>
-                    <dt>Followers</dt>
-                    <dd>1.5M</dd>
-                  </div>
-                  <div>
-                    <dt>Posts</dt>
-                    <dd>685</dd>
-                  </div>
-                  <div>
-                    <dt>Status</dt>
-                    <dd>Icon</dd>
-                  </div>
-                </dl>
+              <a className="social-card social-card-featured" href={CAMPAIGN.tiktokUrl} target="_blank" rel="noreferrer">
+                <div><span>TikTok</span><strong>@timon.surik ↗</strong></div>
+                <dl><div><dt>Followers</dt><dd>258.8K</dd></div><div><dt>Likes</dt><dd>22.4M</dd></div><div><dt>Pinned views</dt><dd>51.7M</dd></div></dl>
               </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.tiktokUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>TikTok</span>
-                  <strong>@smudge_lord ↗</strong>
-                </div>
-                <p>Official Smudge videos, table manners, and gremlin energy.</p>
-              </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.xUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>X</span>
-                  <strong>@SmudgeLord ↗</strong>
-                </div>
-                <p>The official account for the cat who hates vegetals.</p>
-              </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>Facebook</span>
-                  <strong>Smudge Lord Official ↗</strong>
-                </div>
-                <p>Official posts and a whole table full of Smudge fans.</p>
-              </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.merchUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>Official merch</span>
-                  <strong>Shop Smudge Lord ↗</strong>
-                </div>
-                <p>Buy directly through Smudge’s official store.</p>
-              </a>
-              <a
-                className="social-card"
-                href={CAMPAIGN.charityUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <div>
-                  <span>Rescue charity</span>
-                  <strong>Furry Tales ↗</strong>
-                </div>
-                <p>Support the rescue organization featured by Smudge’s official links.</p>
-              </a>
+              <a className="social-card" href={CAMPAIGN.instagramUrl} target="_blank" rel="noreferrer"><div><span>Instagram</span><strong>@timon.surik ↗</strong></div><p>Photos, reels, costumes, and daily meerkat life.</p></a>
+              <a className="social-card" href={CAMPAIGN.xUrl} target="_blank" rel="noreferrer"><div><span>X</span><strong>@timonsurik ↗</strong></div><p>The community timeline for Timon on Solana.</p></a>
+              <a className="social-card" href={CAMPAIGN.taplinkUrl} target="_blank" rel="noreferrer"><div><span>Official links</span><strong>Timon&apos;s Taplink ↗</strong></div><p>The link hub shared directly from Timon&apos;s TikTok profile.</p></a>
+              <a className="social-card" href="#pfp"><div><span>PFP lab</span><strong>Make your Timon ↓</strong></div><p>Hats, shades, ties, backgrounds, frames, and instant PNG downloads.</p></a>
             </div>
           </div>
         </div>
       </section>
 
       <section className="final-cta section-shell" data-reveal>
-        <div>
-          <p className="eyebrow">
-            <span aria-hidden="true">●</span> CHARITY COIN. MEME COIN ENERGY.
-          </p>
-          <h2>PUT THE INTERNET’S MOST UNBOTHERED CAT ON SOLANA.</h2>
-        </div>
-        <a
-          className="round-link"
-          href={CAMPAIGN.xUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Follow Smudge on X"
-        >
-          <span>FOLLOW</span>
-          <strong aria-hidden="true">↗</strong>
-        </a>
+        <div><p className="eyebrow"><span aria-hidden="true">●</span> TINY MEERKAT. BIG INTERNET.</p><h2>PUT TIMON ON THE TIMELINE.</h2></div>
+        <a className="round-link" href="#pfp" aria-label="Build a Timon profile picture"><span>BUILD PFP</span><strong aria-hidden="true">↓</strong></a>
       </section>
 
-      <section
-        className="launch-banner section-shell"
-        aria-label="Smudge banner"
-        data-reveal
-      >
-        <a href={CAMPAIGN.instagramUrl} target="_blank" rel="noreferrer">
-          <Image
-            src="/smudge-original.jpg"
-            alt="Smudge sitting at the dinner table behind a plate of salad"
-            width={746}
-            height={545}
-            sizes="(max-width: 1440px) 94vw, 1312px"
-          />
-          <span>FOLLOW SMUDGE ON INSTAGRAM ↗</span>
-        </a>
+      <section className="launch-banner section-shell" aria-label="Timon banner" data-reveal>
+        <a href={CAMPAIGN.tiktokUrl} target="_blank" rel="noreferrer"><Image src="/og.png" alt="Timon the Meerkat banner" width={1200} height={630} sizes="(max-width: 1440px) 94vw, 1312px" /><span>WATCH TIMON ON TIKTOK ↗</span></a>
       </section>
 
       <footer className="site-footer">
         <div className="footer-top">
-          <div className="footer-brand">
-            <Image src="/smudge-avatar.png" alt="" width={38} height={38} />
-            <strong>SMUDGE THE TABLE CAT</strong>
-          </div>
-          <div className="footer-socials">
-            <SocialLink href={CAMPAIGN.xUrl} label="X" />
-            <SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" />
-            <SocialLink href={CAMPAIGN.instagramUrl} label="Instagram" />
-            <SocialLink href={CAMPAIGN.facebookUrl} label="Facebook" />
-            <SocialLink href={CAMPAIGN.merchUrl} label="Official merch" />
-            <SocialLink href={CAMPAIGN.supportUrl} label="Direct support" />
-            <SocialLink href={CAMPAIGN.charityUrl} label="Furry Tales" />
-            <SocialLink href={CAMPAIGN.linktreeUrl} label="All Smudge links" />
-          </div>
+          <div className="footer-brand"><Image src="/timon-avatar.png" alt="" width={38} height={38} /><strong>TIMON THE MEERKAT</strong></div>
+          <div />
+          <div className="footer-socials"><SocialLink href={CAMPAIGN.xUrl} label="X" /><SocialLink href={CAMPAIGN.tiktokUrl} label="TikTok" /><SocialLink href={CAMPAIGN.instagramUrl} label="Instagram" /><SocialLink href={CAMPAIGN.taplinkUrl} label="Official links" /></div>
         </div>
         <div className="footer-legal">
-          <p>
-            Smudge is a community meme coin, not an investment product. Crypto
-            is volatile. Nothing here is financial advice.
-          </p>
-          <p>
-            Smudge is a community-run fan project. It is not affiliated with
-            Smudge’s owner. Support uses official public links for now.
-          </p>
+          <p>Timon is a community meme coin, not an investment product. Crypto is volatile. Nothing here is financial advice.</p>
+          <p>Timon is a community-run fan project. Creator fees are reserved for Timon and his owner, with verified support documented publicly.</p>
           <a href="#top">BACK TO TOP ↑</a>
         </div>
       </footer>
