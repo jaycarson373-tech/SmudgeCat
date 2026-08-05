@@ -36,7 +36,7 @@ test("renders the complete Zazu identity and forty-cat hero", async () => {
   assert.match(html, /\/og\.png/i);
 });
 
-test("renders a zero-based mini dashboard, mechanism, and guardrails", async () => {
+test("renders a zero-based mini dashboard, simple mechanism, and header actions", async () => {
   const html = await render();
   assert.match(html, /BUYBACK DASHBOARD/i);
   assert.match(html, /ZAZU BURNED[\s\S]*0 \$ZAZU/i);
@@ -44,15 +44,13 @@ test("renders a zero-based mini dashboard, mechanism, and guardrails", async () 
   assert.match(html, /FEES DEPLOYED[\s\S]*0 WETH/i);
   assert.match(html, /BUYBACKS[\s\S]*0/i);
   assert.match(html, /PONS FEES FLOW/i);
+  assert.match(html, /AUTOMATION CHECKS IN/i);
+  assert.match(html, /BUYBACK EXECUTES/i);
+  assert.match(html, /ZAZU BURNS/i);
   assert.match(html, /PUBLIC VAULT/i);
   assert.match(html, /DEX ADAPTER/i);
-  assert.match(html, /KEEPER CANNOT WITHDRAW/i);
-  assert.match(html, /STRICT MAXIMUM BUY SIZE/i);
-  assert.match(html, /PRICE IMPACT CEILING/i);
-  assert.match(html, /SIMULATION BEFORE SUBMIT/i);
-  assert.match(html, /PAUSABLE BY MULTISIG OWNER/i);
-  assert.match(html, /SMARTER BUYS[\s\S]*STEADIER BURNS/i);
-  assert.match(html, /automatically sizes each buyback to current liquidity/i);
+  assert.match(html, /header-chip header-chip-placeholder[^>]*>CA<\/button>/i);
+  assert.match(html, /header-chip header-chip-placeholder[^>]*>X<\/button>/i);
 });
 
 test("renders the Zazu Files lore without inventing a birthday", async () => {
@@ -82,6 +80,9 @@ test("contains the official socials and no stale brands or rejected copy", async
   assert.doesNotMatch(html, /Solana|pump\.fun|jup\.ag|Jupiter/i);
   assert.doesNotMatch(html, /ZAZU\.EXE|prelaunch|testnet|awaiting verified|not configured|not set/i);
   assert.doesNotMatch(html, /stare that burns back|15 min target|public proof/i);
-  assert.doesNotMatch(html, /BAD ROUTE|NO BUY/i);
+  assert.doesNotMatch(html, /BAD ROUTE|NO BUY|SAFE ROUTE|QUOTE CHECKED/i);
+  assert.doesNotMatch(html, /EXECUTION GUARDRAILS|LIQUIDITY-AWARE EXECUTION/i);
+  assert.doesNotMatch(html, /SMARTER BUYS|STEADIER BURNS|automatically sizes each buyback/i);
+  assert.doesNotMatch(html, /STRICT MAXIMUM BUY SIZE|PRICE IMPACT CEILING|SIMULATION BEFORE SUBMIT/i);
   assert.doesNotMatch(html, /—/);
 });

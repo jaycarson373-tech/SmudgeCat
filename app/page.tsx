@@ -13,33 +13,22 @@ const mechanicSteps = [
   },
   {
     number: "02",
-    title: "KEEPER CHECKS",
-    copy: "A lightweight keeper reads the vault balance and onchain cooldown once per minute.",
+    title: "AUTOMATION CHECKS IN",
+    copy: "A lightweight keeper reads the vault and initiates the next buyback cycle.",
     tone: "gray",
   },
   {
     number: "03",
-    title: "SAFE ROUTE",
-    copy: "The keeper gets a DEX quote, rejects excessive price impact, and simulates the complete swap.",
+    title: "BUYBACK EXECUTES",
+    copy: "Creator fees are used to buy ZAZU through the protocol's onchain flow.",
     tone: "blue",
   },
   {
     number: "04",
-    title: "BUY + BURN",
-    copy: "The vault buys ZAZU through the verified adapter and sends it directly to the burn destination.",
+    title: "ZAZU BURNS",
+    copy: "Bought ZAZU is sent directly to the burn destination.",
     tone: "red",
   },
-] as const;
-
-const safetyRails = [
-  "KEEPER CANNOT WITHDRAW",
-  "STRICT MAXIMUM BUY SIZE",
-  "NONZERO MINIMUM OUTPUT",
-  "PRICE IMPACT CEILING",
-  "SIMULATION BEFORE SUBMIT",
-  "ONCHAIN EXECUTION COOLDOWN",
-  "PAUSABLE BY MULTISIG OWNER",
-  "TIMELOCKED ROUTER AND DESTINATION OPTION",
 ] as const;
 
 function ExternalLink({
@@ -82,20 +71,24 @@ export default function Home() {
           <a href="#stats">Dashboard</a>
           <a href="#mechanism">How it works</a>
           <a href="#elements">Zazu Files</a>
-          <a href="#security">Security</a>
         </nav>
 
         <div className="header-actions">
-          {ZAZU.xUrl ? (
-            <ExternalLink className="header-chip" href={ZAZU.xUrl}>X ↗</ExternalLink>
-          ) : null}
-          <ExternalLink className="header-chip header-chip-neon" href={ZAZU.ponsUrl}>PONS ↗</ExternalLink>
+          <ExternalLink className="header-chip header-chip-neon header-chip-secondary" href={ZAZU.ponsUrl}>PONS ↗</ExternalLink>
           {ZAZU.tokenAddress ? (
             <div className="header-ca">
+              <span>CA</span>
               <code>{`${ZAZU.tokenAddress.slice(0, 5)}...${ZAZU.tokenAddress.slice(-4)}`}</code>
               <CopyButton value={ZAZU.tokenAddress} compact />
             </div>
-          ) : null}
+          ) : (
+            <button className="header-chip header-chip-placeholder" type="button" disabled>CA</button>
+          )}
+          {ZAZU.xUrl ? (
+            <ExternalLink className="header-chip" href={ZAZU.xUrl}>X ↗</ExternalLink>
+          ) : (
+            <button className="header-chip header-chip-placeholder" type="button" disabled>X</button>
+          )}
         </div>
       </header>
 
@@ -151,8 +144,8 @@ export default function Home() {
 
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
-          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
+          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>BUYBACK RUNNING</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
+          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>BUYBACK RUNNING</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
         </div>
       </div>
 
@@ -160,8 +153,8 @@ export default function Home() {
         <div className="section-shell">
           <div className="section-kicker"><span>01</span><p>HOW THE LOOP WORKS</p></div>
           <div className="section-heading mechanism-heading">
-            <div><p className="eyebrow"><i /> AUTOMATED, BOUNDED, ONCHAIN</p><h2>FEES IN.<br />ZAZU OUT.</h2></div>
-            <p>Contracts cannot wake themselves up. The keeper checks the vault, quotes a safe route, and submits only the narrow buyback call.</p>
+            <div><p className="eyebrow"><i /> AUTOMATED ONCHAIN LOOP</p><h2>FEES IN.<br />ZAZU OUT.</h2></div>
+            <p>Pons creator fees enter the vault, the buyback runs, and purchased ZAZU goes straight to the burn destination.</p>
           </div>
           <div className="mechanic-grid">
             {mechanicSteps.map((step) => (
@@ -212,26 +205,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="security-section" id="security" data-reveal>
-        <div className="section-shell security-layout">
-          <div className="security-copy">
-            <div className="section-kicker section-kicker-light"><span>03</span><p>EXECUTION GUARDRAILS</p></div>
-            <p className="eyebrow eyebrow-light"><i /> LIQUIDITY-AWARE EXECUTION</p>
-            <h2>SMARTER BUYS.<br />STEADIER BURNS.</h2>
-            <p>The keeper automatically sizes each buyback to current liquidity. Smaller buys keep the loop moving while every onchain guardrail stays active.</p>
-          </div>
-          <div className="safety-list">
-            {safetyRails.map((rail, index) => (
-              <div key={rail}><span>{String(index + 1).padStart(2, "0")}</span><strong>{rail}</strong><i>✓</i></div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {hasRegistry ? (
         <section className="registry-section" id="registry" data-reveal>
           <div className="section-shell">
-            <div className="section-kicker"><span>04</span><p>VERIFY ONCHAIN</p></div>
+            <div className="section-kicker"><span>03</span><p>VERIFY ONCHAIN</p></div>
             <div className="registry-layout">
               <div><p className="eyebrow"><i /> CHECK EVERY ADDRESS</p><h2>FOLLOW THE<br />MONEY.</h2></div>
               <div className="registry-table">
