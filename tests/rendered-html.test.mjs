@@ -77,6 +77,9 @@ test("server-renders the public terminal, eligibility rules, and security rails"
   assert.match(html, /The ledger populates only after confirmed on-chain events/i);
   assert.match(html, /AWAITING VERIFIED DEPLOYMENT/i);
   assert.match(html, /AWAITING VERIFIED VAULT/i);
+  assert.match(html, /NEXT BUYBACK[\s\S]*NOT CONFIGURED/i);
+  assert.match(html, /TREASURY BALANCE[\s\S]*NOT SET/i);
+  assert.doesNotMatch(html, /TREASURY BALANCE<\/span><strong>0<\/strong>/i);
 
   assert.match(html, /Targeting 15-minute intervals when fees are available\./i);
   assert.match(

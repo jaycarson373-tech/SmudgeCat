@@ -213,10 +213,23 @@ export function BurnDashboard({
     return stats.configured ? "ON-CHAIN DATA LIVE" : "CONFIGURATION INCOMPLETE";
   }, [configured, loading, stats.configured, stats.error]);
 
-  const treasury = formatDecimal(stats.treasury?.balanceFormatted);
-  const spent = formatDecimal(stats.totalInputSpentFormatted);
-  const bought = formatDecimal(stats.totalZazuBoughtFormatted, 2);
-  const executions = String(stats.totalExecutions ?? "0");
+  const unavailableMetric = configured
+    ? loading
+      ? "SYNCING"
+      : "UNAVAILABLE"
+    : "NOT SET";
+  const treasury = stats.configured
+    ? formatDecimal(stats.treasury?.balanceFormatted)
+    : unavailableMetric;
+  const spent = stats.configured
+    ? formatDecimal(stats.totalInputSpentFormatted)
+    : unavailableMetric;
+  const bought = stats.configured
+    ? formatDecimal(stats.totalZazuBoughtFormatted, 2)
+    : unavailableMetric;
+  const executions = stats.configured
+    ? String(stats.totalExecutions ?? "0")
+    : unavailableMetric;
 
   return (
     <div className="burn-terminal">
