@@ -50,7 +50,7 @@ test("server-renders the Zazu identity and exact elemental archive", async () =>
   assert.match(html, /FIRE/i);
   assert.match(html, /40[\s\S]*FILES FOUND/i);
 
-  assert.match(html, /zazu-avatar\.png/i);
+  assert.match(html, /zazu-logo\.jpg/i);
   assert.match(html, /zazu-elements\.jpg/i);
   assert.match(html, /zazu-40-grid\.png/i);
   assert.match(html, /zazu-favicon\.png/i);

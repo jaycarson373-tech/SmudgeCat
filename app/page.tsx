@@ -70,7 +70,7 @@ export default function Home() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Zazu home">
           <span className="brand-avatar">
-            <Image src="/zazu-avatar.png" alt="" width={44} height={44} priority />
+            <Image src="/zazu-logo.jpg" alt="" width={44} height={44} priority />
           </span>
           <span className="brand-copy"><strong>ZAZU</strong><small>THE STARE ONCHAIN</small></span>
         </a>
@@ -222,7 +222,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <div className="footer-main">
-          <div className="footer-brand"><Image src="/zazu-avatar.png" alt="" width={56} height={56} /><div><strong>ZAZU.EXE</strong><span>STILL STARING AT THE CHAIN.</span></div></div>
+          <div className="footer-brand"><Image src="/zazu-logo.jpg" alt="" width={56} height={56} /><div><strong>ZAZU.EXE</strong><span>STILL STARING AT THE CHAIN.</span></div></div>
           <div className="footer-links">
             {ZAZU.xUrl ? <ExternalLink href={ZAZU.xUrl}>Project X ↗</ExternalLink> : null}
             <ExternalLink href={ZAZU.instagramUrl}>Zazu Instagram ↗</ExternalLink>
