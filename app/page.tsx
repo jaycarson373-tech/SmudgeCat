@@ -1,32 +1,32 @@
 import Image from "next/image";
-import { BurnDashboard } from "@/components/BurnDashboard";
 import { CopyButton } from "@/components/CopyButton";
+import { HeroMiniDashboard } from "@/components/HeroMiniDashboard";
 import { MotionController } from "@/components/MotionController";
 import { ZAZU } from "@/lib/zazu";
 
 const mechanicSteps = [
   {
     number: "01",
-    title: "FEES LAND",
-    copy: "ZAZU's creator-fee share is reserved for the public BuybackVault as native gas token or one configured ERC-20.",
+    title: "PONS FEES FLOW",
+    copy: "ZAZU creator fees from Pons move directly into the public BuybackVault.",
     tone: "green",
   },
   {
     number: "02",
     title: "KEEPER CHECKS",
-    copy: "When live, the keeper checks the vault every minute. Buybacks target 15-minute intervals only when fees and the minimum balance are available.",
+    copy: "A lightweight keeper reads the vault balance and onchain cooldown once per minute.",
     tone: "gray",
   },
   {
     number: "03",
-    title: "ROUTE QUOTED",
-    copy: "Before an execution, the keeper requests a DEX quote, rejects excessive price impact, and simulates a narrow call through the verified DEX adapter.",
+    title: "SAFE ROUTE",
+    copy: "The keeper gets a DEX quote, rejects excessive price impact, and simulates the complete swap.",
     tone: "blue",
   },
   {
     number: "04",
-    title: "ZAZU MOVES",
-    copy: "Purchased ZAZU goes to the configured permanent burn destination. Once live, every execution and receipt stays public onchain.",
+    title: "BUY + BURN",
+    copy: "The vault buys ZAZU through the verified adapter and sends it directly to the burn destination.",
     tone: "red",
   },
 ] as const;
@@ -37,9 +37,9 @@ const safetyRails = [
   "NONZERO MINIMUM OUTPUT",
   "PRICE IMPACT CEILING",
   "SIMULATION BEFORE SUBMIT",
-  "15 MINIMUM MINUTES BETWEEN EXECUTIONS",
+  "ONCHAIN EXECUTION COOLDOWN",
   "PAUSABLE BY MULTISIG OWNER",
-  "TIMELOCK OPTION FOR ROUTER AND DESTINATION",
+  "TIMELOCKED ROUTER AND DESTINATION OPTION",
 ] as const;
 
 function ExternalLink({
@@ -59,7 +59,7 @@ function ExternalLink({
 }
 
 export default function Home() {
-  const dashboardConfigured = Boolean(ZAZU.vaultAddress);
+  const hasRegistry = Boolean(ZAZU.tokenAddress || ZAZU.vaultAddress);
 
   return (
     <main>
@@ -72,157 +72,188 @@ export default function Home() {
           <span className="brand-avatar">
             <Image src="/zazu-logo.jpg" alt="" width={44} height={44} priority />
           </span>
-          <span className="brand-copy"><strong>ZAZU</strong><small>THE STARE ONCHAIN</small></span>
+          <span className="brand-copy">
+            <strong>ZAZU</strong>
+            <small>BUYBACK + BURN</small>
+          </span>
         </a>
 
         <nav className="header-nav" aria-label="Main navigation">
-          <a href="#dashboard">Dashboard</a>
-          <a href="#wall">Zazu files</a>
+          <a href="#stats">Dashboard</a>
           <a href="#mechanism">How it works</a>
+          <a href="#elements">Zazu Files</a>
           <a href="#security">Security</a>
         </nav>
 
         <div className="header-actions">
-          {ZAZU.xUrl ? <ExternalLink className="header-chip" href={ZAZU.xUrl}>X ↗</ExternalLink> : <span className="header-chip header-chip-muted">X SOON</span>}
+          {ZAZU.xUrl ? (
+            <ExternalLink className="header-chip" href={ZAZU.xUrl}>X ↗</ExternalLink>
+          ) : null}
+          <ExternalLink className="header-chip header-chip-neon" href={ZAZU.ponsUrl}>PONS ↗</ExternalLink>
           {ZAZU.tokenAddress ? (
-            <div className="header-ca"><code>{`${ZAZU.tokenAddress.slice(0, 5)}...${ZAZU.tokenAddress.slice(-4)}`}</code><CopyButton value={ZAZU.tokenAddress} compact /></div>
-          ) : <span className="header-chip header-chip-neon">CA SOON</span>}
+            <div className="header-ca">
+              <code>{`${ZAZU.tokenAddress.slice(0, 5)}...${ZAZU.tokenAddress.slice(-4)}`}</code>
+              <CopyButton value={ZAZU.tokenAddress} compact />
+            </div>
+          ) : null}
         </div>
       </header>
 
       <section className="hero" id="top">
         <div className="hero-copy">
-          <p className="eyebrow"><i /> BUILT ON ROBINHOOD CHAIN • LAUNCHING THROUGH PONS</p>
-          <div className="network-line"><span>CHAIN {ZAZU.chainId}</span><b>•</b><span>15 MIN TARGET</span><b>•</b><span>PUBLIC PROOF</span></div>
+          <p className="eyebrow"><i /> BUILT ON ROBINHOOD CHAIN</p>
           <h1><span>$</span>ZAZU</h1>
-          <p className="hero-title">THE STARE THAT<br />BURNS BACK.</p>
-          <p className="hero-dek">
-            ZAZU&apos;s creator-fee share is reserved for recurring buybacks and permanent burns. Once live, the public vault and keeper route purchased ZAZU to the configured burn destination when execution is safe.
-          </p>
-          <p className="eligibility-note">
-            <strong>Targeting 15-minute intervals when fees are available.</strong> A cycle is skipped when liquidity, slippage, price impact, gas, or network conditions are unsafe.
-          </p>
-
-          <div className={`contract-bar${ZAZU.tokenAddress ? "" : " contract-bar-soon"}`}>
-            <span>CONTRACT</span>
-            {ZAZU.tokenAddress ? <><code>{ZAZU.tokenAddress}</code><CopyButton value={ZAZU.tokenAddress} /></> : <strong>AWAITING VERIFIED DEPLOYMENT</strong>}
-          </div>
+          <p className="hero-title">THE INTERNET&apos;S MOST LOCKED-IN CAT.</p>
+          <p className="hero-dek">Creator fees buy ZAZU. ZAZU gets burned.</p>
 
           <div className="hero-actions">
-            <a className="button button-neon" href="#dashboard">OPEN LIVE DATA ↓</a>
-            {ZAZU.dexUrl ? <ExternalLink className="button button-dark" href={ZAZU.dexUrl}>TRADE ZAZU ↗</ExternalLink> : <a className="button button-outline" href="#registry">CONTRACT REGISTRY</a>}
+            <ExternalLink className="button button-neon" href={ZAZU.ponsUrl}>POWERED BY PONS ↗</ExternalLink>
+            <a className="button button-outline" href="#mechanism">HOW IT WORKS ↓</a>
+            {ZAZU.dexUrl ? (
+              <ExternalLink className="button button-dark" href={ZAZU.dexUrl}>BUY $ZAZU ↗</ExternalLink>
+            ) : null}
           </div>
+
+          {ZAZU.tokenAddress ? (
+            <div className="contract-bar">
+              <span>CA</span>
+              <code>{ZAZU.tokenAddress}</code>
+              <CopyButton value={ZAZU.tokenAddress} />
+            </div>
+          ) : null}
         </div>
 
-        <div className="hero-art" aria-label="Zazu the gray tabby cat">
+        <div className="hero-art" aria-label="Forty elemental Zazu cat variations">
           <div className="hero-window">
-            <div className="window-title"><span>ZAZU_ELEMENTS.JPG</span><span>_ □ ×</span></div>
+            <div className="window-title">
+              <span>ZAZU_VARIANTS_001-040.PNG</span>
+              <span>_ □ ×</span>
+            </div>
             <div className="hero-photo">
               <Image
-                src="/zazu-elements.jpg"
-                alt="Four lo-fi elemental Zazu cat edits in green, gray, underwater blue, and fire red"
-                fill
+                src="/zazu-40-grid.png"
+                alt="Forty lo-fi Zazu cat portraits in green, gray, underwater blue, fire red, and other elemental styles"
+                width={1586}
+                height={992}
                 priority
-                sizes="(max-width: 820px) 92vw, 46vw"
+                sizes="(max-width: 820px) 94vw, 70vw"
               />
             </div>
+            <div className="hero-file-count"><strong>40</strong><span>CATS<br />LOADED</span></div>
           </div>
-          <div className="hero-stamp stamp-green">KEEPER<br />TARGET 1M</div>
-          <div className="hero-stamp stamp-red">NO HIDDEN<br />TRANSACTIONS</div>
-          <div className="pixel-note">FOUR ELEMENTS. ONE STARE.<br />JPEG QUALITY: DESTROYED.</div>
+          <HeroMiniDashboard />
         </div>
       </section>
 
-      <div className="element-strip" aria-hidden="true"><span>EARTH</span><span>VOID</span><span>WATER</span><span>FIRE</span></div>
+      <div className="element-strip" aria-hidden="true">
+        <span>EARTH</span><span>VOID</span><span>WATER</span><span>FIRE</span>
+      </div>
 
       <div className="ticker" aria-hidden="true">
         <div>
-          <span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>SIMULATION PASSED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>DESTINATION VERIFIED</span><b>✦</b>
-          <span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>SIMULATION PASSED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>DESTINATION VERIFIED</span><b>✦</b>
+          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
+          <span>POWERED BY PONS</span><b>✦</b><span>CREATOR FEES IN</span><b>✦</b><span>QUOTE CHECKED</span><b>✦</b><span>ZAZU BOUGHT</span><b>✦</b><span>ZAZU BURNED</span><b>✦</b>
         </div>
       </div>
 
-      <section className="dashboard-section" id="dashboard" data-reveal>
-        <div className="section-shell">
-          <div className="section-kicker"><span>01</span><p>PUBLIC BUYBACK TERMINAL</p></div>
-          <div className="section-heading dashboard-heading">
-            <div><p className="eyebrow eyebrow-light"><i /> CONTRACT-DERIVED DATA ONLY</p><h2>WATCH THE VAULT.<br />VERIFY THE LOOP.</h2></div>
-            <p>No fake countdown and no manually entered burn total. Once configured, the timer derives from lastExecutionTime and the ledger derives from BuybackExecuted events.</p>
-          </div>
-          <BurnDashboard
-            configured={dashboardConfigured}
-            vaultAddress={ZAZU.vaultAddress}
-            explorerUrl={ZAZU.explorerBase}
-          />
-        </div>
-      </section>
-
-      <section className="wall-section" id="wall" data-reveal>
-        <div className="section-shell">
-          <div className="section-kicker"><span>02</span><p>ZAZU FILE ARCHIVE</p></div>
-          <div className="section-heading wall-heading">
-            <div><p className="eyebrow"><i /> SAME CAT. FORTY CONDITIONS.</p><h2>THE STARE<br />HAS RANGE.</h2></div>
-            <p>Forty stretched, blurry, deeply compressed Zazu files. XP hill, grayscale hallway, underwater, fire, lightning, CRT, fog, and other terminal states.</p>
-          </div>
-          <div className="zazu-grid-window">
-            <div className="window-title"><span>ZAZU_VARIANTS_001-040.PNG</span><span>8 × 5</span></div>
-            <Image src="/zazu-40-grid.png" alt="Forty intentionally distorted and compressed elemental Zazu cat variations in an eight by five grid" width={1586} height={992} sizes="(max-width: 1440px) 96vw, 1360px" />
-            <div className="grid-corner"><strong>40</strong><span>FILES FOUND</span></div>
-          </div>
-          <div className="original-files">
-            <div className="original-image"><Image src="/zazu-elements.jpg" alt="Four early internet elemental Zazu edits" fill sizes="(max-width: 720px) 94vw, 38vw" /></div>
-            <div className="original-copy"><span>REFERENCE FOLDER</span><h3>EARTH. VOID.<br />WATER. FIRE.</h3><p>The original cursed four-panel energy, expanded into forty low-resolution ways to stretch Zazu into another dimension.</p></div>
-          </div>
-        </div>
-      </section>
-
       <section className="mechanism-section" id="mechanism" data-reveal>
         <div className="section-shell">
-          <div className="section-kicker"><span>03</span><p>HOW THE LOOP WORKS</p></div>
+          <div className="section-kicker"><span>01</span><p>HOW THE LOOP WORKS</p></div>
           <div className="section-heading mechanism-heading">
-            <div><p className="eyebrow"><i /> DESIGNED TO BE AUTOMATED, BOUNDED, AUDITABLE</p><h2>FOUR STEPS.<br />ZERO THEATER.</h2></div>
-            <p>The contract does not wake itself up. Once live, the keeper checks once per minute and can only invoke the vault&apos;s narrow buyback path.</p>
+            <div><p className="eyebrow"><i /> AUTOMATED, BOUNDED, ONCHAIN</p><h2>FEES IN.<br />ZAZU OUT.</h2></div>
+            <p>Contracts cannot wake themselves up. The keeper checks the vault, quotes a safe route, and submits only the narrow buyback call.</p>
           </div>
           <div className="mechanic-grid">
-            {mechanicSteps.map((step) => <article className={`mechanic-card ${step.tone}`} key={step.number}><span>{step.number}</span><h3>{step.title}</h3><p>{step.copy}</p></article>)}
+            {mechanicSteps.map((step) => (
+              <article className={`mechanic-card ${step.tone}`} key={step.number}>
+                <span>{step.number}</span><h3>{step.title}</h3><p>{step.copy}</p>
+              </article>
+            ))}
           </div>
-          <div className="flow-line"><span>CREATOR FEES</span><b>→</b><span>PUBLIC VAULT</span><b>→</b><span>DEX ADAPTER</span><b>→</b><span>ZAZU</span><b>→</b><span>VERIFIED DESTINATION</span></div>
+          <div className="flow-line"><span>PONS FEES</span><b>→</b><span>PUBLIC VAULT</span><b>→</b><span>DEX ADAPTER</span><b>→</b><span>ZAZU</span><b>→</b><span>BURN</span></div>
+        </div>
+      </section>
+
+      <section className="wall-section" id="elements" data-reveal>
+        <div className="section-shell">
+          <div className="section-kicker"><span>02</span><p>THE ZAZU FILES</p></div>
+          <div className="original-files original-files-feature">
+            <div className="original-image">
+              <Image src="/zazu-elements.jpg" alt="Four early internet Zazu edits representing earth, void, water, and fire" fill sizes="(max-width: 720px) 94vw, 44vw" />
+            </div>
+            <div className="original-copy">
+              <span>ZAZU ELEMENTS</span>
+              <h2>EARTH.<br />VOID.<br />WATER. FIRE.</h2>
+              <p>One locked-in cat. Every possible condition.</p>
+            </div>
+          </div>
+          <div className="lore-heading">
+            <p className="eyebrow"><i /> INTERNET ARTIFACT 001</p>
+            <h2>DATE OF BIRTH:<br />CLASSIFIED.</h2>
+            <p>Zazu&apos;s exact birthday was never published. He arrived online fully formed: gray tabby, black-glass eyes, and one impossible expression that looked like it already knew everything.</p>
+          </div>
+          <div className="lore-grid">
+            <article>
+              <span>ORIGIN FILE</span>
+              <strong>THE LOCKED-IN STARE</strong>
+              <p>A close-up of Zazu became the perfect reaction to disbelief, exhaustion, and witnessing something no cat should have to process.</p>
+            </article>
+            <article>
+              <span>2023</span>
+              <strong>THE PHOTO ESCAPES</strong>
+              <p>The image broke containment and spread across feeds, replies, edits, and reaction posts. The internet had found a new face for having seen too much.</p>
+            </article>
+            <article>
+              <span>THE ELEMENTAL ERA</span>
+              <strong>ONE CAT. EVERY UNIVERSE.</strong>
+              <p>Earth. Void. Water. Fire. Then forty files and counting. Every remix changes the world around him. Zazu never breaks eye contact.</p>
+            </article>
+          </div>
         </div>
       </section>
 
       <section className="security-section" id="security" data-reveal>
         <div className="section-shell security-layout">
           <div className="security-copy">
-            <div className="section-kicker section-kicker-light"><span>04</span><p>EXECUTION GUARDRAILS</p></div>
-            <p className="eyebrow eyebrow-light"><i /> SAFETY BEFORE CADENCE</p>
-            <h2>SKIP THE BUY<br />BEFORE FORCING<br />A BAD ONE.</h2>
-            <p>Buybacks target 15-minute intervals when fees are available. They are never promised to execute exactly every 15 minutes.</p>
+            <div className="section-kicker section-kicker-light"><span>03</span><p>EXECUTION GUARDRAILS</p></div>
+            <p className="eyebrow eyebrow-light"><i /> SAFETY BEFORE SPEED</p>
+            <h2>BAD ROUTE?<br />NO BUY.</h2>
+            <p>The onchain cooldown limits execution frequency. Any route that fails the quote, impact, slippage, gas, or simulation checks gets skipped.</p>
           </div>
           <div className="safety-list">
-            {safetyRails.map((rail, index) => <div key={rail}><span>{String(index + 1).padStart(2, "0")}</span><strong>{rail}</strong><i>✓</i></div>)}
+            {safetyRails.map((rail, index) => (
+              <div key={rail}><span>{String(index + 1).padStart(2, "0")}</span><strong>{rail}</strong><i>✓</i></div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="registry-section" id="registry" data-reveal>
-        <div className="section-shell">
-          <div className="section-kicker"><span>05</span><p>CONTRACT REGISTRY</p></div>
-          <div className="registry-layout">
-            <div><p className="eyebrow"><i /> VERIFY, DO NOT TRUST</p><h2>PRODUCTION ADDRESSES<br />GO HERE ONLY AFTER<br />TESTNET PROOF.</h2></div>
-            <div className="registry-table">
-              <div><span>ZAZU TOKEN</span><code>{ZAZU.tokenAddress || "NOT DEPLOYED"}</code>{ZAZU.tokenAddress ? <CopyButton value={ZAZU.tokenAddress} compact /> : null}</div>
-              <div><span>BUYBACK VAULT</span><code>{ZAZU.vaultAddress || "NOT DEPLOYED"}</code>{ZAZU.vaultAddress ? <CopyButton value={ZAZU.vaultAddress} compact /> : null}</div>
-              <div><span>DEX ADAPTER</span><code>NOT CONFIGURED</code></div>
-              <div><span>CHAIN ID</span><code>{ZAZU.chainId}</code></div>
+      {hasRegistry ? (
+        <section className="registry-section" id="registry" data-reveal>
+          <div className="section-shell">
+            <div className="section-kicker"><span>04</span><p>VERIFY ONCHAIN</p></div>
+            <div className="registry-layout">
+              <div><p className="eyebrow"><i /> CHECK EVERY ADDRESS</p><h2>FOLLOW THE<br />MONEY.</h2></div>
+              <div className="registry-table">
+                {ZAZU.tokenAddress ? (
+                  <div><span>ZAZU TOKEN</span><code>{ZAZU.tokenAddress}</code><CopyButton value={ZAZU.tokenAddress} compact /></div>
+                ) : null}
+                {ZAZU.vaultAddress ? (
+                  <div><span>BUYBACK VAULT</span><code>{ZAZU.vaultAddress}</code><CopyButton value={ZAZU.vaultAddress} compact /></div>
+                ) : null}
+                <div><span>CHAIN ID</span><code>{ZAZU.chainId}</code><ExternalLink href={ZAZU.explorerBase}>EXPLORER ↗</ExternalLink></div>
+              </div>
             </div>
           </div>
-          <p className="registry-note">No production DEX adapter or underlying router is hardcoded. Testnet deployment, adapter verification, a small-value end-to-end buyback, explorer checks, and multisig ownership transfer come first.</p>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <footer className="site-footer">
         <div className="footer-main">
-          <div className="footer-brand"><Image src="/zazu-logo.jpg" alt="" width={56} height={56} /><div><strong>ZAZU.EXE</strong><span>STILL STARING AT THE CHAIN.</span></div></div>
+          <div className="footer-brand">
+            <Image src="/zazu-logo.jpg" alt="" width={56} height={56} />
+            <div><strong>$ZAZU</strong><span>BUYBACK. BURN. REPEAT.</span></div>
+          </div>
           <div className="footer-links">
             {ZAZU.xUrl ? <ExternalLink href={ZAZU.xUrl}>Project X ↗</ExternalLink> : null}
             <ExternalLink href={ZAZU.instagramUrl}>Zazu Instagram ↗</ExternalLink>
@@ -232,8 +263,8 @@ export default function Home() {
           </div>
         </div>
         <div className="footer-legal">
-          <p>$ZAZU is a community meme token prototype and can lose all value. Nothing here is financial advice.</p>
-          <p>Built on Robinhood Chain and launching through Pons. Not affiliated with or endorsed by Robinhood, Pons, a DEX, or Zazu&apos;s owner.</p>
+          <p>$ZAZU is a community meme token and can lose all value. Nothing here is financial advice.</p>
+          <p>Built on Robinhood Chain. Powered by Pons. Not affiliated with or endorsed by Robinhood, Pons, a DEX, or Zazu&apos;s owner.</p>
           <a href="#top">TOP ↑</a>
         </div>
       </footer>

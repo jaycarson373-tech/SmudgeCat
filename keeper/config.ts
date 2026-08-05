@@ -6,9 +6,11 @@ export interface KeeperConfig {
   chainId: number;
   rpcUrl: string;
   vaultAddress: Address;
+  feeCollectorAddress: Address;
   privateKey?: Hex;
   keeperAddress?: Address;
   expectedZazuToken: Address;
+  expectedPonsLocker: Address;
   expectedDexRouter: Address;
   expectedWrappedNative: Address;
   expectedDestination: Address;
@@ -152,9 +154,11 @@ export function loadKeeperConfig(): KeeperConfig {
     chainId,
     rpcUrl: readHttpUrl("ROBINHOOD_RPC_URL", true),
     vaultAddress,
+    feeCollectorAddress: readAddress("PONS_FEE_COLLECTOR_ADDRESS", true)!,
     privateKey,
     keeperAddress,
     expectedZazuToken: readAddress("ZAZU_TOKEN_ADDRESS", true)!,
+    expectedPonsLocker: readAddress("PONS_LOCKER_ADDRESS", true)!,
     expectedDexRouter: readAddress("DEX_ROUTER_ADDRESS", true)!,
     expectedWrappedNative: readAddress("WRAPPED_NATIVE_ADDRESS", true)!,
     expectedDestination: readAddress("BUYBACK_DESTINATION", true)!,

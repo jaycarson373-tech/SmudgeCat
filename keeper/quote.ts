@@ -145,10 +145,9 @@ export async function requestDexQuote(options: {
   if (
     typeof data.routerData !== "string" ||
     !isHex(data.routerData) ||
-    data.routerData.length < 10 ||
     data.routerData.length % 2 !== 0
   ) {
-    throw new QuoteServiceError("routerData must contain 0x-prefixed adapter route data");
+    throw new QuoteServiceError("routerData must be valid 0x-prefixed adapter route data");
   }
   if (
     typeof data.expiresAt !== "number" ||

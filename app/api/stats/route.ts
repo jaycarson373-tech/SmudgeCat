@@ -42,6 +42,8 @@ function unconfiguredResponse(error?: string) {
       totalInputSpentFormatted: null,
       totalZazuBoughtRaw: null,
       totalZazuBoughtFormatted: null,
+      totalZazuBurnedRaw: null,
+      totalZazuBurnedFormatted: null,
       totalExecutions: null,
       lastExecutionTimestamp: null,
       nextEligibleExecutionTimestamp: null,
@@ -84,6 +86,7 @@ export async function GET() {
       executionCount,
       totalInputSpent,
       totalZazuBought,
+      totalZazuBurned,
     ] = await Promise.all([
       rpc<string>("eth_chainId", []),
       rpc<string>("eth_getCode", [vault.address, "latest"]),
@@ -95,6 +98,7 @@ export async function GET() {
       readUint(vault.address, BUYBACK_VAULT_SELECTORS.executionCount),
       readUint(vault.address, BUYBACK_VAULT_SELECTORS.totalInputSpent),
       readUint(vault.address, BUYBACK_VAULT_SELECTORS.totalZazuBought),
+      readUint(vault.address, BUYBACK_VAULT_SELECTORS.totalZazuBurned),
     ]);
 
     if (contractCode === "0x" || contractCode === "0x0") {
@@ -178,6 +182,11 @@ export async function GET() {
           totalZazuBought,
           zazuMetadata.decimals,
         ),
+        totalZazuBurnedRaw: totalZazuBurned.toString(),
+        totalZazuBurnedFormatted: formatUnits(
+          totalZazuBurned,
+          zazuMetadata.decimals,
+        ),
         totalExecutions: executionCount.toString(),
         lastExecutionTimestamp: executionCount > BigInt(0)
           ? lastExecutionTime.toString()
@@ -209,6 +218,8 @@ export async function GET() {
         totalInputSpentFormatted: null,
         totalZazuBoughtRaw: null,
         totalZazuBoughtFormatted: null,
+        totalZazuBurnedRaw: null,
+        totalZazuBurnedFormatted: null,
         totalExecutions: null,
         lastExecutionTimestamp: null,
         nextEligibleExecutionTimestamp: null,

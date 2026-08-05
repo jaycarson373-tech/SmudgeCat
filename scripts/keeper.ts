@@ -11,7 +11,7 @@ import {
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { setTimeout as sleep } from "node:timers/promises";
-import { buybackVaultAbi, erc20ReadAbi } from "../keeper/abi";
+import { buybackVaultAbi, erc20ReadAbi, ponsFeeCollectorAbi } from "../keeper/abi";
 import { loadKeeperConfig, type KeeperConfig } from "../keeper/config";
 import { acquireProcessLock } from "../keeper/lock";
 import { describeError, KeeperLogger } from "../keeper/logger";
@@ -285,6 +285,169 @@ function effectivePrice(
   return formatUnits(numerator / denominator, 18);
 }
 
+async function processCreatorFees(options: {
+  config: KeeperConfig;
+  publicClient: PublicClient;
+  walletClient?: ReturnType<typeof createWalletClient>;
+  signerAccount?: ReturnType<typeof privateKeyToAccount>;
+  keeperAddress: Address;
+  logger: KeeperLogger;
+  latestBlock: { baseFeePerGas: bigint | null };
+  cycleStartedAt: string;
+}): Promise<boolean> {
+  const { config, publicClient, logger, keeperAddress, latestBlock, cycleStartedAt } = options;
+  const collector = { address: config.feeCollectorAddress, abi: ponsFeeCollectorAbi } as const;
+  const [configured, wrappedNativeToken, ponsLocker, zazuToken, buybackVault] =
+    await Promise.all([
+      publicClient.readContract({ ...collector, functionName: "configured" }),
+      publicClient.readContract({ ...collector, functionName: "wrappedNativeToken" }),
+      publicClient.readContract({ ...collector, functionName: "ponsLocker" }),
+      publicClient.readContract({ ...collector, functionName: "zazuToken" }),
+      publicClient.readContract({ ...collector, functionName: "buybackVault" }),
+    ]);
+
+  if (!configured) throw new ConfigurationMismatchError("pons fee collector is not configured");
+  const collectorPins: Array<[string, Address, Address]> = [
+    ["collector.wrappedNativeToken", wrappedNativeToken, config.expectedWrappedNative],
+    ["collector.ponsLocker", ponsLocker, config.expectedPonsLocker],
+    ["collector.zazuToken", zazuToken, config.expectedZazuToken],
+    ["collector.buybackVault", buybackVault, config.vaultAddress],
+  ];
+  for (const [field, actual, expected] of collectorPins) {
+    if (!addressesEqual(actual, expected)) {
+      throw new ConfigurationMismatchError(`${field} is ${actual}, expected ${expected}`);
+    }
+  }
+
+  const flush = {
+    ...collector,
+    functionName: "claimAndFlush" as const,
+    account: keeperAddress,
+  };
+  const simulation = await withRpcBackoff("simulate_creator_fee_claim_and_flush", config, logger, () =>
+    publicClient.simulateContract(flush),
+  );
+  const [wethBalance, zazuBalance] = simulation.result;
+  if (wethBalance === 0n && zazuBalance === 0n) return false;
+
+  const [estimatedGas, feeParameters] = await Promise.all([
+    withRpcBackoff("estimate_creator_fee_flush_gas", config, logger, () =>
+      publicClient.estimateContractGas(flush),
+    ),
+    withRpcBackoff("estimate_creator_fee_flush_fees", config, logger, async () => {
+      if (latestBlock.baseFeePerGas !== null) {
+        const fees = await publicClient.estimateFeesPerGas({ chain: undefined, type: "eip1559" });
+        return {
+          kind: "eip1559" as const,
+          maxFeePerGas: fees.maxFeePerGas,
+          maxPriorityFeePerGas: fees.maxPriorityFeePerGas,
+        };
+      }
+      const fees = await publicClient.estimateFeesPerGas({ chain: undefined, type: "legacy" });
+      return { kind: "legacy" as const, gasPrice: fees.gasPrice };
+    }),
+  ]);
+  const gasLimit = (estimatedGas * GAS_LIMIT_BUFFER_BPS + BASIS_POINTS - 1n) / BASIS_POINTS;
+  const boundedFeePerGas =
+    feeParameters.kind === "eip1559" ? feeParameters.maxFeePerGas : feeParameters.gasPrice;
+  const maximumTransactionFee = gasLimit * boundedFeePerGas;
+  if (gasLimit > config.maximumGasUnits || maximumTransactionFee > config.maximumGasCostWei) {
+    await logger.write("warn", "creator_fee_flush_skipped", {
+      reason: "gas_limit_exceeded",
+      cycleStartedAt,
+      wethBalance,
+      zazuBalance,
+      gasLimit,
+      maximumTransactionFee,
+    });
+    return false;
+  }
+
+  const keeperGasBalance = await publicClient.getBalance({ address: keeperAddress });
+  if (keeperGasBalance < maximumTransactionFee) {
+    await logger.write("warn", "creator_fee_flush_skipped", {
+      reason: "keeper_gas_balance_insufficient",
+      cycleStartedAt,
+      keeperGasBalance,
+      maximumTransactionFee,
+    });
+    return false;
+  }
+
+  if (config.dryRun) {
+    await logger.write("info", "creator_fee_flush_dry_run", {
+      cycleStartedAt,
+      wethBalance,
+      zazuBalance,
+      gasLimit,
+      maximumTransactionFee,
+    });
+    return false;
+  }
+  if (!options.walletClient || !options.signerAccount) {
+    throw new Error("Live creator-fee forwarding requires a configured signer");
+  }
+
+  let transactionHash: `0x${string}`;
+  try {
+    const request = {
+      ...collector,
+      functionName: "claimAndFlush" as const,
+      account: options.signerAccount,
+      chain: options.walletClient.chain,
+      gas: gasLimit,
+    };
+    transactionHash = feeParameters.kind === "eip1559"
+      ? await options.walletClient.writeContract({
+          ...request,
+          maxFeePerGas: feeParameters.maxFeePerGas,
+          maxPriorityFeePerGas: feeParameters.maxPriorityFeePerGas,
+        })
+      : await options.walletClient.writeContract({ ...request, gasPrice: feeParameters.gasPrice });
+  } catch (error) {
+    await logger.write("error", "creator_fee_flush_submission_uncertain", {
+      cycleStartedAt,
+      retryAttempted: false,
+      ...describeError(error),
+    });
+    throw new KeeperHaltError(
+      "Creator-fee forwarding submission is uncertain. Reconcile the signer nonce before restarting.",
+    );
+  }
+
+  let receipt;
+  try {
+    receipt = await withRpcBackoff("wait_for_creator_fee_flush", config, logger, () =>
+      publicClient.waitForTransactionReceipt({
+        hash: transactionHash,
+        confirmations: config.confirmations,
+        timeout: config.receiptTimeoutMs,
+      }),
+    );
+  } catch (error) {
+    await logger.write("error", "creator_fee_flush_confirmation_uncertain", {
+      cycleStartedAt,
+      transactionHash,
+      retryTransaction: false,
+      ...describeError(error),
+    });
+    throw new KeeperHaltError(
+      `Creator-fee forwarding confirmation is uncertain for ${transactionHash}. Reconcile it before restarting.`,
+    );
+  }
+  if (receipt.status !== "success") {
+    throw new KeeperHaltError(`Creator-fee forwarding reverted in ${transactionHash}`);
+  }
+  await logger.write("info", "creator_fees_forwarded", {
+    cycleStartedAt,
+    transactionHash,
+    wethBalance,
+    zazuBalance,
+    blockNumber: receipt.blockNumber,
+  });
+  return true;
+}
+
 async function runCycle(options: {
   config: KeeperConfig;
   publicClient: PublicClient;
@@ -296,13 +459,33 @@ async function runCycle(options: {
   const { config, publicClient, logger, keeperAddress } = options;
   const cycleStartedAt = new Date().toISOString();
 
-  const [state, latestBlock] = await Promise.all([
+  let [state, latestBlock] = await Promise.all([
     readVaultState(publicClient, config, logger),
     withRpcBackoff("read_latest_block", config, logger, () =>
       publicClient.getBlock({ blockTag: "latest" }),
     ),
   ]);
   validateVaultConfiguration(state, config, keeperAddress);
+
+  if (state.paused) {
+    await logger.write("info", "cycle_skipped", { reason: "vault_paused", cycleStartedAt });
+    return;
+  }
+
+  const creatorFeesForwarded = await processCreatorFees({
+    ...options,
+    latestBlock,
+    cycleStartedAt,
+  });
+  if (creatorFeesForwarded) {
+    [state, latestBlock] = await Promise.all([
+      readVaultState(publicClient, config, logger),
+      withRpcBackoff("refresh_latest_block_after_fee_flush", config, logger, () =>
+        publicClient.getBlock({ blockTag: "latest" }),
+      ),
+    ]);
+    validateVaultConfiguration(state, config, keeperAddress);
+  }
 
   if (state.paused) {
     await logger.write("info", "cycle_skipped", { reason: "vault_paused", cycleStartedAt });
@@ -754,10 +937,22 @@ async function main(): Promise<void> {
         `No contract bytecode found at ${config.vaultAddress}`,
       );
     }
+    const collectorBytecode = await withRpcBackoff(
+      "verify_fee_collector_contract",
+      config,
+      logger,
+      () => publicClient.getCode({ address: config.feeCollectorAddress }),
+    );
+    if (!collectorBytecode || collectorBytecode === "0x") {
+      throw new ConfigurationMismatchError(
+        `No contract bytecode found at ${config.feeCollectorAddress}`,
+      );
+    }
 
     await logger.write("info", "keeper_started", {
       chainId: config.chainId,
       vault: config.vaultAddress,
+      feeCollector: config.feeCollectorAddress,
       keeper: keeperAddress,
       dryRun: config.dryRun,
       runOnce: config.runOnce,

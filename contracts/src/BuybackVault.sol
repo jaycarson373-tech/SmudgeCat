@@ -39,6 +39,7 @@ contract BuybackVault is Ownable2Step, Pausable, ReentrancyGuard {
     uint256 public totalDeposited;
     uint256 public totalInputSpent;
     uint256 public totalZazuBought;
+    uint256 public totalZazuBurned;
     uint256 public totalFeeAssetRescued;
 
     bool public configurationTimelockEnabled;
@@ -69,6 +70,7 @@ contract BuybackVault is Ownable2Step, Pausable, ReentrancyGuard {
         address indexed destination,
         uint256 timestamp
     );
+    event DirectZazuBurned(uint256 amount, address indexed destination, uint256 timestamp);
     event KeeperUpdated(address oldKeeper, address newKeeper);
     event RouterUpdated(address oldRouter, address newRouter);
     event DestinationUpdated(address oldDestination, address newDestination);
@@ -112,6 +114,7 @@ contract BuybackVault is Ownable2Step, Pausable, ReentrancyGuard {
     error NotProtectedAsset();
     error NativeTransferFailed();
     error TreasuryAccountingDeficit(uint256 accountedBalance, uint256 actualBalance);
+    error BurnDestinationNotActive(address destination);
 
     modifier onlyKeeper() {
         if (msg.sender != keeper) revert UnauthorizedKeeper(msg.sender);
@@ -277,11 +280,28 @@ contract BuybackVault is Ownable2Step, Pausable, ReentrancyGuard {
         }
 
         totalZazuBought += zazuReceived;
+        if (destination == DEFAULT_BURN_ADDRESS) totalZazuBurned += zazuReceived;
         zazuToken.safeTransfer(destination, zazuReceived);
 
         emit BuybackExecuted(
             executionId, feeToken, amountIn, zazuReceived, destination, block.timestamp
         );
+    }
+
+    /// @notice Burns token-side pons creator fees that arrive directly at the vault.
+    /// @dev Anyone may call this, but it can only transfer ZAZU to the canonical burn address.
+    function burnDirectZazu() external whenNotPaused nonReentrant returns (uint256 amount) {
+        address destination = buybackDestination;
+        if (destination != DEFAULT_BURN_ADDRESS) {
+            revert BurnDestinationNotActive(destination);
+        }
+
+        amount = zazuToken.balanceOf(address(this));
+        if (amount == 0) return 0;
+
+        totalZazuBurned += amount;
+        zazuToken.safeTransfer(destination, amount);
+        emit DirectZazuBurned(amount, destination, block.timestamp);
     }
 
     function setKeeper(address newKeeper) external onlyOwner {

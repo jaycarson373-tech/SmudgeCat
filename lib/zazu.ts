@@ -37,7 +37,6 @@ export const ZAZU = {
   tokenAddress,
   vaultAddress,
   chainId,
-  cycleMinutes: 15,
   xUrl: safeUrl(process.env.NEXT_PUBLIC_X_URL),
   instagramUrl: "https://www.instagram.com/zazubabyman/",
   tiktokUrl: "https://www.tiktok.com/@zazubabyman_",

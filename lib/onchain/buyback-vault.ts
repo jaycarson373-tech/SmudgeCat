@@ -7,6 +7,7 @@ export const BUYBACK_VAULT_SELECTORS = {
   executionCount: "0xa17ecef3",
   totalInputSpent: "0x342ffc90",
   totalZazuBought: "0xd8b6eb7a",
+  totalZazuBurned: "0x22a2cefd",
 } as const;
 
 export const ERC20_SELECTORS = {
