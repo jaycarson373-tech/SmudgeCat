@@ -12,6 +12,14 @@ The contract and its `BuybackExecuted` events are always the source of truth. Su
 
 This handoff targets **pons v1 only**. The adapter and quote route assume its WETH/ZAZU Uniswap V3 pool and 1% fee tier. Do not use these values for pons v2, which has a bonding-curve phase, Uniswap V4 after graduation, and pairing-asset payouts through a fee escrow.
 
+## One-time TUFF v2 test
+
+The separate `npm run tuff:v2-test` command is a deliberately pinned exception for the existing TUFF test launch only. It does not use the website, Supabase, the ZAZU vault, or the continuous v1 keeper. It performs exactly three sequential transactions from the TUFF creator wallet: `sweepFees(0)`, escrow `claim(500000000000000)`, and a `0.0005 ETH` curve buy whose recipient is the canonical burn address. Both the partial claim and the buy are hard-capped at `0.0005 ETH`; the remaining creator fees stay in escrow.
+
+Use a separate Railway service with build command `npm install --include=dev`, start command `npm run tuff:v2-test`, one replica, autodeploy disabled, and restart policy Never. Import [`deploy/railway-tuff-v2-test.env.example`](deploy/railway-tuff-v2-test.env.example) and run it first with `TUFF_TEST_DRY_RUN=true` and no key. The dry run uses the chain's sequential transaction simulator and prints the current nonce plus the exact live acknowledgement.
+
+For the single live run, set the printed nonce, exact acknowledgement, `TUFF_TEST_DRY_RUN=false`, and the creator key in `TUFF_TEST_PRIVATE_KEY`. The script checks that the key derives the pinned creator, reconciles latest and pending nonces before every write, caps gas and slippage, submits each transaction once, waits for confirmations, and verifies both the `CurveBuy` and token transfer to the burn address. An uncertain submission or partial failure is a manual recovery event; do not change the nonce and rerun the whole sequence. Remove the private key and scale the service to zero after completion.
+
 ## Vercel
 
 Import [`deploy/vercel.env.example`](deploy/vercel.env.example), replace every placeholder, and apply the variables to Production. Values beginning with `NEXT_PUBLIC_` are intentionally visible in the browser. Never place the keeper key, deployer key, or Supabase elevated key in Vercel. `KEEPER_QUOTE_API_KEY` belongs in Vercel only as a server-side value and must never use a `NEXT_PUBLIC_` prefix.
