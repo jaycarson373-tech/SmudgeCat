@@ -48,6 +48,26 @@ Keep `KEEPER_DRY_RUN=true` for the first complete quote and simulation. Review t
 
 `PONS_FEE_COLLECTOR_ADDRESS` pins the collector used as the pons creator wallet. `PONS_LOCKER_ADDRESS` pins the active v1 locker. The Railway keeper simulates the collector's permissionless `claimAndFlush()`, skips an empty claim, and submits only when a creator share is available. The collector claims from the pinned locker, forwards WETH to the vault, accounts it, forwards token-side ZAZU, and invokes the vault's `burnDirectZazu()`. Those functions cannot choose a recipient and can only send ZAZU to the canonical burn address.
 
+### Guarded manual fallback
+
+Keep a normally idle Railway service at zero replicas with start command `npm run keeper:manual`, GitHub autodeploys disabled, and restart policy Never. It must use the same deployed commit and pins as the automatic worker. The manual entrypoint forces `KEEPER_RUN_ONCE=true`, identifies its logs as manual, and defaults to `KEEPER_DRY_RUN=true`.
+
+The automatic worker must be fully stopped before a live manual job begins. Railway containers do not share the keeper's `/tmp` file lock, and a rolling deployment can overlap. Scale automation to zero, wait for `keeper_stopped`, confirm there are no other replicas or deployments, and reconcile the keeper wallet's `latest` and `pending` nonces. If they differ, or a submitted transaction has uncertain status, stop and reconcile it before continuing.
+
+Run the fallback once in dry-run mode first. For the live one-off, set all three temporary values:
+
+```text
+KEEPER_MANUAL_ACK=AUTOMATION_STOPPED:4663:<CHECKSUMMED_BUYBACK_VAULT_ADDRESS>
+KEEPER_MANUAL_EXPECTED_NONCE=<MATCHING_LATEST_AND_PENDING_NONCE>
+KEEPER_MANUAL_REASON=<8_TO_200_CHARACTER_INCIDENT_NOTE>
+```
+
+The live job rechecks both signer nonces before every write and binds the acknowledgement to the configured chain and vault. It still enforces the onchain 15-minute interval, execution limits, quote expiry, adaptive size, price impact, slippage, gas limits, and full simulation. Configure the manual job with restart policy Never. Configure at least 240 seconds of Railway deployment draining so the normal worker can finish any in-flight receipt check and emit `keeper_stopped` before shutdown.
+
+Every successful buyback, scheduled or manual, emits the same onchain `BuybackExecuted` proof. `/api/stats`, `/api/buybacks`, and the website read that event and vault counters directly, so a manual recovery is documented automatically after the short cache window. The event does not distinguish manual from scheduled execution. Direct token-side creator fees are reflected in `totalZazuBurned` but do not create a `BuybackExecuted` history entry.
+
+After the one-off process emits `keeper_stopped`, scale the manual service back to zero and delete its three temporary live-run variables before restoring the automatic service to one replica.
+
 ## pons v1 fee flow
 
 `NEXT_PUBLIC_PONS_URL` controls the public pons link only. It does not move fees.

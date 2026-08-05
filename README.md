@@ -69,6 +69,8 @@ Copy-ready Vercel and Railway templates, contract order, Supabase SQL, and activ
 
 Keep all private keys on the service that needs them. Vercel receives no signer key. Railway uses one minimally funded keeper and one replica. The chain and `BuybackExecuted` events remain the source of truth; Supabase is only an optional query mirror.
 
+If automation is stopped for recovery, `npm run keeper:manual` provides a one-cycle fallback with dry-run by default, an explicit chain/vault acknowledgement, a reconciled signer nonce, and the same quote, simulation, gas, slippage, and cooldown checks. Successful manual executions emit the normal onchain event and appear automatically in the public stats and buyback APIs. Follow the stop, verify, run, and resume procedure in [keeper/README.md](keeper/README.md#manual-recovery).
+
 Before enabling keeper submissions, verify the active pons factory, locker, router, Quoter V2, WETH, pool, collector fee redirect, adapter immutables, vault pins, burn destination, and multisig ownership against the Robinhood Chain explorer. Start Railway in dry-run mode, then validate one bounded end-to-end execution.
 
 ## Disclaimer

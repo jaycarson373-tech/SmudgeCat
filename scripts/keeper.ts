@@ -16,6 +16,7 @@ import { buybackVaultAbi, erc20ReadAbi, ponsFeeCollectorAbi } from "../keeper/ab
 import { loadKeeperConfig, type KeeperConfig } from "../keeper/config";
 import { acquireProcessLock } from "../keeper/lock";
 import { describeError, KeeperLogger } from "../keeper/logger";
+import { assertManualNonceState } from "../keeper/manual-nonce";
 import { QuoteServiceError, requestDexQuote } from "../keeper/quote";
 
 const REQUIRED_INTERVAL_SECONDS = 15n * 60n;
@@ -144,6 +145,38 @@ async function withRpcBackoff<T>(
   }
 
   throw new Error(`RPC retry loop ended unexpectedly for ${operation}`);
+}
+
+async function verifyManualNonce(options: {
+  publicClient: PublicClient;
+  config: KeeperConfig;
+  logger: KeeperLogger;
+  keeperAddress: Address;
+  expectedNonce: number;
+  phase: "creator_fee_flush" | "buyback";
+}): Promise<void> {
+  const { publicClient, config, logger, keeperAddress, expectedNonce, phase } = options;
+  const [latestNonce, pendingNonce] = await Promise.all([
+    withRpcBackoff(`read_${phase}_latest_nonce`, config, logger, () =>
+      publicClient.getTransactionCount({ address: keeperAddress, blockTag: "latest" }),
+    ),
+    withRpcBackoff(`read_${phase}_pending_nonce`, config, logger, () =>
+      publicClient.getTransactionCount({ address: keeperAddress, blockTag: "pending" }),
+    ),
+  ]);
+
+  try {
+    assertManualNonceState({ expectedNonce, latestNonce, pendingNonce, phase });
+  } catch (error) {
+    throw new KeeperHaltError((error as Error).message);
+  }
+
+  await logger.write("info", "manual_nonce_guard_passed", {
+    phase,
+    keeper: keeperAddress,
+    latestNonce,
+    pendingNonce,
+  });
 }
 
 async function readVaultState(
@@ -295,6 +328,8 @@ async function processCreatorFees(options: {
   logger: KeeperLogger;
   latestBlock: { baseFeePerGas: bigint | null };
   cycleStartedAt: string;
+  manualNonce?: number;
+  shutdownSignal?: AbortSignal;
 }): Promise<boolean> {
   const { config, publicClient, logger, keeperAddress, latestBlock, cycleStartedAt } = options;
   const collector = { address: config.feeCollectorAddress, abi: ponsFeeCollectorAbi } as const;
@@ -388,6 +423,30 @@ async function processCreatorFees(options: {
   if (!options.walletClient || !options.signerAccount) {
     throw new Error("Live creator-fee forwarding requires a configured signer");
   }
+  if (options.shutdownSignal?.aborted) {
+    await logger.write("info", "submission_skipped_for_shutdown", {
+      phase: "creator_fee_flush",
+      cycleStartedAt,
+    });
+    return false;
+  }
+  if (options.manualNonce !== undefined) {
+    await verifyManualNonce({
+      publicClient,
+      config,
+      logger,
+      keeperAddress,
+      expectedNonce: options.manualNonce,
+      phase: "creator_fee_flush",
+    });
+  }
+  if (options.shutdownSignal?.aborted) {
+    await logger.write("info", "submission_skipped_for_shutdown", {
+      phase: "creator_fee_flush",
+      cycleStartedAt,
+    });
+    return false;
+  }
 
   let transactionHash: `0x${string}`;
   try {
@@ -397,6 +456,7 @@ async function processCreatorFees(options: {
       account: options.signerAccount,
       chain: options.walletClient.chain,
       gas: gasLimit,
+      ...(options.manualNonce === undefined ? {} : { nonce: options.manualNonce }),
     };
     transactionHash = feeParameters.kind === "eip1559"
       ? await options.walletClient.writeContract({
@@ -445,6 +505,9 @@ async function processCreatorFees(options: {
     wethBalance,
     zazuBalance,
     blockNumber: receipt.blockNumber,
+    executionMode: config.executionMode,
+    nonce: options.manualNonce,
+    manualReason: config.manualReason,
   });
   return true;
 }
@@ -456,9 +519,12 @@ async function runCycle(options: {
   signerAccount?: ReturnType<typeof privateKeyToAccount>;
   keeperAddress: Address;
   logger: KeeperLogger;
+  manualNonce?: number;
+  shutdownSignal?: AbortSignal;
 }): Promise<void> {
   const { config, publicClient, logger, keeperAddress } = options;
   const cycleStartedAt = new Date().toISOString();
+  let nextManualNonce = options.manualNonce;
 
   let [state, latestBlock] = await Promise.all([
     readVaultState(publicClient, config, logger),
@@ -477,8 +543,14 @@ async function runCycle(options: {
     ...options,
     latestBlock,
     cycleStartedAt,
+    manualNonce: nextManualNonce,
   });
+  if (options.shutdownSignal?.aborted) {
+    await logger.write("info", "cycle_stopped_before_submission", { cycleStartedAt });
+    return;
+  }
   if (creatorFeesForwarded) {
+    if (nextManualNonce !== undefined) nextManualNonce += 1;
     [state, latestBlock] = await Promise.all([
       readVaultState(publicClient, config, logger),
       withRpcBackoff("refresh_latest_block_after_fee_flush", config, logger, () =>
@@ -767,6 +839,30 @@ async function runCycle(options: {
   if (!options.walletClient || !options.signerAccount) {
     throw new Error("Live execution requires a configured signer");
   }
+  if (options.shutdownSignal?.aborted) {
+    await logger.write("info", "submission_skipped_for_shutdown", {
+      phase: "buyback",
+      cycleStartedAt,
+    });
+    return;
+  }
+  if (nextManualNonce !== undefined) {
+    await verifyManualNonce({
+      publicClient,
+      config,
+      logger,
+      keeperAddress,
+      expectedNonce: nextManualNonce,
+      phase: "buyback",
+    });
+  }
+  if (options.shutdownSignal?.aborted) {
+    await logger.write("info", "submission_skipped_for_shutdown", {
+      phase: "buyback",
+      cycleStartedAt,
+    });
+    return;
+  }
 
   let transactionHash: `0x${string}`;
   try {
@@ -780,6 +876,7 @@ async function runCycle(options: {
       account: options.signerAccount,
       chain: options.walletClient.chain,
       gas: gasLimit,
+      ...(nextManualNonce === undefined ? {} : { nonce: nextManualNonce }),
     };
     transactionHash =
       feeParameters.kind === "eip1559"
@@ -814,6 +911,9 @@ async function runCycle(options: {
     feeModel: feeParameters.kind,
     boundedFeePerGas,
     maximumTransactionFee,
+    executionMode: config.executionMode,
+    nonce: nextManualNonce,
+    manualReason: config.manualReason,
   });
 
   let receipt;
@@ -845,7 +945,7 @@ async function runCycle(options: {
       blockNumber: receipt.blockNumber,
       retryTransaction: false,
     });
-    return;
+    throw new KeeperHaltError(`Buyback reverted in ${transactionHash}`);
   }
 
   const events = parseEventLogs({
@@ -862,7 +962,9 @@ async function runCycle(options: {
       blockNumber: receipt.blockNumber,
       retryTransaction: false,
     });
-    return;
+    throw new KeeperHaltError(
+      `Confirmed transaction ${transactionHash} did not emit BuybackExecuted`,
+    );
   }
 
   const [inputDecimals, zazuDecimals] = await Promise.all([
@@ -893,7 +995,9 @@ async function runCycle(options: {
       eventDestination: destination,
       retryTransaction: false,
     });
-    return;
+    throw new KeeperHaltError(
+      `Confirmed transaction ${transactionHash} emitted mismatched buyback proof`,
+    );
   }
   await logger.write("info", "buyback_confirmed", {
     cycleStartedAt,
@@ -915,6 +1019,9 @@ async function runCycle(options: {
     destination,
     gasUsed: receipt.gasUsed,
     effectiveGasPrice: receipt.effectiveGasPrice,
+    executionMode: config.executionMode,
+    nonce: nextManualNonce,
+    manualReason: config.manualReason,
   });
 }
 
@@ -983,6 +1090,9 @@ async function main(): Promise<void> {
       keeper: keeperAddress,
       dryRun: config.dryRun,
       runOnce: config.runOnce,
+      executionMode: config.executionMode,
+      manualExpectedNonce: config.manualExpectedNonce,
+      manualReason: config.manualReason,
       pollIntervalMs: config.pollIntervalMs,
     });
 
@@ -995,6 +1105,8 @@ async function main(): Promise<void> {
           signerAccount,
           keeperAddress,
           logger,
+          manualNonce: config.manualExpectedNonce,
+          shutdownSignal: shutdownController.signal,
         });
       } catch (error) {
         if (error instanceof KeeperHaltError) throw error;
@@ -1002,6 +1114,7 @@ async function main(): Promise<void> {
           retryTransaction: false,
           ...describeError(error),
         });
+        if (config.runOnce) throw error;
       }
 
       if (config.runOnce || stopping) break;

@@ -5,6 +5,26 @@ import { join } from "node:path";
 import test from "node:test";
 import { acquireProcessLock } from "./lock";
 
+test("active lock rejects overlap and can be reacquired after release", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "zazu-keeper-lock-"));
+  const lockPath = join(directory, "keeper.lock");
+  const first = await acquireProcessLock(lockPath, 60_000);
+
+  try {
+    await assert.rejects(acquireProcessLock(lockPath, 60_000), {
+      message: /Keeper lock is already held/,
+    });
+
+    await first.release();
+    const second = await acquireProcessLock(lockPath, 60_000);
+    await second.release();
+  } finally {
+    await first.release();
+    await unlink(lockPath).catch(() => undefined);
+    await rmdir(directory);
+  }
+});
+
 test("stale lock takeover fails closed and preserves the existing owner", async () => {
   const directory = await mkdtemp(join(tmpdir(), "zazu-keeper-lock-"));
   const lockPath = join(directory, "keeper.lock");

@@ -12,7 +12,42 @@ Install `viem` as a runtime dependency and `tsx` as a development dependency. Co
 node --env-file=/secure/path/zazu-keeper.env --import=tsx scripts/keeper.ts
 ```
 
-Use `KEEPER_DRY_RUN=true` with `KEEPER_ADDRESS` and no private key to exercise reads, quoting, limits, and simulation without submitting a transaction. `KEEPER_RUN_ONCE=true` performs one cycle and exits.
+Use `KEEPER_DRY_RUN=true` with `KEEPER_ADDRESS` and no private key to exercise reads, quoting, limits, and simulation without submitting a transaction. Use `npm run keeper:manual` for a live one-cycle execution; setting `KEEPER_RUN_ONCE=true` by itself cannot submit transactions.
+
+## Manual recovery
+
+`npm run keeper:manual` is the guarded backup when the automatic Railway worker is unavailable. It always forces one cycle and defaults to dry-run mode. It uses the same configuration pins, adaptive sizing, quote expiry, price-impact limit, slippage floor, gas ceilings, simulation, receipt checks, and vault cooldown as automation.
+
+The file lock is local to one container. It cannot coordinate an automatic Railway container with a separate manual job. Before a live manual run:
+
+1. Scale the automatic worker to zero and wait for the old process to emit `keeper_stopped`.
+2. Confirm no other replica, deployment, or manual job is running.
+3. Reconcile every submitted transaction. The signer `latest` and `pending` nonces must match.
+4. Record `/api/stats` and `/api/buybacks?page=1&pageSize=20` before the run.
+5. Run the manual command once in dry-run mode with `KEEPER_ADDRESS` and no signing key available to that process.
+6. Use a separate one-off job with restart policy set to Never for the live run.
+
+Dry-run command:
+
+```sh
+KEEPER_DRY_RUN=true npm run keeper:manual
+```
+
+For a live run, set `KEEPER_DRY_RUN=false`, set `KEEPER_MANUAL_EXPECTED_NONCE` to the matching `latest` and `pending` signer nonce, and provide a chain-and-vault-bound acknowledgement plus an incident reason:
+
+```sh
+KEEPER_DRY_RUN=false \
+KEEPER_MANUAL_ACK="AUTOMATION_STOPPED:4663:0xYourChecksummedVault" \
+KEEPER_MANUAL_EXPECTED_NONCE=7 \
+KEEPER_MANUAL_REASON="Automatic worker stopped; guarded operator recovery." \
+npm run keeper:manual
+```
+
+The manual process rechecks `latest` and `pending` immediately before each write. If creator fees are forwarded first, the confirmed claim uses the expected nonce and the subsequent buyback must pass a second check at the next nonce. Any mismatch or pending transaction halts the run. A manual cycle can submit zero transactions, only `claimAndFlush`, only `executeBuyback`, or both.
+
+After confirmation, the vault's `BuybackExecuted` event automatically updates `/api/stats`, `/api/buybacks`, and the website dashboard. This is independent of whether the authorized keeper was scheduled or manually invoked. The event does not label execution mode, so public copy must describe it as an authorized keeper execution, not claim it was necessarily automated. Direct token-side fee burns update `totalZazuBurned` but are not buyback-history rows because they emit `DirectZazuBurned`, not `BuybackExecuted`.
+
+Do not resume automation until the manual job has emitted `keeper_stopped`, every transaction is confirmed, and `latest` equals `pending` again. Then scale the manual service back to zero and remove `KEEPER_MANUAL_ACK`, `KEEPER_MANUAL_EXPECTED_NONCE`, and `KEEPER_MANUAL_REASON` before restoring the automatic worker to one replica. Never retry a hashless or confirmation-uncertain submission until the signer nonce and transaction pool have been reconciled.
 
 ## Quote service contract
 

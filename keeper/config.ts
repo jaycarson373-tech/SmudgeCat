@@ -1,6 +1,7 @@
 import { isAddress, type Address, type Hex } from "viem";
 import { resolve } from "node:path";
 import { tmpdir } from "node:os";
+import { assertManualRunEnvironment } from "./manual-run";
 
 export interface KeeperConfig {
   chainId: number;
@@ -36,6 +37,9 @@ export interface KeeperConfig {
   logFile?: string;
   dryRun: boolean;
   runOnce: boolean;
+  executionMode: "automatic" | "manual";
+  manualExpectedNonce?: number;
+  manualReason?: string;
 }
 
 const readRequired = (name: string): string => {
@@ -126,11 +130,20 @@ const readHttpUrl = (name: string, allowLocalHttp = false): string => {
 };
 
 export function loadKeeperConfig(): KeeperConfig {
-  const dryRun = readBoolean("KEEPER_DRY_RUN", false);
-  const privateKey = readPrivateKey(!dryRun);
-  const keeperAddress = privateKey
-    ? undefined
-    : readAddress("KEEPER_ADDRESS", true);
+  const runOnce = readBoolean("KEEPER_RUN_ONCE", false);
+  const manualRun = readBoolean("KEEPER_MANUAL_RUN", false);
+  const manualGuard = manualRun ? assertManualRunEnvironment(process.env) : undefined;
+  if (!manualGuard && readOptional("KEEPER_DRY_RUN") === undefined) {
+    throw new Error("KEEPER_DRY_RUN must be explicitly set to true or false");
+  }
+  const dryRun = manualGuard?.dryRun ?? readBoolean("KEEPER_DRY_RUN");
+  if (runOnce && !manualRun && !dryRun) {
+    throw new Error(
+      "Live one-cycle execution requires the guarded manual entrypoint: npm run keeper:manual",
+    );
+  }
+  const privateKey = dryRun ? undefined : readPrivateKey(true);
+  const keeperAddress = dryRun ? readAddress("KEEPER_ADDRESS", true) : undefined;
 
   const expectedMinimumAmount = readBigInt("MIN_EXECUTION_AMOUNT");
   const expectedMaximumAmount = readBigInt("MAX_EXECUTION_AMOUNT");
@@ -224,6 +237,9 @@ export function loadKeeperConfig(): KeeperConfig {
       ? resolve(readOptional("KEEPER_LOG_FILE")!)
       : undefined,
     dryRun,
-    runOnce: readBoolean("KEEPER_RUN_ONCE", false),
+    runOnce,
+    executionMode: manualRun ? "manual" : "automatic",
+    manualExpectedNonce: manualGuard?.expectedNonce,
+    manualReason: manualGuard?.manualReason,
   };
 }
