@@ -11,6 +11,7 @@ import {
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { setTimeout as sleep } from "node:timers/promises";
+import { selectAdaptiveBuySize } from "../keeper/adaptive-buy-size";
 import { buybackVaultAbi, erc20ReadAbi, ponsFeeCollectorAbi } from "../keeper/abi";
 import { loadKeeperConfig, type KeeperConfig } from "../keeper/config";
 import { acquireProcessLock } from "../keeper/lock";
@@ -518,27 +519,63 @@ async function runCycle(options: {
     return;
   }
 
-  const amountIn = minimum(treasuryBalance, state.maximumExecutionAmount);
-  const quoteRequest = {
-    chainId: config.chainId,
-    vault: config.vaultAddress,
-    router: state.dexRouter,
-    wrappedNativeToken: state.wrappedNativeToken,
-    inputToken: state.feeToken,
-    outputToken: state.zazuToken,
-    recipient: config.vaultAddress,
-    amountIn,
-    maximumSlippageBps: Number(state.maximumSlippageBps),
-  } as const;
-
+  const requestedAmountIn = minimum(treasuryBalance, state.maximumExecutionAmount);
+  let amountIn = requestedAmountIn;
   let quote;
   try {
-    quote = await requestDexQuote({
-      apiUrl: config.quoteApiUrl,
-      apiKey: config.quoteApiKey,
-      timeoutMs: config.quoteTimeoutMs,
-      request: quoteRequest,
+    const sizing = await selectAdaptiveBuySize({
+      requestedAmountIn,
+      minimumAmountIn: state.minimumExecutionAmount,
+      maximumPriceImpactBps: config.maximumPriceImpactBps,
+      getQuote: (candidateAmountIn) =>
+        requestDexQuote({
+          apiUrl: config.quoteApiUrl,
+          apiKey: config.quoteApiKey,
+          timeoutMs: config.quoteTimeoutMs,
+          request: {
+            chainId: config.chainId,
+            vault: config.vaultAddress,
+            router: state.dexRouter,
+            wrappedNativeToken: state.wrappedNativeToken,
+            inputToken: state.feeToken,
+            outputToken: state.zazuToken,
+            recipient: config.vaultAddress,
+            amountIn: candidateAmountIn,
+            maximumSlippageBps: Number(state.maximumSlippageBps),
+          },
+        }),
     });
+
+    for (let index = 0; index < sizing.attempts.length - 1; index += 1) {
+      const attempt = sizing.attempts[index];
+      const nextAttempt = sizing.attempts[index + 1];
+      await logger.write("info", "buy_size_reduced", {
+        cycleStartedAt,
+        quoteId: attempt.quote.quoteId,
+        previousAmountIn: attempt.amountIn,
+        nextAmountIn: nextAttempt.amountIn,
+        priceImpactBps: attempt.quote.priceImpactBps,
+        maximumPriceImpactBps: config.maximumPriceImpactBps,
+      });
+    }
+
+    if (!sizing.safe) {
+      const minimumAttempt = sizing.attempts[sizing.attempts.length - 1];
+      await logger.write("warn", "cycle_skipped", {
+        reason: "minimum_buy_still_above_price_impact_limit",
+        cycleStartedAt,
+        quoteId: minimumAttempt.quote.quoteId,
+        requestedAmountIn,
+        minimumAmountIn: minimumAttempt.amountIn,
+        priceImpactBps: minimumAttempt.quote.priceImpactBps,
+        maximumPriceImpactBps: config.maximumPriceImpactBps,
+        quotedSizes: sizing.attempts.map((attempt) => attempt.amountIn),
+      });
+      return;
+    }
+
+    amountIn = sizing.amountIn;
+    quote = sizing.quote;
   } catch (error) {
     await logger.write("warn", "cycle_skipped", {
       reason: error instanceof QuoteServiceError ? "invalid_or_unavailable_quote" : "quote_error",
@@ -549,16 +586,6 @@ async function runCycle(options: {
     return;
   }
 
-  if (quote.priceImpactBps > config.maximumPriceImpactBps) {
-    await logger.write("warn", "cycle_skipped", {
-      reason: "price_impact_above_limit",
-      cycleStartedAt,
-      quoteId: quote.quoteId,
-      priceImpactBps: quote.priceImpactBps,
-      maximumPriceImpactBps: config.maximumPriceImpactBps,
-    });
-    return;
-  }
   if (
     BigInt(quote.expiresAt) <
     chainTimestamp + BigInt(config.quoteValidityBufferSeconds)

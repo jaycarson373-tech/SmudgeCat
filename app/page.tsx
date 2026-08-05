@@ -216,9 +216,9 @@ export default function Home() {
         <div className="section-shell security-layout">
           <div className="security-copy">
             <div className="section-kicker section-kicker-light"><span>03</span><p>EXECUTION GUARDRAILS</p></div>
-            <p className="eyebrow eyebrow-light"><i /> SAFETY BEFORE SPEED</p>
-            <h2>BAD ROUTE?<br />NO BUY.</h2>
-            <p>The onchain cooldown limits execution frequency. Any route that fails the quote, impact, slippage, gas, or simulation checks gets skipped.</p>
+            <p className="eyebrow eyebrow-light"><i /> LIQUIDITY-AWARE EXECUTION</p>
+            <h2>SMARTER BUYS.<br />STEADIER BURNS.</h2>
+            <p>The keeper automatically sizes each buyback to current liquidity. Smaller buys keep the loop moving while every onchain guardrail stays active.</p>
           </div>
           <div className="safety-list">
             {safetyRails.map((rail, index) => (

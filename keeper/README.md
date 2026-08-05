@@ -1,6 +1,6 @@
 # ZAZU keeper
 
-The keeper is a fail-closed TypeScript service. It checks the vault once per minute, but only submits a buyback after the contract's `minimumInterval` has elapsed and every treasury, quote, price-impact, gas, and simulation check passes.
+The keeper is a fail-closed TypeScript service. It checks the vault once per minute, but only submits a buyback after the contract's `minimumInterval` has elapsed and every treasury, quote, price-impact, gas, and simulation check passes. If the maximum permitted buy would exceed the price-impact ceiling, it automatically quotes progressively smaller bounded amounts and executes the first safe size. The configured minimum buy is always the final candidate.
 
 It does not contain a router address or private key. Production addresses are environment pins. If the vault configuration differs from those pins, the cycle stops safely.
 

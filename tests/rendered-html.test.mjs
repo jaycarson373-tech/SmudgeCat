@@ -51,6 +51,8 @@ test("renders a zero-based mini dashboard, mechanism, and guardrails", async () 
   assert.match(html, /PRICE IMPACT CEILING/i);
   assert.match(html, /SIMULATION BEFORE SUBMIT/i);
   assert.match(html, /PAUSABLE BY MULTISIG OWNER/i);
+  assert.match(html, /SMARTER BUYS[\s\S]*STEADIER BURNS/i);
+  assert.match(html, /automatically sizes each buyback to current liquidity/i);
 });
 
 test("renders the Zazu Files lore without inventing a birthday", async () => {
@@ -80,5 +82,6 @@ test("contains the official socials and no stale brands or rejected copy", async
   assert.doesNotMatch(html, /Solana|pump\.fun|jup\.ag|Jupiter/i);
   assert.doesNotMatch(html, /ZAZU\.EXE|prelaunch|testnet|awaiting verified|not configured|not set/i);
   assert.doesNotMatch(html, /stare that burns back|15 min target|public proof/i);
+  assert.doesNotMatch(html, /BAD ROUTE|NO BUY/i);
   assert.doesNotMatch(html, /—/);
 });
