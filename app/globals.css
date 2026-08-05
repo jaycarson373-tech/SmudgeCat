@@ -81,7 +81,6 @@ h1, h2, h3, p { margin-top: 0; }
 .brand-avatar img { height: 100%; image-rendering: auto; object-fit: cover; width: 100%; }
 .brand-copy { display: flex; flex-direction: column; line-height: 1; }
 .brand-copy strong { font-size: 1.65rem; font-weight: 950; letter-spacing: -.08em; }
-.brand-copy small { font-family: var(--font-geist-mono), monospace; font-size: .54rem; font-weight: 800; letter-spacing: .06em; }
 .header-nav { align-items: center; display: flex; font-family: var(--font-geist-mono), monospace; font-size: .7rem; font-weight: 800; gap: clamp(15px, 2.4vw, 34px); text-transform: uppercase; }
 .header-nav a { border-bottom: 2px solid transparent; padding: 7px 0; }
 .header-nav a:hover { border-color: var(--ink); }
@@ -336,7 +335,6 @@ h1, h2, h3, p { margin-top: 0; }
   .site-header { min-height: 67px; padding: 8px 12px; }
   .brand-avatar { height: 42px; width: 42px; }
   .brand-copy strong { font-size: 1.35rem; }
-  .brand-copy small { display: none; }
   .header-actions { gap: 5px; }
   .header-chip { font-size: .57rem; min-height: 34px; padding: 7px 8px; }
   .header-chip-secondary { display: none; }

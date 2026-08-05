@@ -34,6 +34,7 @@ test("renders the complete Zazu identity and forty-cat hero", async () => {
   assert.match(html, /zazu-logo\.jpg/i);
   assert.match(html, /zazu-40-grid\.png/i);
   assert.match(html, /\/og\.png/i);
+  assert.doesNotMatch(html, /BUYBACK \+ BURN/i);
 });
 
 test("renders a zero-based mini dashboard, simple mechanism, and header actions", async () => {

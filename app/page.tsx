@@ -63,7 +63,6 @@ export default function Home() {
           </span>
           <span className="brand-copy">
             <strong>ZAZU</strong>
-            <small>BUYBACK + BURN</small>
           </span>
         </a>
 
