@@ -1,36 +1,32 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://timon-the-meerkat.vercel.app",
+    process.env.NEXT_PUBLIC_SITE_URL || "https://zazu-still-staring.vercel.app",
   ),
-  title: "Timon the Meerkat | $TIMON",
-  description: "Build and download a custom Timon PFP. 100% of creator fees are reserved for Timon the Meerkat and his owner.",
+  title: "$ZAZU | The Stare That Burns Back",
+  description: "ZAZU's creator-fee share is reserved for recurring buybacks and permanent burns on Robinhood Chain, targeting 15-minute intervals when fees are available.",
   icons: {
-    icon: "/timon-favicon.png",
-    shortcut: "/timon-favicon.png",
-    apple: "/timon-apple-touch-icon.png",
+    icon: "/zazu-favicon.png",
+    shortcut: "/zazu-favicon.png",
+    apple: "/zazu-apple-touch-icon.png",
   },
   openGraph: {
-    title: "Timon the Meerkat | $TIMON",
-    description: "Make a custom Timon PFP with hats, shades, backgrounds, and more. Download it free.",
+    title: "$ZAZU | The Stare That Burns Back",
+    description: "Built on Robinhood Chain and launching through Pons. Creator-fee buybacks target 15-minute intervals when fees are available.",
     type: "website",
-    siteName: "Timon the Meerkat",
-    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Timon the Meerkat wearing his yellow hat and black sunglasses" }],
+    siteName: "Zazu",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "$ZAZU, the stare that burns back" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Timon the Meerkat | $TIMON",
-    description: "Build your Timon PFP. Hats, shades, backgrounds, and instant downloads.",
+    title: "$ZAZU | The Stare That Burns Back",
+    description: "Built on Robinhood Chain and launching through Pons. Creator-fee buybacks target 15-minute intervals when fees are available.",
     images: ["/og.png"],
   },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body></html>;
+  return <html lang="en"><body>{children}</body></html>;
 }
